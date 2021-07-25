@@ -1,5 +1,3 @@
-# Part-Blog-System-SSR
-
 ## 安装
 
 ```bash
