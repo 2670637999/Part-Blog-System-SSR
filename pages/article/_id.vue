@@ -1,7 +1,10 @@
 <template>
     <div>
-        <h2>{{ article.Title }}</h2>
-        <p v-html="article.Content"></p>
+        <article>
+            <h2>{{ article.Title }}</h2>
+            <p>{{ article.Time }}</p>
+            <p v-html="article.Content"></p>
+        </article>
     </div>
 </template>
 
@@ -9,7 +12,7 @@
 export default {
     head(){
         return {
-            title: this.$axios.get('Article.php',{ params: { data: 'getArticleindexOfData', getidArticle: this.$route.params.id }}).then((res)=>res.data.id),
+            title: this.title,
             meta: [
                 { charset: 'utf-8' },
                 { 
@@ -33,7 +36,7 @@ export default {
         return {
             article: {
                 id: Number,
-                Title: '加载中',
+                Title: '',
                 Content: '',
                 Author: '',
                 categorie: '',
@@ -42,22 +45,35 @@ export default {
             }
         }
     },
-    beforeCreate(){
-        this.$axios.get('Article.php',{
-            params: {
-                data: 'getArticleindexOfData',
-                getidArticle: this.$route.params.id
-            }
-        }).then((res)=>{
-            this.article = res.data
+    async asyncData({ app,route }) {
+        let article = await app.$axios.get('Article.php',{ params:{ data: 'getArticleindexOfData',getidArticle: route.params.id }}).then((res)=>res.data)
+        return { article }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            setTimeout(() => this.$nuxt.$loading.finish(), 3000)
         })
-    }
+    },
 }
 </script>
 
 
 <style lang="scss" scoped>
     div {
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
         padding: 15px;
+        box-sizing: border-box;
+        article {
+            margin: auto;
+         
+        }
+        @media all and (min-width: 750px) {
+            article{
+                width: 700px;
+            }
+        }
     }
 </style>

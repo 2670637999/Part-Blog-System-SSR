@@ -1,6 +1,6 @@
 <template>
     <div>
-        footer
+        © 陈陈菌 ｜ 粤ICP备18077886号
     </div>
 </template>
 

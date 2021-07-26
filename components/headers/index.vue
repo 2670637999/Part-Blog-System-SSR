@@ -3,7 +3,8 @@
         <carousel></carousel>
         <nav id="nav">
             <nuxt-link :key="data" v-for="(item,data) in header" :to="header[data].url" @click.native="NavOnclick(header[data],$event)">
-                {{ header[data].itemName }}<span></span>
+                {{ header[data].itemName }}
+                <span></span>
             </nuxt-link>
         </nav>
     </div>
@@ -12,7 +13,6 @@
 <script>
 import carousel from './carousel.vue'
 export default {
-    
     data(){
         return {
             header:[
@@ -20,13 +20,12 @@ export default {
             ]
         }
     },
+    // async asyncData({ app }) {
+    //     let header = await app.$axios.get('/Menu.php',{ params:{ class: 'TopMenu' }}).then((res)=>res.data)
+    //     return { header }
+    // },
     beforeCreate(){
-        let header = this.$axios.get('/Menu.php',{ 
-            params:{    
-                class: 'TopMenu'
-            }
-        }).then((res)=>this.header = res.data)
-        console.log(header)
+        this.$axios.get('/Menu.php',{ params:{ class: 'TopMenu' }}).then((res)=>this.header=res.data)
     },
     components: {
         carousel
@@ -63,7 +62,7 @@ export default {
 
 
 <style lang="scss" scoped>
-    #nav {
+    #nav {         
         width: 100%;
         top: 0;
         z-index: 1000;

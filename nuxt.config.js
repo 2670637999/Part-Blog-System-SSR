@@ -22,6 +22,7 @@ export default {
       baseURL: 'http://test.glumi.cn/api'
     }
   },
+  // extractCSS: process.env.NODE_ENV === 'production',
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/static/global.css',
