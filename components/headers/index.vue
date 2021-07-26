@@ -75,7 +75,7 @@ export default {
             text-align: center;
             cursor: pointer;
             line-height: 50px;
-            width: 120px;
+            width: 140px;
             text-decoration: none;
             color: #000000;
             transition: 0.51s;

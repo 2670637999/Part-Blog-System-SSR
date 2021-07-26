@@ -2,10 +2,11 @@
   <div>
       <article :key="data" v-for="(item,data) in articles">
         <nuxt-link :to="{ name: 'article-id', params:{ id: articles[data].id  } }">
-          <h2># {{ articles[data].Title }}</h2>
+          <h2><span>#</span>{{ articles[data].Title }}</h2>
         </nuxt-link>
+        <p v-if="articles[data].subtitle==''?false:true">{{ articles[data].subtitle }}</p>
         <p>{{ ToText(articles[data].Content)|ellipsis}}</p>
-        <p>写于 {{ articles[data].Time }} <nuxt-link :to="{ name: 'article-id', params:{ id: articles[data].id  } }">查看更多</nuxt-link></p>
+        <p>写于 {{ articles[data].Time }} {{ articles[data].categorie }} <nuxt-link :to="{ name: 'article-id', params:{ id: articles[data].id  } }">查看更多</nuxt-link></p>
       </article>
   </div>
 </template>
@@ -15,13 +16,13 @@ export default {
   data(){
     return {
       articles: [
-          { id: Number,Title: '', Content: '', Author: '',categorie: '',Time: '',url: ''}
+          { id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''}
       ]
     }
   },
   filters: {
     ellipsis: function(value) {
-        let i = 100;
+        let i = 230;
         if(value.length > i){
             return value.slice(0,i)+'...'
         }
@@ -60,11 +61,10 @@ div {
     padding: 0;
     background-color: #ffffff;
     box-sizing: border-box;
-
-
     article {
       display: block;
       // box-sizing: border-box;
+      border-bottom: 1px solid rgb(226, 226, 226);
       padding: 15px;
       margin: 10px 0px 10px 0px;
       background-color: #ffffff;
@@ -72,8 +72,15 @@ div {
       a {
         color: #000000;
         text-decoration: none;
+        h2 {
+          span {
+            color: cornflowerblue;
+            margin-right: 5px;
+          }
+        }
       }
       p {
+        color: #363636;
         a {
           float: right;
         }
