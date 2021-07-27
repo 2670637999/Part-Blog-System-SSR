@@ -1,6 +1,8 @@
 <template>
     <div>
-        admin
+        <main>
+            <input type="text" placeholder="请输入用户名">
+        </main>
     </div>
 </template>
 
@@ -15,14 +17,16 @@ export default {
 }
 </script>
 
+
 <style lang="scss" scoped>
 div { 
-    display: flex;
-    justify-content: center;
+    // align-items: center;
     width: 100%;
-    height: 100%;
+    height: 100px;
     margin: 0;
     padding: 0;
     background-color: #ffffff;
+    main {
+    }
 }
 </style>

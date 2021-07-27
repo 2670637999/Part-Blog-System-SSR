@@ -11,9 +11,12 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.15.1",
+    "editor.md": "^1.5.0",
+    "highlight.js": "^11.1.0",
     "hyperdown": "^2.4.26",
     "nuxt": "^2.15.7",
-    "part-animator": "^0.0.2"
+    "part-animator": "^0.0.2",
+    "wangeditor": "^4.7.5"
   },
   "devDependencies": {
     "node-sass": "^6.0.1",

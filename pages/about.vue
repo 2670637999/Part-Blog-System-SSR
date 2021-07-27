@@ -1,29 +1,44 @@
 <template>
     <div>
-        about
+        <div id="aboutBox" v-html="content"></div>
     </div>
 </template>
 
 <script>
 export default {
-    mounted() {
+    data(){
+        return {
+            content: ''
+        }
+    },
+    async asyncData({ app }) {
+        let content = await app.$axios.get('About.php',{ params: { data:'getData' } })
+        return { content: content.data }
+    },
+    mounted(){
         this.$nextTick(() => {
-        this.$nuxt.$loading.start()
-        setTimeout(() => this.$nuxt.$loading.finish(), 3000)
+            this.$nuxt.$loading.start()
+            setTimeout(() => this.$nuxt.$loading.finish(), 3000)
         })
     },
 }
 </script>
 
 <style lang="scss" scoped>
-div { 
-    display: flex;
-    justify-content: center;
-    // align-items: center;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-}
+    div {
+        width: 100%;
+        background-color: #ffffff;
+    }
+    #aboutBox {
+        transition: 1s;
+        width: 700px;
+        padding: 15px;
+        margin-top: 10px;
+        background-color: #ffffff;
+        margin-bottom: 10px;
+        margin: 0px auto;
+        @media all and(max-width: 800px) {
+            width: 100%;
+        }
+    }
 </style>

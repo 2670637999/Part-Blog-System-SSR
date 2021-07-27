@@ -50,6 +50,7 @@ div {
         width: 700px;
         a {
             text-decoration: none;
+            color: initial;
         }
         li {
             transition: 0.5s;
@@ -58,8 +59,7 @@ div {
             padding: 15px;
             box-sizing: border-box;
             cursor: pointer;
-            border-bottom: 1px solid #bdbcbc;
-            color: initial;
+            border-bottom: 1px solid #dadada;
             span {
                 width: 100%;
             }
@@ -80,7 +80,7 @@ div {
                 transform: scale(0.9);
                 border-bottom: 1px solid cornflowerblue;
             }
-        }
+        } 
     }
 }
 </style>

@@ -31,6 +31,7 @@ export default {
   loading: '~/components/LoadingBar.vue',
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/route',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -43,7 +44,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    'hyperdown'
+    'hyperdown',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
