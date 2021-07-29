@@ -37,7 +37,7 @@ export default {
             var Alldom = document.getElementById('nav')
             for(let i =0;i<Alldom.childNodes.length;i++){
                 Alldom.childNodes[i].childNodes[1].style.width = "0%"
-                Alldom.childNodes[i].style.color = "#000000"
+                Alldom.childNodes[i].style.color = "#5e5e5e"
             }
             dom.srcElement.childNodes[1].style.width = "100%"
             dom.srcElement.style.color = "cornflowerblue"
@@ -49,7 +49,7 @@ export default {
                     dom.srcElement.style.color = "cornflowerblue"
                 }else if(this.$store.state.imageShow == false) {
                     dom.srcElement.childNodes[1].style.width = "0%"
-                    dom.srcElement.style.color = "#000000"
+                    dom.srcElement.style.color = "#5e5e5e"
                 }
             }
         },
@@ -76,8 +76,9 @@ export default {
             cursor: pointer;
             line-height: 50px;
             width: 140px;
+            font-weight: 600;
             text-decoration: none;
-            color: #000000;
+            color: #5e5e5e;
             transition: 0.51s;
             span {
                 bottom: 0;

@@ -1,14 +1,29 @@
 <template>     
         <div id="commentBox">
+            <div id="form">
+                <input type="text" v-model="inputValue.name" placeholder="用户名">
+                <input type="text" v-model="inputValue.Email" placeholder="请输入邮箱（可选）">
+                <input type="text" v-model="inputValue.url" placeholder="地址（可选）">
+                <textarea type="text" v-model="inputValue.content" placeholder="内容"></textarea>
+                先生 <input type="radio" value="男" v-model="inputValue.sex" name="sex">
+                女士 <input type="radio" value="女" v-model="inputValue.sex" name="sex">
+                <button @click="AddComment">提交</button>
+            </div>
             <div id="comment">
                 <transition-group enter-active-class="part-enter-2" leave-active-class="part-leave-2">
-                    <p :key="data+1" v-for="(item,data) in comments">{{comments[data].name}} <span>{{comments[data].time}}</span><br><br>{{comments[data].content}}</p>
+                    <ul :key="data+1" v-for="(item,data) in comments">
+                        <li><img :src="comments[data].sex=='男'?'/man.png':'/woman.png'" alt=""></li>
+                        <li>
+                            <div>
+                                <span><b>{{comments[data].name}}</b></span>
+                            </div>
+                            <div>
+                                <span>{{comments[data].content}}</span>
+                                <span>{{comments[data].time}}</span>
+                            </div>
+                        </li>
+                    </ul>
                 </transition-group>
-            </div>
-            <div id="form">
-                <p><input type="text" v-model="inputValue.Email" placeholder="请输入邮箱（可选）"><input type="text" v-model="inputValue.url" placeholder="地址（可选）"><input type="text" v-model="inputValue.name" placeholder="用户名"></p>
-                <p><textarea type="text" v-model="inputValue.content" placeholder="内容"></textarea></p>
-                <p><button @click="AddComment">提交</button></p>
             </div>
         </div>
 </template>
@@ -18,15 +33,23 @@ export default {
     data(){
         return {
             inputValue: {
-                Email:'',url:'',name:'',content:'' 
+                Email:'',url:'',name:'',content:'',sex:'男'
             },
             comments:[
-                { Email:'',url:'',name:'',content:'',time:''}
+                { Email:'',url:'',name:'',sex:'',content:'',time:''}
             ]
         }
     },
     methods: {
+        SexformStateLog(){
+            if(this.inputValue.sex=='男'){
+                console.log('选住了男人')
+            }else if(this.inputValue.sex=='女'){
+                console.log('选住了女人')
+            }
+        },
         AutoReadComment(){
+            
             this.$axios.get('comment.php',{
                 params: {
                     data: 'getAllComment'
@@ -55,6 +78,7 @@ export default {
                         Email: this.inputValue.Email,
                         url: this.inputValue.url,
                         name: this.inputValue.name,
+                        sex: this.inputValue.sex,
                         content: this.inputValue.content
                     }
                 }).then(function(response){
@@ -87,92 +111,98 @@ export default {
 
 <style lang="scss" scoped>
     #commentBox {
-        margin: 0px 0px;
         width: 100%;
-        display: grid;
+        // background-color: #ffffff;
         box-sizing: border-box;
-        @media all and (min-width: 1000px) {
-            display: inline-flex;
-            justify-content: center;
-        }
-        @media all and (max-width: 800px) {
-            & #form{
-                display: block;
-            }
-        }
-        #form {
-            width: 50%;
-            margin: 0px 10px;
-            padding: 10px 50px;
-            background-color: #ffffff;
-            box-sizing: border-box;
-            @media all and (max-width: 800px) {
-                & {
-                    padding: 10px;
-                    margin: 0px 0px 0px 0px;
-                    width: 100%;
-                }
-            }
-            p {
-                
-                & * {
-                    box-sizing: border-box;
-                    border-radius: 5px;
-                    border: 1px solid rgb(196, 196, 196);
-
-                }
-                input{
-                    display: block;
-                    width: 100%;  
-                    padding: 15px;
-                    margin: 15px 0px;
-                    
-                    &:checked {
-                        color: cornflowerblue;
-                        border: 1px solid cornflowerblue;
-                    }
-                }
-                textarea {
-                    width: 100%;  
-                    padding: 15px;
-                    height: 150px;
-                }
-                button {
-                    transition: 0.5s;
-                    width: 100px;
-                    padding: 5px;
-                    cursor: pointer;
-                    background-color: #ffffff;
-                    box-shadow: 0px 2px 5px 0px cornflowerblue;
-                    &:hover {
-                        box-shadow: 0px 0px 0px 0px cornflowerblue;
-                        transform: scale(0.95) translateY(10px);
-                    }
-                }
-            }
-        }
-        #comment {
+        padding: 10px 0px;
+        #comment,#form {
             display: block;
-            width: 100%;
-            padding: 10px 50px;
-            box-sizing: border-box;
-            background-color: #ffffff;
-            @media all and (max-width: 800px) {
-                & {
-                    padding: 10px;
-                    margin: 0px 0px 10px 0px;
-                }
-            }
-            p {
-                box-sizing: border-box;
+            width: 700px;
+            margin: auto;
+            @media all and(max-width: 700px) {
                 width: 100%;
-                background-color: rgb(240, 240, 240);
-                margin: 20px 0px;
-                padding: 15px;
-                span {
-                    float: right;
-                }
+                padding: 10px;
+                box-sizing: border-box;
             }
+        }
+    }
+    #comment {
+        margin-top: 10px;
+        ul {
+            transition: 0.5s;
+            margin: 10px 0px;
+            padding: 10px 10px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            border: 1px solid #d8d8d8;
+            &:hover {
+                transform: scale(0.9);
+            }
+           li {
+               display: inline-block;
+               div {
+                   display: block;
+                   margin-left: 2px;
+                   span {
+                       display: inline-block;
+                   }
+                   span:nth-child(2) {
+                       float: right;
+                       
+                       color: #000000;
+                   }
+                }
+                div:nth-child(1) {
+                    margin-top: 10px;
+                }
+                div:nth-child(2){
+                    margin-top: 10px;
+                }
+           }
+           li:nth-child(1){
+               margin-right: 15px;
+           }
+           li:nth-child(2) {
+               width: 100%;
+           }
+           img {
+               width: 50px;
+               height: 50px;
+           } 
+        }
+    }
+    #form {
+        input:nth-child(1),
+        input:nth-child(2),
+        input:nth-child(3){
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #d8d8d8;
+            font-size: 16px;
+            border-radius: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            border: 1px solid #d8d8d8;
+        }
+        button {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: cornflowerblue;
+            color: #ffffff;
         }
     }
 </style>
