@@ -12,14 +12,15 @@
 <script>
 if (process.client) {
     var hljs = require('highlight.js')
-    var E = require('wangeditor')
-    var editor
+    var wangEditor = require('wangeditor')
 }
-
 import hyperdown from 'hyperdown'
+import qs from 'qs'
 export default {
     data(){
         return {
+            editor: null,
+            editorData: '',
             id: '',
             title: '',
             subtitle: '',
@@ -27,31 +28,25 @@ export default {
             author: '',
             categorie: '',
             time: '',
-            url: '',
-            markdown: '',
-            html: ''
         }
     },
     methods:{
         onclick(){
-            // this.content = document.getElementsByClassName('w-e-text')[0].outerHTML
             var requ = "^[ ]+$"
             var re = new RegExp(requ)
             this.author = this.$route.params.user
-            this.html = editor.txt.html();
-            this.$axios.get('Article.php',{
-                params: {
-                    data: 'addArticle',
-                    token: window.localStorage.getItem('token'),
-                    article_title: this.title,
-                    article_subtitle: this.subtitle,
-                    article_content: this.html,
-                    article_author: this.author,
-                    article_categorie: this.categorie,
-                    article_time: this.time
-                }
-            }).then((res)=>{
-                console.log(this.html)
+            this.editorData = this.editor.txt.html();
+            const data = {
+                data: 'post_addArticle',
+                token: window.localStorage.getItem('token'),
+                article_title: this.title,
+                article_subtitle: this.subtitle,
+                article_content: this.editorData,
+                article_author: this.author,
+                article_categorie: this.categorie,
+                article_time: this.time
+            }
+            this.$axios.post('Article.php',qs.stringify(data)).then((res)=>{
                 if(re.test(this.title) | re.test(this.content)){
                     alert('不能发布空文章')
                 }else {
@@ -61,8 +56,6 @@ export default {
                         alert('发布失败')
                     }
                 }
-            }).catch((error)=>{
-                console.log(error)
             })
         }
     },
@@ -71,14 +64,28 @@ export default {
         this.$nuxt.$loading.start()
         setTimeout(() => this.$nuxt.$loading.finish(), 3000)
         })
-        editor = new E('#editor')
+        const editor = new wangEditor(`#editor`)
+        editor.config.onchange = (newHtml) => {
+            this.editorData = newHtml
+        }
         editor.highlight = hljs
         editor.create();
+        this.editor = editor
     },
+    // beforeDestroy(){
+    //     this.editor.destroy()
+    //     this.editor = null
+    // }
 }
 </script>
 
 <style lang="scss" scoped>
+.page-enter-active {
+  animation: part-enter-2 1s;
+}
+.page-leave-active {
+  animation: part-leave-1 0.71s;
+}
 #editorbox { 
     input {
         display: block;

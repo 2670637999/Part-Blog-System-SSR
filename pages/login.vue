@@ -3,7 +3,7 @@
         <h1>博客后台登录</h1>
         <p><input type="text" v-model="user" placeholder="请输入用户名"></p>
         <p><input type="password" v-model="pwd" placeholder="请输入密码"></p>
-        <p><router-link :to="{ name:'admin-editor' }"><input type="button" @click="Login()" value="登录到博客"></router-link></p>
+        <p><nuxt-link :to="{ name:'admin-editor' }"><input type="button" @click="Login()" value="登录到博客"></nuxt-link></p>
     </div>
 </template>
 

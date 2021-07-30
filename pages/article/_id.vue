@@ -68,7 +68,6 @@ export default {
         box-sizing: border-box;
         article {
             margin: auto;
-         
         }
         @media all and (min-width: 750px) {
             article{

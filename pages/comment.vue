@@ -105,9 +105,10 @@ export default {
 <style lang="scss" scoped>
     #commentBox {
         width: 100%;
-        // background-color: #ffffff;
+        background-color: #ffffff;
         box-sizing: border-box;
         padding: 10px 0px;
+        margin: 0px 0px 10px 0px;
         #comment,#form {
             display: block;
             width: 700px;

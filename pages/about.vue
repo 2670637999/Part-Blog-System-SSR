@@ -36,7 +36,7 @@ export default {
         margin-top: 10px;
         background-color: #ffffff;
         margin-bottom: 10px;
-        margin: 0px auto;
+        margin: 10px auto;
         box-sizing: border-box;
         @media all and(max-width: 800px) {
             width: 100%;
