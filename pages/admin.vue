@@ -1,11 +1,13 @@
 <template>
     <div>
-        admin
+        <editor></editor>
     </div>
 </template>
 
 <script>
+import editor from './admin/editor.vue'
 export default {
+  components: { editor },
     mounted() {
         this.$nextTick(() => {
             this.$nuxt.$loading.start()

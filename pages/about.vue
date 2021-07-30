@@ -37,6 +37,7 @@ export default {
         background-color: #ffffff;
         margin-bottom: 10px;
         margin: 0px auto;
+        box-sizing: border-box;
         @media all and(max-width: 800px) {
             width: 100%;
         }

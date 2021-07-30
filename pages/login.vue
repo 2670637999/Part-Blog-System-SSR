@@ -1,9 +1,9 @@
 <template>
-    <div id="admin-login">
+    <div id="admin-login" v-if="state">
         <h1>博客后台登录</h1>
         <p><input type="text" v-model="user" placeholder="请输入用户名"></p>
         <p><input type="password" v-model="pwd" placeholder="请输入密码"></p>
-        <p><router-link to=""><input type="button" @click="Login()" value="登录到博客"></router-link></p>
+        <p><router-link :to="{ name:'admin-editor' }"><input type="button" @click="Login()" value="登录到博客"></router-link></p>
     </div>
 </template>
 
@@ -13,7 +13,8 @@ export default {
         return {
             user: '',
             pwd: '',
-            token: ''
+            token: '',
+            state: true
         }
     },
     methods: {
@@ -46,7 +47,8 @@ export default {
                         }).then((response)=>{
                             window.localStorage.setItem('token',response.data)
                         })
-                        this.$router.push({ name: 'admin',params: { user : this.user } })
+                        this.state = false
+                        // this.$router.push({ name: 'admin',params: { user : this.user } })
                     }
                 }
                 ).catch(error=>

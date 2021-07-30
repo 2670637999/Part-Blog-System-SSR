@@ -26,7 +26,8 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/static/global.css',
-    'part-animator/PartAnimator.css'
+    'part-animator/PartAnimator.css',
+    'highlight.js/styles/xcode.css'
   ],
   loading: '~/components/LoadingBar.vue',
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
