@@ -41,13 +41,6 @@ export default {
         }
     },
     methods: {
-        SexformStateLog(){
-            if(this.inputValue.sex=='男'){
-                console.log('选住了男人')
-            }else if(this.inputValue.sex=='女'){
-                console.log('选住了女人')
-            }
-        },
         AutoReadComment(){
             
             this.$axios.get('comment.php',{
@@ -126,6 +119,18 @@ export default {
             }
         }
     }
+    @keyframes commentUser {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(0.95);
+            border: 1px solid cornflowerblue;
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
     #comment {
         margin-top: 10px;
         ul {
@@ -136,7 +141,8 @@ export default {
             border-radius: 15px;
             border: 1px solid #d8d8d8;
             &:hover {
-                transform: scale(0.9);
+                animation: commentUser  0.51s cubic-bezier(0.51, 0.82, 0.965, 1);
+                // transform: scale(0.95);
             }
            li {
                display: inline-block;

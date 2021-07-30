@@ -1,21 +1,27 @@
+import axios from '@nuxtjs/axios'
+
 export default ({ app })=>{
     app.router.beforeEach((to, from, next) => {
-        // const tokenstr = window.localStorage.getItem('token')
-
-        if( to.name == 'admin' | to.name == 'adminPost' | to.name == 'adminComment' | to.name== 'editor'){
-          if(from.name == 'login') {
+      
+      if (process.browser) {
+        if ((window.navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i))) {
+          var tokenstr = window.localStorage.getItem('token')
+          var http = new XMLHttpRequest();
+          http.open('GET',`http://test.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
+          http.send()
+        }
+      }
+      if(to.name=='admin'){
+        if(tokenstr==null){
+          next('login')
+        }else {
+          if(http.responseText=='true'){
             next();
           }else {
-            if( from.name == 'admin' 
-            | from.name == 'adminPost' 
-            | from.name == 'adminComment' 
-            | from.name == 'editor'){
-              next();
-            }else {
-              return next('/login');
-            }
+            next('login')
           }
         }
-        next();
+      }
+      next()
     })
 }
