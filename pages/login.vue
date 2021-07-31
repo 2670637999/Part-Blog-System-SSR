@@ -1,9 +1,9 @@
 <template>
-    <div id="admin-login" v-if="state">
+    <div id="admin-login">
         <h1>博客后台登录</h1>
         <p><input type="text" v-model="user" placeholder="请输入用户名"></p>
         <p><input type="password" v-model="pwd" placeholder="请输入密码"></p>
-        <p><nuxt-link :to="{ name:'admin-editor' }"><input type="button" @click="Login()" value="登录到博客"></nuxt-link></p>
+        <p><nuxt-link to=""><input type="button" @click="Login()" value="登录到博客"></nuxt-link></p>
     </div>
 </template>
 
@@ -14,11 +14,10 @@ export default {
             user: '',
             pwd: '',
             token: '',
-            state: true
         }
     },
     methods: {
-        Login(){
+        async Login(){
             if(this.user=='' && this.pwd==''){
                     alert('输入不能为空')
             }else {
@@ -28,8 +27,7 @@ export default {
                         data: 'Manual_login',
                         user: this.user, 
                         pwd: this.pwd,
-                        time: datetime.toLocaleDateString(),
-                        // token: window.localStorage.getItem('token')
+                        time: datetime.toLocaleDateString()
                     }
                 })
                 .then((res)=> {
@@ -47,8 +45,7 @@ export default {
                         }).then((response)=>{
                             window.localStorage.setItem('token',response.data)
                         })
-                        this.state = false
-                        // this.$router.push({ name: 'admin',params: { user : this.user } })
+                        this.$router.push({ name: 'admin-articles'})
                     }
                 }
                 ).catch(error=>
@@ -59,10 +56,6 @@ export default {
     },
     
 }
-
-
-
-
 </script>
 
 <style lang="scss" scoped>

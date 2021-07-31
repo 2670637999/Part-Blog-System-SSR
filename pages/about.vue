@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import qs from 'qs'
 export default {
     data(){
         return {
@@ -12,7 +13,10 @@ export default {
         }
     },
     async asyncData({ app }) {
-        let content = await app.$axios.get('About.php',{ params: { data:'getData' } })
+        const query_data = {
+            data:'getData'
+        }
+        let content = await app.$axios.post('About.php',qs.stringify(query_data))
         return { content: content.data }
     },
     mounted(){
@@ -36,7 +40,7 @@ export default {
         margin-top: 10px;
         background-color: #ffffff;
         margin-bottom: 10px;
-        margin: 10px auto;
+        margin: 0px auto;
         box-sizing: border-box;
         @media all and(max-width: 800px) {
             width: 100%;

@@ -1,21 +1,20 @@
 <template>
-
-<div id="admin-box">
-    <div id="admin-view">
-        <main id="admin-main">
-            <div id="admin-nav">
-                <nuxt-link :to="{ name:'admin-articles' }"><ul><li>文章管理</li></ul></nuxt-link>
-                <nuxt-link :to="{ name:'admin-comments'}"><ul><li>评论管理</li></ul></nuxt-link>
-                <nuxt-link :to="{ name:'admin-editor'}"><ul><li>写文章</li></ul></nuxt-link>
-                <ul @click="outUser()"><li>退出</li></ul>
-            </div>
-            <div id="admin-content">
-                <nuxt-child/>
-            </div>
-        </main>
+    <div id="admin-box">
+        <div id="admin-view">
+            <main id="admin-main">
+                <div id="admin-nav">
+                    <nuxt-link :to="{ name:'admin-articles' }"><ul><li>文章管理（beta）</li></ul></nuxt-link>
+                    <nuxt-link :to="{ name:'admin-comments'}"><ul><li>评论管理（beta）</li></ul></nuxt-link>
+                    <nuxt-link :to="{ name:'admin-pages'}"><ul><li>关于页面</li></ul></nuxt-link>
+                    <nuxt-link :to="{ name:'admin-editor'}"><ul><li>写文章</li></ul></nuxt-link>
+                    <ul @click="outUser()"><li>退出后台</li></ul>
+                </div>
+                <div id="admin-content">
+                    <nuxt-child/>
+                </div>
+            </main>
+        </div>
     </div>
-</div>
-
 </template>
 
 <script>
@@ -36,14 +35,14 @@ export default {
     #admin-box {
         display: flex;
         justify-content: center;
-        margin: 10px 0px 10px 0px;
+        margin: 0px 0px 0px 0px;
         background-color: #ffffff;
     }
     a {
         text-decoration: none;
     }
     #admin-view {
-        width: 100%;
+        width: 700px;
         #admin-main {
             display: flex;
             div {
@@ -64,13 +63,12 @@ export default {
                     &:hover {
                         color: cornflowerblue;
                         border: 2px solid cornflowerblue;
-                        // background-color: cornflowerblue;
                         cursor: pointer;
                     }
                 }
             }
             #admin-content {
-                text-align: center;
+                // text-align: center;
                 width: 100%;
                 background-color: rgb(255, 255, 255);
 

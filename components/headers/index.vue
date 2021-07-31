@@ -70,7 +70,8 @@ export default {
         justify-content: center;
         background-color: #ffffff;
         box-sizing: border-box;
-        margin-bottom: 10px;
+        border-bottom: 1px solid #e6e6e6;
+        margin-bottom: 0px;
         a {
             text-align: center;
             cursor: pointer;

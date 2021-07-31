@@ -59,7 +59,7 @@ export default {
             })
         }
     },
-    mounted() {
+    async mounted() {
         this.$nextTick(() => {
         this.$nuxt.$loading.start()
         setTimeout(() => this.$nuxt.$loading.finish(), 3000)
@@ -89,7 +89,7 @@ export default {
 #editorbox { 
     input {
         display: block;
-        width: 700px;
+        width: 100%;
         margin: 0 auto;
         box-sizing: border-box;
         padding: 15px;
@@ -101,13 +101,13 @@ export default {
     // margin: 0 auto;
     background-color: #ffffff;
     #editor {
-        width: 700px;
+        // width: 700px;
         margin: auto;
         text-align: left;
     }
     button {
         display: block;
-        width: 700px;
+        width: 100%;
         margin: auto;
         padding: 15px;
     }
