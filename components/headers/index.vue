@@ -12,6 +12,7 @@
 
 <script>
 import carousel from './carousel.vue'
+import qs from 'qs'
 export default {
     data(){
         return {
@@ -19,13 +20,6 @@ export default {
                 { 'itemName':'','url':'','orders':'','action':'' }
             ]
         }
-    },
-    // async asyncData({ app }) {
-    //     let header = await app.$axios.get('/Menu.php',{ params:{ class: 'TopMenu' }}).then((res)=>res.data)
-    //     return { header }
-    // },
-    beforeCreate(){
-        this.$axios.get('/Menu.php',{ params:{ class: 'TopMenu' }}).then((res)=>this.header=res.data)
     },
     components: {
         carousel
@@ -41,7 +35,6 @@ export default {
             }
             dom.srcElement.childNodes[1].style.width = "100%"
             dom.srcElement.style.color = "cornflowerblue"
-
             if(prop.action=="ShowCategory()") {
                 this.ShowCategory()
                 if(this.$store.state.imageShow == true) {
@@ -57,15 +50,26 @@ export default {
             this.$store.commit('ChangeBtnStyle')
         }
     },
+    async beforeCreate(){
+        const data = {class: 'TopMenu'}
+        let res = await this.$axios.post('/Menu.php',qs.stringify(data))
+        this.header = res.data
+    },
+    // async asyncData({app}) {
+    //     const data = {class: 'TopMenu'}
+    //     let header = await app.$axios.post('/Menu.php',qs.stringify(data))
+    //     console.log(res)
+    //     return { header }
+    // },
 }
 </script>
 
 
 <style lang="scss" scoped>
     #nav {         
+        transition: 2s;
         width: 100%;
         top: 0;
-        z-index: 1000;
         display: flex;
         justify-content: center;
         background-color: #ffffff;

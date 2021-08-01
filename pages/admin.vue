@@ -35,6 +35,8 @@ export default {
     #admin-box {
         display: flex;
         justify-content: center;
+        // height: 700px;
+        // overflow: auto;
         margin: 0px 0px 0px 0px;
         background-color: #ffffff;
     }
@@ -43,8 +45,10 @@ export default {
     }
     #admin-view {
         width: 700px;
+        // height: 700px;
         #admin-main {
             display: flex;
+            height: 100%;
             div {
                 display: inline-block;
             }

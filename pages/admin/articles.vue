@@ -1,13 +1,24 @@
 <template>
     <div id="admin-post-box">
         <header>
-            <span>欢迎回来👏 ，目前有 {{sum}} 篇文章可以管理 </span>
+            <span v-if="$store.state.AdminEditorPageState">欢迎回来👏 ，目前有 {{sum}} 篇文章可以管理 </span>
+            <span v-if="!$store.state.AdminEditorPageState">编辑文章</span>
             <!-- <span>写文章</span> -->
         </header>
         <main id="admin-post-list">
             <div>
-                <p class="part-enter-2" ref="posts" :key="data" v-for="(item,data) in posts">{{posts[data].Time}} , {{posts[data].Title}} <button @click="DeletePost(`${posts[data].Title}`)" >删除文章</button></p>
+                <p class="part-enter-2" ref="posts" :key="data" v-for="(item,data) in posts">
+                    {{posts[data].Time}} , {{posts[data].Title}} 
+                    <nuxt-link :to="{name:'admin-update',query:{ id:posts[data].id}}">
+                        <button @click="$store.commit('ChangeAdminEditorPageState')">编辑文章</button>
+                        <!-- <button>编辑文章</button> -->
+                    </nuxt-link>
+                    <button @click="DeletePost(`${posts[data].Title}`)" >删除文章</button>
+                </p>
             </div>
+            <transition mode="out-in" enter-active-class="part-enter-2" leave-active-class="part-leave-1">
+                <nuxt/>
+            </transition>
         </main>
     </div>
 </template>
@@ -18,31 +29,31 @@ export default {
         return {
             sum: 'null',
             posts: [
-                {Title: '请检查你的网络',subTitle:'', Content: 'null', Author: 'null',Time: 'null',url: 'null'}
+                { id:Number,Title: '请检查你的网络',subTitle:'', Content: 'null', Author: 'null',Time: 'null',url: 'null'}
             ]
         }
     },
     methods: {
-        AutoReadPost(){
-            this.$axios.get(`Article.php`,{
-                params: {
-                    data: 'getAllArticle'
-                }
-            }).then((response)=>
-                this.posts = response.data
-            ).catch(function(err){
-                console.log(err);
-            }),
-            this.$axios.get(`Article.php`,{
-                params: {
-                    data: 'getAllArticleSum'
-                }
-            }).then((response)=>
-                this.sum = response.data
-            ).catch(function(err){
-                console.log(err);
-            })
-        },
+        // AutoReadPost(){
+        //     this.$axios.get(`Article.php`,{
+        //         params: {
+        //             data: 'getAllArticle'
+        //         }
+        //     }).then((response)=>
+        //         this.posts = response.data
+        //     ).catch(function(err){
+        //         console.log(err);
+        //     }),
+        //     this.$axios.get(`Article.php`,{
+        //         params: {
+        //             data: 'getAllArticleSum'
+        //         }
+        //     }).then((response)=>
+        //         this.sum = response.data
+        //     ).catch(function(err){
+        //         console.log(err);
+        //     })
+        // },
         DeletePost(Title){
             var user = this.$route.params.user
             this.$axios.get(`Article.php`,{
@@ -53,38 +64,20 @@ export default {
             }).then(function(res){
                 if(res.data=='删除成功'){
                     alert('删除成功')
-                    // window.location.href= `/admin/${user}/post`
                 }else if(res.data=='删除失败') {
                     alert('删除失败')
-                    // window.location.href= `/admin/${user}/post`
                 }
             }).catch((error)=>console.log(error))
-        }
+        },
     },
-    mounted: function(){
-        setInterval(this.AutoReadPost,3000);
+    async asyncData({app}){
+        let getAllArticle = await app.$axios.get(`Article.php`,{ params: {data: 'getAllArticle'} })
+        let getAllArticleSum = await app.$axios.get(`Article.php`,{params: {data: 'getAllArticleSum'}})
+        return { sum:getAllArticleSum.data, posts:getAllArticle.data }
     },
-    beforeCreate: function(){
-        this.$axios.get(`Article.php`,{
-            params: {
-                data: 'getAllArticle'
-            }
-        }).then((response)=>
-            this.posts = response.data
-        ).catch(function(err){
-            console.log(err);
-        }),
-        this.$axios.get(`Article.php`,{
-            params: {
-                data: 'getAllArticleSum'
-            }
-        }).then((response)=>
-            this.sum = response.data
-        ).catch(function(err){
-            console.log(err);
-        })
-        
-    }
+    async mounted(){
+        // var time1 = setInterval(this.AutoReadPost,3000);
+    },
 
 }
 </script>
@@ -108,7 +101,6 @@ export default {
             display: block;
             margin: 0px 10px;
             padding: 10px;
-            // box-shadow: 0px 0px 15px 0px #cacaca;
             border: 2px solid rgb(241, 241, 241);
         }
         header {
@@ -116,33 +108,9 @@ export default {
             span {
                 margin: 10px;
             }
-            span:nth-child(2) {
-                margin: 0;
-                transition: 0.3s;
-                border-radius: 5px;
-                padding: 5px;
-                display: block;
-                float: right;
-                background-color: #ffffff;
-                color: #1d1d1d;
-                padding: 0px 5px;
-                font-size: 20px;
-                margin: 0px 20px 0px 0px;
-                cursor: pointer;                    
-                border: 2px solid rgb(88, 88, 88);
-
-                &:hover {
-                    box-shadow: 0px 0px 0px 0px #a8a8a8;
-                    transform: scale(0.9);
-                    border: 2px solid steelblue;
-                    color: steelblue;
-
-                }
-            }
         }
         main {
             div {
-                // width: 300px;
                 p {
                     text-align: left;
                     margin: 10px;
@@ -153,11 +121,6 @@ export default {
                         float: right;
                     }
                 }
-                // p:nth-child(1) {
-                //     float: right;
-                //     background-color: steelblue;
-                //     color: #ffffff;
-                // }
             }
         }   
     }

@@ -8,7 +8,13 @@ export default ({ app })=>{
           http.open('GET',`http://test.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
           http.send()
       }
-      if(to.name=='admin' | to.name=='admin-editor'){
+      if(to.name=='admin' 
+      | to.name=='admin-editor' 
+      | to.name=='admin-articles'
+      | to.name=='admin-comments'
+      | to.name=='admin-editor'
+      | to.name=='admin-pages'
+      | to.name=='admin-articles-editor'){
         if(tokenstr==null){
           next('login')
         }else {

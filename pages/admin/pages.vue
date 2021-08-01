@@ -1,10 +1,7 @@
 <template>
     <div id="box">
-        <!-- <div><h3>预览</h3></div> -->
-        <!-- <div><h3>编写</h3></div> -->
         <div id="editor" ></div>
         <button @click="updateAboutData">更新</button>
-        <!-- <div id="pageContent" v-html="editorData"></div> -->
     </div>
 </template>
 

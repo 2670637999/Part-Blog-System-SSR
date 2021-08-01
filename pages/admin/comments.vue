@@ -46,7 +46,6 @@ export default {
             })
         },
         DelComment(name,content,time){
-            
             this.$axios.get(`comment.php`,{
                 params: {
                     data: 'delComment',
@@ -86,31 +85,14 @@ export default {
             
         }
     },
-    mounted:function(){
-        setInterval(this.AutoReadComment,3000)
+    async mounted(){
+        // var time1 = await setInterval(this.AutoReadComment,3000)
     },
-    beforeCreate: function(){
-        this.$axios.get(`comment.php`,{
-            params: {
-                data: 'getAllComment'
-            }
-        }).then((response)=>
-            this.comments = response.data
-        ).catch(function(err){
-            console.log(err);
-        }),
-        this.$axios.get(`comment.php`,{
-            params: {
-                data: 'getAllCommentSum'
-            }
-        }).then((response)=>
-            this.sum = response.data
-        ).catch(function(err){
-            console.log(err);
-        })
-        
+    async asyncData({app}){
+        let getAllComment = await app.$axios.get(`comment.php`,{params: {data: 'getAllComment'}})
+        let getAllCommentSum = await app.$axios.get(`comment.php`,{params: {data: 'getAllCommentSum'}})
+        return { sum:getAllCommentSum.data, comments:getAllComment.data }
     }
-
 }
 </script>
 

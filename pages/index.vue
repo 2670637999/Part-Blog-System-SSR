@@ -4,7 +4,7 @@
         <nuxt-link :to="{ name: 'article-id', params:{ id: articles[data].id  } }">
           <h2><span>#</span>{{ articles[data].Title }}</h2>
         </nuxt-link>
-        <p v-if="articles[data].subtitle==''?false:true">{{ articles[data].subtitle }}</p>
+        <p v-show="articles[data].subtitle==''?false:true">{{ articles[data].subtitle }}</p>
         <p>{{ ToText(articles[data].Content)|ellipsis}}</p>
         <p>写于 {{ articles[data].Time }} {{ articles[data].categorie }} <nuxt-link :to="{ name: 'article-id', params:{ id: articles[data].id  } }">查看更多</nuxt-link></p>
       </article>

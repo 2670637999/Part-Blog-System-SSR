@@ -6,12 +6,21 @@
 
 <script>
 export default {
-    name:'carousel'
+    name:'carousel',
 }
 </script>
 
 <style lang="scss" scoped>
+    @keyframes imgAnimator {
+        0%{
+            background-size: 100%;
+        }
+        100%{
+            background-size: cover;
+        }
+    }
     div {
+        animation: imgAnimator 2s;
         transition: 1s;
         position: relative;
         width: 100%;

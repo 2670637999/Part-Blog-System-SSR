@@ -12,6 +12,7 @@
 
 <script>
 export default {
+
 }
 </script>
 
@@ -20,16 +21,13 @@ export default {
   animation: part-enter-2 1s;
 }
 .page-leave-active {
-  animation: part-leave-1 0.71s;
+  animation: part-leave-1 1s;
 }
 #App { 
-  transition: 1s;
     width: 100%;
-    // height: 1000px;
     margin: 0;
     padding: 0;
     background-color: rgb(247, 247, 247);
-    // background-color: #ffffff;
   main {
     margin: 10px 0px;
   }
