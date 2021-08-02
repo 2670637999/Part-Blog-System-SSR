@@ -19,6 +19,13 @@ export default {
         let content = await app.$axios.post('About.php',qs.stringify(query_data))
         return { content: content.data }
     },
+    async beforeCreate(){
+        const query_data = {
+            data:'getData'
+        }
+        let content = await this.$axios.post('About.php',qs.stringify(query_data))
+        this.content = content.data
+    },
     mounted(){
         this.$nextTick(() => {
             this.$nuxt.$loading.start()

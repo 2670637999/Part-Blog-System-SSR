@@ -17,6 +17,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  target: 'static',
   publicRuntimeConfig: {
     axios: {
       baseURL: 'http://test.glumi.cn/api'

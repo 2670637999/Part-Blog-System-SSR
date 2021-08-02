@@ -2,6 +2,7 @@
     <div id="editorbox">
         <input type="text" v-model="title" placeholder="标题">
         <input type="text" v-model="subtitle" placeholder="小标题（可为空）">
+        <input type="text" v-model="author" placeholder="作者">
         <input type="text" v-model="categorie" placeholder="分类">
         <input type="text" v-model="time" placeholder="时间（如果不输入，会是当前时间）">
         <div id="editor"></div>
@@ -34,29 +35,34 @@ export default {
         onclick(){
             var requ = "^[ ]+$"
             var re = new RegExp(requ)
-            this.author = this.$route.params.user
             this.editorData = this.editor.txt.html();
-            const data = {
-                data: 'post_addArticle',
-                token: window.localStorage.getItem('token'),
-                article_title: this.title,
-                article_subtitle: this.subtitle,
-                article_content: this.editorData,
-                article_author: this.author,
-                article_categorie: this.categorie,
-                article_time: this.time
-            }
-            this.$axios.post('Article.php',qs.stringify(data)).then((res)=>{
-                if(re.test(this.title) | re.test(this.content)){
-                    alert('不能发布空文章')
-                }else {
-                    if(res.data == '发布成功'){
-                        alert('发布成功')
-                    }else if(res.data == '发布失败') {
-                        alert('发布失败')
-                    }
+            if(re.test(this.title) 
+            | this.title=='' 
+            | this.author==''){
+                alert('null')
+            }else {
+                const data = {
+                    data: 'post_addArticle',
+                    token: window.localStorage.getItem('token'),
+                    article_title: this.title,
+                    article_subtitle: this.subtitle,
+                    article_content: this.editorData,
+                    article_author: this.author,
+                    article_categorie: this.categorie,
+                    article_time: this.time
                 }
-            })
+                this.$axios.post('Article.php',qs.stringify(data)).then((res)=>{
+                    if(re.test(this.title) | re.test(this.content)){
+                        alert('不能发布空文章')
+                    }else {
+                        if(res.data == '发布成功'){
+                            alert('发布成功')
+                        }else if(res.data == '发布失败') {
+                            alert('发布失败')
+                        }
+                    }
+                })
+            }
         }
     },
     async mounted() {
@@ -95,15 +101,15 @@ export default {
         padding: 15px;
         
     }
-    display: block;
+    display: flex;
     width: 100%;
-    height: 100%;
     // margin: 0 auto;
     background-color: #ffffff;
     #editor {
         // width: 700px;
-        margin: auto;
-        text-align: left;
+        // margin: auto;
+        // height: 400px;
+        box-sizing: border-box;
     }
     button {
         display: block;

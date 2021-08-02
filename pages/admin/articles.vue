@@ -9,9 +9,8 @@
             <div>
                 <p class="part-enter-2" ref="posts" :key="data" v-for="(item,data) in posts">
                     {{posts[data].Time}} , {{posts[data].Title}} 
-                    <nuxt-link :to="{name:'admin-update',query:{ id:posts[data].id}}">
+                    <nuxt-link :to="{name:'admin-update',params:{ id:posts[data].id}}">
                         <button @click="$store.commit('ChangeAdminEditorPageState')">编辑文章</button>
-                        <!-- <button>编辑文章</button> -->
                     </nuxt-link>
                     <button @click="DeletePost(`${posts[data].Title}`)" >删除文章</button>
                 </p>

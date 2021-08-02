@@ -1,6 +1,6 @@
 <template>
     <div id="box">
-        <div id="editor" ></div>
+        <div id="editor" style="height:90%;"></div>
         <button @click="updateAboutData">更新</button>
     </div>
 </template>
@@ -65,6 +65,9 @@ export default {
     padding: 15px;
     box-sizing: border-box; 
     border: 1px solid rgb(241, 241, 241);
+  }
+  #editor {
+    box-sizing: border-box;
   }
   button {
     width: 100%;

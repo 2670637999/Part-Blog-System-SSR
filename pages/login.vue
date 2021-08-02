@@ -17,7 +17,7 @@ export default {
         }
     },
     methods: {
-        async Login(){
+        Login(){
             if(this.user=='' && this.pwd==''){
                     alert('输入不能为空')
             }else {

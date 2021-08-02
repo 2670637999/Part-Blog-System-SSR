@@ -3,6 +3,7 @@
         <div id="admin-view">
             <main id="admin-main">
                 <div id="admin-nav">
+                    <nuxt-link :to="{ name:'admin-home' }"><ul><li>仪表盘（beta）</li></ul></nuxt-link>
                     <nuxt-link :to="{ name:'admin-articles' }"><ul><li>文章管理（beta）</li></ul></nuxt-link>
                     <nuxt-link :to="{ name:'admin-comments'}"><ul><li>评论管理（beta）</li></ul></nuxt-link>
                     <nuxt-link :to="{ name:'admin-pages'}"><ul><li>关于页面</li></ul></nuxt-link>
@@ -53,17 +54,19 @@ export default {
                 display: inline-block;
             }
             #admin-nav {
-                width: 200px;
-                background-color: rgb(255, 255, 255);
+                width: 7 rem;
+                background-color: rgb(94, 94, 94);
                 text-align: center;
                 text-decoration: none;
+                font-size: 0.9rem;
+                border: 1px solid #e7e7e7;
                 ul {
                     transition: 0.5s;
                     list-style: none;
-                    color: #464646;
+                    color: #ffffff;
                     margin: 0;
                     padding: 20px 0px 20px 0px;
-                    border: 2px solid rgb(241, 241, 241);
+                    border: 2px solid rgb(110, 110, 110);
                     &:hover {
                         color: cornflowerblue;
                         border: 2px solid cornflowerblue;

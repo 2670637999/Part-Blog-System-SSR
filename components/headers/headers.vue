@@ -1,7 +1,7 @@
 <template>
     <div>
         <carousel></carousel>
-        <nav id="nav">
+        <nav id="nav" class="part-enter-3">
             <nuxt-link :key="data" v-for="(item,data) in header" :to="header[data].url" @click.native="NavOnclick(header[data],$event)">
                 {{ header[data].itemName }}
                 <span></span>
@@ -13,11 +13,12 @@
 <script>
 import carousel from './carousel.vue'
 import qs from 'qs'
+import axios from '@nuxtjs/axios'
 export default {
     data(){
         return {
             header:[
-                { 'itemName':'','url':'','orders':'','action':'' }
+                { itemName:'',url:'',orders:'',action:'' }
             ]
         }
     },
@@ -50,17 +51,33 @@ export default {
             this.$store.commit('ChangeBtnStyle')
         }
     },
+    async asyncData(){
+        const data = {class:'TopMenu'}
+        let res = await axios.post('Menu.php',qs.stringify(data))
+        console.log('aaaaa')
+        return { header:res.data }
+    },
     async beforeCreate(){
         const data = {class: 'TopMenu'}
         let res = await this.$axios.post('/Menu.php',qs.stringify(data))
         this.header = res.data
     },
-    // async asyncData({app}) {
-    //     const data = {class: 'TopMenu'}
-    //     let header = await app.$axios.post('/Menu.php',qs.stringify(data))
-    //     console.log(res)
-    //     return { header }
-    // },
+    async updated(){
+        let dom = document.getElementById('nav')
+        let res = await this.$axios.post('Menu.php',qs.stringify({class: 'TopMenu'}))    
+        for(let i=0;i<dom.childNodes.length;i++){
+            if(res.data[i].url===window.location.pathname){
+                setTimeout(()=>{
+                    for(let i =0;i<dom.childNodes.length;i++){
+                        dom.childNodes[i].childNodes[1].style.width = "0%"
+                        dom.childNodes[i].style.color = "#5e5e5e"
+                    }
+                    dom.childNodes[i].childNodes[1].style.width = "100%"
+                    dom.childNodes[i].style.color = "cornflowerblue"            
+                },1000)
+            }
+        }
+    }
 }
 </script>
 

@@ -46,3 +46,7 @@ blockquote {
     margin: 0;
     padding: 5px 15px;
 }
+.w-e-text-container {
+    height: 100% !important;
+    box-sizing: border-box;
+}

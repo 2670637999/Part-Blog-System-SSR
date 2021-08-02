@@ -6,7 +6,7 @@
         </nuxt-link>
         <p v-show="articles[data].subtitle==''?false:true">{{ articles[data].subtitle }}</p>
         <p>{{ ToText(articles[data].Content)|ellipsis}}</p>
-        <p>写于 {{ articles[data].Time }} {{ articles[data].categorie }} <nuxt-link :to="{ name: 'article-id', params:{ id: articles[data].id  } }">查看更多</nuxt-link></p>
+        <p>{{ articles[data].Author }} 写于 {{ articles[data].Time }} {{ articles[data].categorie }} <nuxt-link :to="{ name: 'article-id', params:{ id: articles[data].id  } }">查看更多</nuxt-link></p>
       </article>
   </div>
 </template>
@@ -45,7 +45,7 @@ export default {
         var input = HTML;
         return input.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi,'').replace(/<[^>]+?>/g,'').replace(/\s+/g,' ').replace(/ /g,' ').replace(/>/g,' ');  
     }
-  }
+  },
 }
 </script>
 
