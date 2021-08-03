@@ -21,7 +21,7 @@ export default {
   animation: part-enter-2 1s;
 }
 .page-leave-active {
-  animation: part-leave-1 1s;
+  animation: part-leave-1 0.51s cubic-bezier(0.1, 1, 1, 1);
 }
 #App { 
     width: 100%;

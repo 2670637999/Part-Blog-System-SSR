@@ -33,6 +33,11 @@ export default {
     let articles = await app.$axios.get('Article.php',{ params:{ data: 'getAllArticle' }}).then((res=>res.data))
     return { articles }
   },
+  beforeUpdate(){
+    app.$axios.get('Article.php',{ params:{ data: 'getAllArticle' }}).then((res=>{
+      this.articles = res.data
+    }))
+  },
   mounted() {
       this.$nextTick(() => {
       this.$nuxt.$loading.start()

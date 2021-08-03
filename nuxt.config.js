@@ -17,10 +17,9 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  target: 'static',
   publicRuntimeConfig: {
     axios: {
-      baseURL: 'http://test.glumi.cn/api'
+      baseURL: 'http://api.glumi.cn/api'
     }
   },
   // extractCSS: process.env.NODE_ENV === 'production',
@@ -46,7 +45,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    'hyperdown',
+    'hyperdown'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

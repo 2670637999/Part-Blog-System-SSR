@@ -2,7 +2,7 @@
     <div>
         <carousel></carousel>
         <nav id="nav" class="part-enter-3">
-            <nuxt-link :key="data" v-for="(item,data) in header" :to="header[data].url" @click.native="NavOnclick(header[data],$event)">
+            <nuxt-link :key="data" v-for="(item,data) in header" :to="{name:header[data].url}" @click.native="NavOnclick(header[data],$event)">
                 {{ header[data].itemName }}
                 <span></span>
             </nuxt-link>

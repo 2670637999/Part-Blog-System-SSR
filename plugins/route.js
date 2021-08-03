@@ -5,7 +5,7 @@ export default ({ app })=>{
       if (process.browser) {
           var tokenstr = window.localStorage.getItem('token')
           var http = new XMLHttpRequest();
-          http.open('GET',`http://test.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
+          http.open('GET',`http://api.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
           http.send()
       }
       if(to.name=='admin' 
@@ -16,12 +16,12 @@ export default ({ app })=>{
       | to.name=='admin-pages'
       | to.name=='admin-articles-editor'){
         if(tokenstr==null){
-          next('login')
+          next('/login')
         }else {
           if(http.responseText=='true'){
             next();
           }else {
-            next('login')
+            next('/login')
           }
         }
       }

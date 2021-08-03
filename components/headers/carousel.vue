@@ -24,7 +24,7 @@ export default {
         transition: 1s;
         position: relative;
         width: 100%;
-        height: 357px;
+        // height: 20%;
         background: no-repeat center center;
         background-size: cover;
         background-image: url('~/static/head.jpeg');
