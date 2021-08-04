@@ -50,3 +50,7 @@ blockquote {
     height: 100% !important;
     box-sizing: border-box;
 }
+
+a {
+    color: #2d96bd;
+}

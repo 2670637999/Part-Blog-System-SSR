@@ -13,10 +13,8 @@ export default {
 <style lang="scss" scoped>
     @keyframes imgAnimator {
         0%{
-            background-size: 100%;
         }
         100%{
-            background-size: cover;
         }
     }
     div {
@@ -24,7 +22,7 @@ export default {
         transition: 1s;
         position: relative;
         width: 100%;
-        // height: 20%;
+        height: 0px;
         background: no-repeat center center;
         background-size: cover;
         background-image: url('~/static/head.jpeg');

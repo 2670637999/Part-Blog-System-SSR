@@ -12,7 +12,7 @@
 export default {
     head(){
         return {
-            title: this.title,
+            title: this.article.Title,
             meta: [
                 { charset: 'utf-8' },
                 { 
@@ -22,12 +22,12 @@ export default {
                 {
                     hid: 'description',
                     name: 'description',
-                    content: '测试描述'
+                    content: this.SEOContent
                 },
                 {
                     hid: 'keywords',
                     name: 'keywords',
-                    content: '测试关键字'
+                    content: this.article.categorie
                 }
             ]
         }
@@ -47,7 +47,16 @@ export default {
     },
     async asyncData({ app,route }) {
         let article = await app.$axios.get('Article.php',{ params:{ data: 'getArticleindexOfData',getidArticle: route.params.id }}).then((res)=>res.data)
-        return { article }
+        var html = article.Content
+        var value = html.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi,'').replace(/<[^>]+?>/g,'').replace(/\s+/g,' ').replace(/ /g,' ').replace(/>/g,' ')
+        let i = 100
+        if(value.length > i){
+            var content = value.slice(0,i)+'...'
+        }
+        return {
+            article: article,
+            SEOContent: content
+        }
     },
     mounted() {
         this.$nextTick(() => {
@@ -57,7 +66,6 @@ export default {
     },
 }
 </script>
-
 
 <style lang="scss" scoped>
     div {

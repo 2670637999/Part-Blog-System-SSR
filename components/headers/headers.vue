@@ -1,12 +1,12 @@
 <template>
     <div>
-        <carousel></carousel>
-        <nav id="nav" class="part-enter-3">
+        <nav id="nav">
             <nuxt-link :key="data" v-for="(item,data) in header" :to="{name:header[data].url}" @click.native="NavOnclick(header[data],$event)">
                 {{ header[data].itemName }}
                 <span></span>
             </nuxt-link>
         </nav>
+        <carousel></carousel>
     </div>
 </template>
 
@@ -54,7 +54,6 @@ export default {
     async asyncData(){
         const data = {class:'TopMenu'}
         let res = await axios.post('Menu.php',qs.stringify(data))
-        console.log('aaaaa')
         return { header:res.data }
     },
     async beforeCreate(){
@@ -83,6 +82,12 @@ export default {
 
 
 <style lang="scss" scoped>
+    .page-enter-active {
+        animation: part-enter-2 1s;
+    }
+    .page-leave-active {
+        animation: part-leave-1 0.51s cubic-bezier(0.1, 1, 1, 1);
+    }
     #nav {         
         transition: 2s;
         width: 100%;
@@ -110,13 +115,6 @@ export default {
                 transition: 0.51s;
                 background-color: cornflowerblue;
             }
-            // &:hover {
-            //     color: cornflowerblue;
-            //     span {
-            //         width: 100%;
-            //         opacity: 1;
-            //     }
-            // }
         }
     }
 </style>

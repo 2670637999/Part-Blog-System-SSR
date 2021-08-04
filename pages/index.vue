@@ -30,13 +30,10 @@ export default {
     }
   },
   async asyncData({ app }) {
-    let articles = await app.$axios.get('Article.php',{ params:{ data: 'getAllArticle' }}).then((res=>res.data))
-    return { articles }
-  },
-  beforeUpdate(){
-    app.$axios.get('Article.php',{ params:{ data: 'getAllArticle' }}).then((res=>{
-      this.articles = res.data
-    }))
+    let articles = await app.$axios.get('Article.php',{ params:{ data: 'getAllArticle' }})
+    return { 
+      articles:articles.data,
+    }
   },
   mounted() {
       this.$nextTick(() => {
@@ -47,8 +44,8 @@ export default {
   methods: {
     ToText(HTML)
     {
-        var input = HTML;
-        return input.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi,'').replace(/<[^>]+?>/g,'').replace(/\s+/g,' ').replace(/ /g,' ').replace(/>/g,' ');  
+      var input = HTML;
+      return input.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi,'').replace(/<[^>]+?>/g,'').replace(/\s+/g,' ').replace(/ /g,' ').replace(/>/g,' ');  
     }
   },
 }
@@ -57,18 +54,14 @@ export default {
 <style lang="scss" scoped>
 div { 
     display: block;
-    // justify-content: center;
-    // align-items: center;
     width: 100%;
     height: 100%;
-    // overflow: auto;
     margin: 0px 0px 0px 0px;
     padding: 0;
     background-color: #ffffff;
     box-sizing: border-box;
     article {
       display: block;
-      // box-sizing: border-box;
       border-bottom: 1px solid rgb(226, 226, 226);
       padding: 15px;
       margin: 10px 0px 10px 0px;
@@ -105,5 +98,33 @@ div {
       }
     }
 }
-
+#nav {         
+    transition: 2s;
+    width: 100%;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 0px;
+    a {
+        text-align: center;
+        cursor: pointer;
+        line-height: 50px;
+        width: 140px;
+        font-weight: 600;
+        text-decoration: none;
+        color: #5e5e5e;
+        transition: 0.51s;
+        span {
+            bottom: 0;
+            display: flex;
+            width: 0%;
+            height: 2px;
+            transition: 0.51s;
+            background-color: cornflowerblue;
+        }
+    }
+}
 </style>

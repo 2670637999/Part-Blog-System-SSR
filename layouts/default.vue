@@ -1,11 +1,11 @@
 <template>
   <div id="App">
-    <headers></headers>
-    <!-- <transition mode="out-in" enter-active-class="part-enter-2" leave-active-class="part-leave-2"> -->
-     <main>
-        <nuxt/>
-      </main>   
-    <!-- </transition> -->
+    <transition mode="out-in" enter-active-class="part-enter-3" leave-active-class="part-leave-1">
+      <headers></headers>
+    </transition>
+    <main>
+      <nuxt/>
+    </main>
     <footers></footers>
   </div>
 </template>
