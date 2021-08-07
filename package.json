@@ -1,5 +1,5 @@
 {
-  "name": "Part-Blog-System",
+  "name": "blog",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,15 +9,15 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.13.6",
+    "@babel/plugin-proposal-private-methods": "^7.14.5",
+    "axios": "^0.21.1",
     "core-js": "^3.15.1",
-    "echarts": "^5.1.2",
-    "highlight.js": "^11.1.0",
-    "hyperdown": "^2.4.26",
+    "highlight.js": "^11.2.0",
     "nuxt": "^2.15.7",
     "part-animator": "^0.0.2",
     "qs": "^6.10.1",
-    "wangeditor": "^4.7.5"
+    "vue-typed-js": "^0.1.2",
+    "wangeditor": "^4.7.6"
   },
   "devDependencies": {
     "node-sass": "^6.0.1",
@@ -27,8 +27,7 @@
   },
   "config": {
     "nuxt": {
-      "host": "192.168.1.2",
-      "port": "8080"
+      "host":"192.168.1.2"
     }
   }
 }

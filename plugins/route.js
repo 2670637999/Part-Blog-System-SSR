@@ -1,4 +1,3 @@
-
 export default ({ app })=>{
     app.router.beforeEach((to, from, next) => {
       
@@ -8,13 +7,13 @@ export default ({ app })=>{
           http.open('GET',`http://api.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
           http.send()
       }
-      if(to.name=='admin' 
-      | to.name=='admin-editor' 
-      | to.name=='admin-articles'
-      | to.name=='admin-comments'
-      | to.name=='admin-editor'
-      | to.name=='admin-pages'
-      | to.name=='admin-articles-editor'){
+      if(to.name=='index-admin' 
+      | to.name=='index-admin-editor' 
+      | to.name=='index-admin-articles'
+      | to.name=='index-admin-comments'
+      | to.name=='index-admin-editor'
+      | to.name=='index-admin-pages'
+      | to.name=='index-admin-articles-editor'){
         if(tokenstr==null){
           next('/login')
         }else {

@@ -1,5 +1,3 @@
-// 帮我88888程序
-
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -18,24 +16,25 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  publicRuntimeConfig: {
-    axios: {
-      baseURL: 'http://api.glumi.cn/api'
-    }
-  },
-  // extractCSS: process.env.NODE_ENV === 'production',
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/static/global.css',
     'part-animator/PartAnimator.css',
-    'highlight.js/styles/xcode.css'
+    'highlight.js/styles/xcode.css',
+    '~/static/global.css',
+    '~/static/css/font-awesome.min.css'
   ],
-  loading: '~/components/LoadingBar.vue',
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/route',
+    '~/plugins/typed'
   ],
-
+  babel:{
+    plugins:[
+      ["@babel/plugin-proposal-private-methods", { "loose": true }]
+    ]
+  },
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -45,11 +44,11 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/axios',
-    'hyperdown'
+    
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+
   }
 }
