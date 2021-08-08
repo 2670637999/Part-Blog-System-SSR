@@ -81,6 +81,7 @@ export default {
         animation: part-leave-1 0.51s cubic-bezier(0.1, 1, 1, 1);
     }
     #article {
+        margin-top: 80px;
         z-index: 20000;
         padding: 0px 10px;
         box-sizing: border-box;

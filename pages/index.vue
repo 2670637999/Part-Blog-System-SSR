@@ -33,9 +33,16 @@
                 <nuxt-child/>
             </div>
             <menu>
-                <!-- <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=290 height=86 src="//music.163.com/outchain/player?type=2&id=454698102&auto=1&height=66"></iframe> -->
                 <ul id="ToHome" v-if="($route.name!='index'?true:false)">
                     <li @click="onTop"><nuxt-link :to="{name:'index'}">⬆️ 返回首页</nuxt-link></li>
+                </ul>
+                <ul>
+                    <h3>音乐</h3>
+                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=290 height=86 src="//music.163.com/outchain/player?type=2&id=454698102&auto=1&height=66"></iframe>
+                </ul>
+                <ul id="randomArticles">
+                    <h3>随机文章<span @click="getRandomArticles"><i class="fa fa-random">随机一下</i></span></h3>
+                    <li :key="data" v-for="(item,data) in randomArticles"><nuxt-link :to="{ name: 'index-article-id', params:{id: randomArticles[data].id}}">{{randomArticles[data].Title}}</nuxt-link></li>
                 </ul>
                 <ul>
                     <h3>邻居</h3>
@@ -74,15 +81,20 @@ export default {
             ],
             links: [
                 { itemName:'',url:'',orders:''}
+            ],
+            randomArticles: [
+                { id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''}
             ]
         }
     },
     async asyncData(){
         let linksRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
         let MenuRes = await axios.post('http://api.glumi.cn/api/Menu.php',qs.stringify({class:'TopMenu'}))
+        let RandomArticlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
         return { 
             header: MenuRes.data,
-            links: linksRes.data
+            links: linksRes.data,
+            randomArticles: RandomArticlesRes.data
         }
     },
     methods:{
@@ -100,6 +112,10 @@ export default {
         },
         ToUrl(url){
             window.location.href = url
+        },
+        async getRandomArticles(){
+            let RandomArticlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
+            this.randomArticles = RandomArticlesRes.data
         }
     }
 }
@@ -231,7 +247,7 @@ export default {
             }
         }
         menu {
-            width: 292px;
+            width: 300px;
             list-style: none;
             margin: 15px 0px 0px 30px;
             padding: 0;
@@ -251,6 +267,19 @@ export default {
                 }
                 @media all and(max-width:900px) {
                     display: none;
+                }
+            }
+            #randomArticles {
+                h3 {
+                    span {
+                        float: right;
+                        font-size: 0.6rem;
+                        background-color: #868686;
+                        color: #ffffff;
+                        padding: 5px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
                 }
             }
             ul {
