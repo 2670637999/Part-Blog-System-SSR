@@ -1,14 +1,16 @@
 <template>
     <div id="article">
         <article>
-            <h1>{{ article.Title }}</h1>
-            <p>{{ article.Time }}</p>
-            <p v-html="article.Content"></p>
+            <h1 id="Title">{{ article.Title }}</h1>
+            <p>{{ article.subtitle }}</p>
+            <p id="Author"><span>发布人 </span>{{article.Author}} 写于 {{article.Time}}</p>
+            <p id="content" v-html="article.Content"></p>
         </article>
         <div>
-            <p>Author：{{ article.Author }}</p>
-            <p>Permalink：{{ $route.path }}</p>
-            <p>License: Copyright (c) 2021 <a href="http://creativecommons.org/licenses/by-nc/4.0/"> CC-BY-NC-4.0 </a>LICENSE</p>
+            <!-- <p>Author：{{ article.Author }}</p> -->
+            <!-- <p>Time：{{ article.Time }}</p> -->
+            <p>本链接：<a :href="$route.path">https://blog.glumi.cn{{$route.path}}</a></p>
+            <p>@陈杰海 版权所有，遵循许可 <a href="http://creativecommons.org/licenses/by-nc/4.0/"> CC-BY-NC-4.0 </a></p>
         </div>
     </div>
 </template>
@@ -43,6 +45,7 @@ export default {
             article: {
                 id: Number,
                 Title: '',
+                subtitle: '',
                 Content: '',
                 Author: '',
                 categorie: '',
@@ -81,7 +84,7 @@ export default {
         animation: part-leave-1 0.51s cubic-bezier(0.1, 1, 1, 1);
     }
     #article {
-        margin-top: 80px;
+        margin-top: 40px;
         z-index: 20000;
         padding: 0px 10px;
         box-sizing: border-box;
@@ -91,10 +94,25 @@ export default {
                 margin: 0;
             }
         }
-        h1 {
+        #Title {
             color: #575656;
+            font-size: 30px;
+            margin-bottom: 20px;
+            // text-align: center;
         }
-        p {
+        #Author {
+            margin: 0 0 14px 0;
+            padding: 3px;
+            border-radius: 5px;
+            color: rgb(143, 143, 143);
+            span {
+                background-color: rgb(255, 255, 255);
+                // color: cornflowerblue;
+                margin-right: 3px;
+                font-style: italic;
+            }
+        }
+        #content {
             color: #5c5c5c;
         }
         div {

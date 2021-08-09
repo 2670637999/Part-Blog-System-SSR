@@ -73,6 +73,9 @@ export default {
                 border-left: 4px solid cornflowerblue;
             }
         }
+        h3 {
+            font-weight: 200;
+        }
         p{
             color: #a3a3a3;
             font-size: 14px;

@@ -84,9 +84,12 @@ export default {
 
 <style lang="scss" scoped>
 #commentBox {
-    margin-top: 25px;
+    margin-top: 40px;
     padding: 0px 10px;
     box-sizing: border-box;
+    @media all and(max-width:900px) {
+        margin: 10px 0px 0px 0px ;
+    }
 }
 img {
     width: 40px;

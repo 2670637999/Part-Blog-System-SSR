@@ -7,6 +7,14 @@ export default ({ app })=>{
           http.open('GET',`http://api.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
           http.send()
       }
+      // if(process.client){
+      //   if(to.name=='index'){
+      //     window.addEventListener("scroll",function(){
+      //         var header = this.document.querySelector("#nav");
+      //         header.classList.toggle("sticky",window.scrollY > 60);
+      //     })
+      //   }
+      // }
       if(to.name=='index-admin' 
       | to.name=='index-admin-editor' 
       | to.name=='index-admin-articles'

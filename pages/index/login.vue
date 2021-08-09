@@ -1,9 +1,11 @@
 <template>
     <div id="admin-login">
-        <h1>博客后台登录</h1>
-        <p><input type="text" v-model="user" placeholder="请输入用户名"></p>
-        <p><input type="password" v-model="pwd" placeholder="请输入密码"></p>
-        <p><nuxt-link to=""><input type="button" @click="Login()" value="登录到博客"></nuxt-link></p>
+        <div>
+            <h3>登录到博客</h3>
+            <p><input type="text" v-model="user" placeholder="请输入用户名"></p>
+            <p><input type="password" v-model="pwd" placeholder="请输入密码"></p>
+            <p><nuxt-link to=""><input type="button" @click="Login()" value="登录到博客"></nuxt-link></p>
+        </div>
     </div>
 </template>
 
@@ -57,3 +59,25 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+    #admin-login {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 40px;
+        // background-color: red;
+        input {
+            margin-right: 60px;
+            width: 300px;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        @media all and(max-width:900px) {
+            margin: 0;
+            justify-content: center;
+            input {
+                margin: 0;
+            }
+        }
+    }
+</style>

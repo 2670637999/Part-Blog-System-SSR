@@ -9,6 +9,7 @@
         <header id="header" >
             <video muted="" loop="" playsinline="" autoplay="" preload="auto">
                 <!-- <source src="https://www.bertani.net/bert-loop-3.mp4" type="video/mp4"> -->
+                <source src="~/static/header.mp4" type="video/mp4">
                 balbalblablablalbla
             </video>
             <div>
@@ -18,6 +19,7 @@
                 <h1 id="headerTitle" v-else-if="$route.name=='index-admin'">管理</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-login'">登录</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-comment'">留言</h1>
+                <h1 id="headerTitle" v-else-if="$route.name=='index-project'">项目作品</h1>
                 <vue-typed-js v-if="$route.name=='index'" id="text" :smartBackspace="true" :backSpeed="30" :loop="true" :backDelay="3000" :strings="
                 [
                     '有一分热，发一分光','就像萤火一般','也可以在黑暗里发一点光',
@@ -38,11 +40,11 @@
                 </ul>
                 <ul>
                     <h3>音乐</h3>
-                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=290 height=86 src="//music.163.com/outchain/player?type=2&id=454698102&auto=1&height=66"></iframe>
+                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" height=86 src="//music.163.com/outchain/player?type=2&id=1297750163&auto=1&height=66"></iframe>
                 </ul>
                 <ul id="randomArticles">
-                    <h3>随机文章<span @click="getRandomArticles"><i class="fa fa-random">随机一下</i></span></h3>
-                    <li :key="data" v-for="(item,data) in randomArticles"><nuxt-link :to="{ name: 'index-article-id', params:{id: randomArticles[data].id}}">{{randomArticles[data].Title}}</nuxt-link></li>
+                    <h3>随机文章<span @click="getRandomArticles"><i class="fa fa-random"> 随机一下</i></span></h3>
+                    <li @click="ToTop" :key="data" v-for="(item,data) in randomArticles"><nuxt-link :to="{ name: 'index-article-id', params:{id: randomArticles[data].id}}"><i class="fa fa-share"></i> {{ randomArticles[data].Title|ellipsis }} <span>阅读文章</span></nuxt-link></li>
                 </ul>
                 <ul>
                     <h3>邻居</h3>
@@ -59,18 +61,15 @@
             <div><i class="fa fa-codiepie"></i></div>
         </footer>
         <menu id="phone-to-home" @click="onTop">
-            <nuxt-link :to="{name:'index'}"><i class="fa fa-home"></i></nuxt-link>
+            <nuxt-link :to="{name:'index'}">
+                <i v-if="$route.name=='index-article-id'|$route.name=='index-about'" class="fa fa-upload"></i>
+                <i v-else-if="$route.name!='index-article-id'" class="fa fa-home"></i>
+            </nuxt-link>
         </menu>
     </div>
 </template>
 
 <script>
-if(process.client){
-    window.addEventListener("scroll",function(){
-        var header = this.document.querySelector("#nav");
-        header.classList.toggle("sticky",window.scrollY > 60);
-    })
-}
 import axios from 'axios'
 import qs from 'qs'
 export default {
@@ -97,6 +96,15 @@ export default {
             randomArticles: RandomArticlesRes.data
         }
     },
+    filters: {
+        ellipsis: function(value) {
+            let i = 15;
+            if(value.length > i){
+                return value.slice(0,i)+'...'
+            }
+            return value
+        }
+    },
     methods:{
         onTop(){
             if(process.client){
@@ -112,6 +120,9 @@ export default {
         },
         ToUrl(url){
             window.location.href = url
+        },
+        ToTop(){
+            window.scrollTo(0,0)
         },
         async getRandomArticles(){
             let RandomArticlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
@@ -136,6 +147,8 @@ export default {
         }
     }
     #nav {
+        background-color: rgba(#ffffff,0.91);
+        box-shadow: 0px 0px 10px 0px #777777;
         position: fixed;
         display: flex;
         transition: 0.51s;
@@ -149,7 +162,7 @@ export default {
             transition: 0.51s;
             padding: 20px 30px;
             box-sizing: border-box;
-            color: #ffffff;
+            color: #000000;
             text-decoration: none;
             &:hover {
                 cursor: pointer;
@@ -203,8 +216,8 @@ export default {
         height: 417px;
         overflow: hidden;
         background: no-repeat center center;
-        background-image: url('https://huangxuan.me/img/home-bg.jpg');
-        // background-image: url('https://blog.glumi.cn/img/album/21.jpg');
+        // background-image: url('https://huangxuan.me/img/home-bg.jpg');
+        background-image: url('https://blog.glumi.cn/img/album/21.jpg');
         background-size: cover;
         display: flex;
         justify-content: center;
@@ -279,6 +292,16 @@ export default {
                         padding: 5px;
                         border-radius: 5px;
                         cursor: pointer;
+                    }
+                }
+                li {
+                    padding: 0;
+                    margin: 5px;
+                    display: block;
+                    a {
+                        span {
+                            float: right;
+                        }
                     }
                 }
             }

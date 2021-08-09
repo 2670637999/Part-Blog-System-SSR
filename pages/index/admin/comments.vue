@@ -31,7 +31,7 @@ export default {
     },
     methods: {
         DelComment(name,content,time){
-            this.$axios.get(`http://api.glumi.cn/api/comment.php`,{
+            axios.get(`http://api.glumi.cn/api/comment.php`,{
                 params: {
                     data: 'delComment',
                     Comment_userName: `${ name }`,
@@ -46,7 +46,7 @@ export default {
                 }
             }).catch((error)=>console.log(error))
             
-            this.$axios.get(`http://api.glumi.cn/api/comment.php`,{
+            axios.get(`http://api.glumi.cn/api/comment.php`,{
                 params: {
                     data: 'getAllComment'
                 }
@@ -55,7 +55,7 @@ export default {
             ).catch(function(err){
                 console.log(err);
             }),
-            this.$axios.get(`http://api.glumi.cn/api/comment.php`,{
+            axios.get(`http://api.glumi.cn/api/comment.php`,{
                 params: {
                     data: 'getAllCommentSum'
                 }
