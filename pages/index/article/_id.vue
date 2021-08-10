@@ -68,7 +68,7 @@ export default {
         }
     },
     beforeCreate(){
-        if(process.client & this.$route.name!='index'){
+        if(process.client){
             window.scrollTo(0,0)
             document.getElementById('header').style.height="0px"
         }

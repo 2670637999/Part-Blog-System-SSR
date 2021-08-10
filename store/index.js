@@ -1,6 +1,7 @@
 export const state = () => ({
     NavBtnChange: false,
-    AdminEditorPageState: true
+    AdminEditorPageState: true,
+    DisplayMenuState: false
 })
 export const mutations = {
     ChangeAdminEditorPageState(state){
@@ -9,4 +10,7 @@ export const mutations = {
     ChangeBtnStyle(state){
         state.NavBtnChange = !state.NavBtnChange
     },
+    ChangeDisplayMenuState(state){
+        state.DisplayMenuState = !state.DisplayMenuState
+    }
 }

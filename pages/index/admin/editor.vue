@@ -65,13 +65,24 @@ export default {
             }
         }
     },
+    // async beforeCreate(){
+    //     axios.get('http://api.glumi.cn/api/Article.php?data=getNewArticleId').then((res)=>{
+    //         this.id = res.data
+    //     })
+    // },
     async mounted() {
+        let ArticleIdRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params:{ data:'getNewArticleId'} })
+        this.id = ArticleIdRes.data
         const editor = new wangEditor(`#editor`)
         editor.config.onchange = (newHtml) => {
             this.editorData = newHtml
         }
         editor.highlight = hljs
-        editor.config.uploadImgServer = 'http://api.glumi.cn/api/Image.php'
+        editor.config.uploadImgServer = 'http://api.glumi.cn/api/File.php'
+        editor.config.uploadImgParams = {
+            token: window.localStorage.getItem('token'),
+            id: this.id
+        }
         editor.create();
         this.editor = editor
     },

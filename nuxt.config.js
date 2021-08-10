@@ -30,11 +30,6 @@ export default {
     '~/plugins/route',
     '~/plugins/typed'
   ],
-  babel:{
-    plugins:[
-      ["@babel/plugin-proposal-private-methods", { "loose": true }]
-    ]
-  },
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -49,6 +44,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-
+    babel:{
+      plugins:[
+        ["@babel/plugin-proposal-private-methods", { "loose": true }],
+        ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
+      ]
+    }
   }
 }

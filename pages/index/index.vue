@@ -68,13 +68,15 @@ export default {
             transition: 0.21s;
             border-left: 4px solid rgb(209, 211, 214);
             padding-left: 10px;
-            font-size: 26px;
+            font-size: 21px;
             &:hover {
                 border-left: 4px solid cornflowerblue;
             }
         }
         h3 {
             font-weight: 200;
+            font-size: 16px;
+            margin: 0;
         }
         p{
             color: #a3a3a3;

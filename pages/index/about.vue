@@ -20,10 +20,10 @@ export default {
         return { content:contentRes.data }
     },
     async beforeCreate(){
-        if(process.client){
-            window.scrollTo(0,0)
-            document.getElementById('header').style.height="0px"
-        }
+        // if(process.client){
+        //     window.scrollTo(0,0)
+        //     document.getElementById('header').style.height="0px"
+        // }
     }
 }
 </script>

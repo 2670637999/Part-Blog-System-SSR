@@ -1,20 +1,20 @@
 <template>
     <div>
-        <nav id="nav" v-if="($route.name=='index-article-id'|$route.name=='index-about')?false:true">
+        <nav id="nav">
             <nuxt-link id="logo" to="/" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
             <nuxt-link :key="data" v-for="(item,data) in header" :to="{ name:header[data].url }">
-                {{ header[data].itemName }}
+                <i :class="header[data].iconClass"></i> {{ header[data].itemName }}
             </nuxt-link>
         </nav>
         <header id="header" >
             <video muted="" loop="" playsinline="" autoplay="" preload="auto">
                 <!-- <source src="https://www.bertani.net/bert-loop-3.mp4" type="video/mp4"> -->
-                <source src="~/static/header.mp4" type="video/mp4">
+                <!-- <source src="~/static/header.mp4" type="video/mp4"> -->
                 balbalblablablalbla
             </video>
             <div>
                 <h1 id="headerTitle" v-if="$route.name=='index'">L.I.F.E</h1>
-                <h1 id="headerTitle" v-else-if="$route.name=='index-about'"></h1>
+                <h1 id="headerTitle" v-else-if="$route.name=='index-about'">关于</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-articles'">历史</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-admin'">管理</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-login'">登录</h1>
@@ -61,11 +61,22 @@
             <div><i class="fa fa-codiepie"></i></div>
         </footer>
         <menu id="phone-to-home" @click="onTop">
-            <nuxt-link :to="{name:'index'}">
+            <nuxt-link :to="{ name:'index'}">
                 <i v-if="$route.name=='index-article-id'|$route.name=='index-about'" class="fa fa-upload"></i>
                 <i v-else-if="$route.name!='index-article-id'" class="fa fa-home"></i>
             </nuxt-link>
         </menu>
+        <nav id="phone-menu-box">
+            <nuxt-link id="logo" to="/" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
+            <div id="phone-menu-button" @click="onClickDisplayMenu">
+                <i class="fa fa-navicon"></i>
+            </div>
+            <div id="phone-menu">
+                <ul>
+                    <li :key="data" v-for="(item,data) in header" @click="onClickDisplayMenu"><nuxt-link :to="{ name:header[data].url}"><i :class="header[data].iconClass"></i> {{header[data].itemName}}</nuxt-link></li>
+                </ul>
+            </div>
+        </nav>
     </div>
 </template>
 
@@ -76,7 +87,7 @@ export default {
     data(){
         return {
             header: [
-                { itemName:'',url:'',orders:'',action:'' }
+                { iconClass:'',itemName:'',url:'',orders:'',action:'' }
             ],
             links: [
                 { itemName:'',url:'',orders:''}
@@ -107,13 +118,6 @@ export default {
     },
     methods:{
         onTop(){
-            if(process.client){
-                if(window.innerWidth > 600){
-                    document.getElementById('header').style.height="417px"
-                }else if(window.innerWidth < 605){
-                    document.getElementById('header').style.height="317px"
-                }
-            }
             window.scrollTo(0,0)
             document.getElementById('phone-to-home').style.animation = "phone-to-home-button-animation 1s"
             console.log('Top!')
@@ -127,8 +131,27 @@ export default {
         async getRandomArticles(){
             let RandomArticlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
             this.randomArticles = RandomArticlesRes.data
+        },
+        async onClickDisplayMenu(){
+            this.$store.commit('ChangeDisplayMenuState')
+            if(this.$store.state.DisplayMenuState){
+                document.getElementById('phone-menu').style.top = "60px"
+                document.getElementById('phone-menu').style.width = "160px"
+                document.getElementById('phone-menu').style.height = "320px"
+                document.getElementById('phone-menu').style.boxShadow = "0px 0px 10px 0px #bdbdbd"
+                document.getElementById('phone-menu-button').style.backgroundColor = "#ebebeb"
+                document.getElementById('phone-menu-button').style.color = "#000000"
+            }else {
+                document.getElementById('phone-menu').style.boxShadow = "0px 0px 0px 0px #ebebeb"
+                document.getElementById('phone-menu').style.padding = "0px"
+                document.getElementById('phone-menu').style.top = "0px"
+                document.getElementById('phone-menu').style.width = "0px"
+                document.getElementById('phone-menu').style.height = "0px"
+                document.getElementById('phone-menu-button').style.backgroundColor = "inherit"
+                document.getElementById('phone-menu-button').style.color = "#ffffff"
+            }
         }
-    }
+    },
 }
 </script>
 
@@ -147,8 +170,8 @@ export default {
         }
     }
     #nav {
-        background-color: rgba(#ffffff,0.91);
-        box-shadow: 0px 0px 10px 0px #777777;
+        // background-color: rgba(#ffffff,0.91);
+        // box-shadow: 0px 0px 10px 0px #777777;
         position: fixed;
         display: flex;
         transition: 0.51s;
@@ -162,7 +185,7 @@ export default {
             transition: 0.51s;
             padding: 20px 30px;
             box-sizing: border-box;
-            color: #000000;
+            color: #ffffff;
             text-decoration: none;
             &:hover {
                 cursor: pointer;
@@ -174,15 +197,19 @@ export default {
             padding-left: 50px;
         }
         &:hover {
-        background-color: rgba(#ffffff,0.91);
+            background-color: rgba(#ffffff,0.91);
+            box-shadow: 0px 0px 10px 0px #777777;
             a {
                 color: #000000;
             }
         }
-        @media all and(max-width: 605px) {
+        @media all and(max-width: 900px) {
             width: 100%;
             background-color: rgba(#ffffff,0.9);
             justify-content: space-between;
+            visibility: hidden ;
+            opacity: 0 ;
+            // background-color: red;
             a {
                 padding: 15px;
                 color: #000000;
@@ -191,6 +218,10 @@ export default {
                 display: none;
 
             }
+        }
+        @media all and(min-width: 900px) {
+            visibility: inherit ;
+            opacity: 1 ;
         }
     }
     @keyframes headerStart {
@@ -217,7 +248,8 @@ export default {
         overflow: hidden;
         background: no-repeat center center;
         // background-image: url('https://huangxuan.me/img/home-bg.jpg');
-        background-image: url('https://blog.glumi.cn/img/album/21.jpg');
+        background-image: url('~/static/home-bg2.jpg');
+        // background-image: url('https://blog.glumi.cn/img/album/21.jpg');
         background-size: cover;
         display: flex;
         justify-content: center;
@@ -240,7 +272,8 @@ export default {
         }
         @media all and(max-width: 605px) {
             div h1 {
-                font-size: 3rem;
+                // font-size: 3rem;
+                font-size: 50px;
             }
             div {
                 width: 100%;
@@ -371,9 +404,7 @@ export default {
         overflow: hidden;
         box-shadow: 0px 0px 10px 0px #dededf;
         background-color: #ffffff;
-        &:hover {
-            // animation: phone-to-home-button-animation 1s;
-        }
+        z-index: 3000;
         a {
             display: inline-block;
             width: 100%;
@@ -387,6 +418,83 @@ export default {
         }
         @media all and(min-width:900px) {
             display: none;
+        }
+    }
+    #phone-menu-box {
+        transition: 0.5s;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        top: 0;
+        width: 100%;
+        // background-color: #ffffff;
+        a {
+            padding: 15px;
+            font-size: 1rem;
+            text-decoration: none;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        #phone-menu-button {
+            transition: 0.5s;
+            display: flex;
+            font-size: 1.2rem;
+            align-items: center;
+            position: absolute;
+            right: 15px;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 15px;
+            color: #ffffff;
+            &:hover {
+                // background-color: #ebebeb;
+                // color: #000000;
+            }
+        }
+        
+        #phone-menu {
+            transition: 0.51s;
+            position: absolute;
+            right: 15px;
+            padding: 0px;
+            top: 0px;
+            width: 0px;
+            height: 0px;
+            overflow: hidden;
+            background-color:rgba(#ffffff,1);
+            border-radius: 15px;
+            box-shadow: 0px 0px 0px 0px #ebebeb ;
+            ul {
+                // width: 50px;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                li {
+                    transition: 0.5s;
+                    // width: 100%;
+                    box-sizing: border-box;
+                    border-bottom: 1px solid #e6e6e6;
+                    a {
+                        display: inline-block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        color: #000000;
+                        font-size: 1rem;
+
+                    }
+                    &:last-child{
+                        border: none;
+                    }
+                }
+            }
+        }
+        @media all and(max-width: 725px) {
+            visibility: inherit ;
+            opacity: 1 ;
+        }
+        @media all and(min-width: 900px) {
+            visibility: hidden ;
+            opacity: 0 ;
         }
     }
     #footer {
