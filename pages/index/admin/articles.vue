@@ -1,18 +1,18 @@
 <template>
-    <div id="admin-post-box">
+    <div id="admin-articles">
         <header>
             <span v-if="$store.state.AdminEditorPageState">欢迎回来👏 ，目前有 {{sum}} 篇文章可以管理 </span>
             <span v-if="!$store.state.AdminEditorPageState">编辑文章</span>
             <!-- <span>写文章</span> -->
         </header>
-        <main id="admin-post-list">
+        <main id="admin-articles-list">
             <div>
-                <p class="part-enter-2" ref="posts" :key="data" v-for="(item,data) in posts">
+                <p ref="posts" :key="data" v-for="(item,data) in posts">
                     {{posts[data].Time}} , {{posts[data].Title}} 
                     <nuxt-link :to="{name:'index-admin-update',query:{ id:posts[data].id}}">
-                        <button @click="$store.commit('ChangeAdminEditorPageState')">编辑文章</button>
+                        <button @click="$store.commit('ChangeAdminEditorPageState')"><i class="fa fa-edit"></i> 编辑</button>
                     </nuxt-link>
-                    <button @click="DeletePost(`${posts[data].Title}`)" >删除文章</button>
+                    <button @click="DeletePost(`${posts[data].Title}`)" ><i class="fa fa-trash-o fa-lg"></i> 删除</button>
                 </p>
             </div>
             <transition mode="out-in" enter-active-class="part-enter-2" leave-active-class="part-leave-1">
@@ -57,3 +57,28 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+    #admin-articles {
+        margin: 10px;
+        box-sizing: border-box;
+        background-color: #fff;
+        header {
+            padding: 15px;
+            background-color: #fff;
+            border-bottom: 1px solid #ebebeb;
+            box-sizing: border-box;
+        }
+        main {
+            padding: 15px;
+            box-sizing: border-box;
+            p {
+                border-bottom: 1px solid #ebebeb;
+                a,button {
+                    float: right;
+                }
+            }
+        }
+
+    }
+</style>

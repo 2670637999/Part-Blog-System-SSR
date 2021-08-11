@@ -20,7 +20,7 @@ export default {
         }
     },
     methods:{
-        Login(){
+        async Login(){
             if(this.user=='' && this.pwd==''){
                     alert('输入不能为空')
             }else {
@@ -47,8 +47,8 @@ export default {
                             }
                         }).then((response)=>{
                             window.localStorage.setItem('token',response.data)
+                            this.$router.push({ name: 'index-admin-articles'})
                         })
-                        this.$router.push({ name: 'index-admin-articles'})
                     }
                 }
                 ).catch(error=>

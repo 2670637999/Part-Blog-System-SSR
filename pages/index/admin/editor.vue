@@ -88,3 +88,19 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+    #editorbox {
+        margin: 10px;
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    }
+</style>

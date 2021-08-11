@@ -1,5 +1,5 @@
 <template>
-    <div id="box">
+    <div id="pages">
         <div id="editor" style="height:90%;"></div>
         <button @click="updateAboutData">更新</button>
     </div>
@@ -47,3 +47,14 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+    #pages {
+        margin: 10px;
+        button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    }
+</style>

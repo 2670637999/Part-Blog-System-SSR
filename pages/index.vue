@@ -16,7 +16,15 @@
                 <h1 id="headerTitle" v-if="$route.name=='index'">L.I.F.E</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-about'">关于</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-articles'">历史</h1>
-                <h1 id="headerTitle" v-else-if="$route.name=='index-admin'">管理</h1>
+                <h1 id="headerTitle" v-else-if="(
+                    $route.name=='index-admin'|
+                    $route.name=='index-admin-articles'|
+                    $route.name=='index-admin-comments'|
+                    $route.name=='index-admin-editor'|
+                    $route.name=='index-admin-pages'|
+                    $route.name=='index-admin-setting'|
+                    $route.name=='index-admin-update'
+                )">管理</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-login'">登录</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-comment'">留言</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-project'">项目作品</h1>
@@ -38,14 +46,19 @@
                 <ul id="ToHome" v-if="($route.name!='index'?true:false)">
                     <li @click="onTop"><nuxt-link :to="{name:'index'}">⬆️ 返回首页</nuxt-link></li>
                 </ul>
-                <ul>
+                <ul id="music">
                     <h3>音乐</h3>
-                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" height=86 src="//music.163.com/outchain/player?type=2&id=1297750163&auto=1&height=66"></iframe>
+                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1424621347&auto=0&height=66"></iframe>
                 </ul>
                 <ul id="randomArticles">
                     <h3>随机文章<span @click="getRandomArticles"><i class="fa fa-random"> 随机一下</i></span></h3>
                     <li @click="ToTop" :key="data" v-for="(item,data) in randomArticles"><nuxt-link :to="{ name: 'index-article-id', params:{id: randomArticles[data].id}}"><i class="fa fa-share"></i> {{ randomArticles[data].Title|ellipsis }} <span>阅读文章</span></nuxt-link></li>
                 </ul>
+                <!-- <ul>
+                    <h3>更多内容</h3>
+                    <li><nuxt-link :to="{name:'index-project'}"><i class="fa fa-code"></i> 我的项目</nuxt-link></li>
+                    <li><nuxt-link :to="{name:'index-project'}"><i class="fa fa-video-camera"></i> 我的豆瓣</nuxt-link></li>
+                </ul> -->
                 <ul>
                     <h3>邻居</h3>
                     <li :key="data" v-for="(item,data) in links">
@@ -54,18 +67,17 @@
                 </ul>
             </menu>
         </div>
-        <footer id="footer">
-            <div><i class="fa fa-qq"></i></div>
-            <div><i class="fa fa-facebook"></i></div>
-            <div><i class="fa fa-github"></i></div>
-            <div><i class="fa fa-codiepie"></i></div>
+        <footer id="footer" >
+            <div v-show="userLinks[0].orders" :key="data" v-for="(item,data) in userLinks"><a :href="userLinks[data].url"><i :class="userLinks[data].iconClass"></i></a></div>
         </footer>
-        <menu id="phone-to-home" @click="onTop">
-            <nuxt-link :to="{ name:'index'}">
-                <i v-if="$route.name=='index-article-id'|$route.name=='index-about'" class="fa fa-upload"></i>
-                <i v-else-if="$route.name!='index-article-id'" class="fa fa-home"></i>
-            </nuxt-link>
-        </menu>
+        <transition mode="out-in" enter-active-class="part-enter-10" leave-active-class="part-leave-3">
+            <menu id="phone-to-home" @click="onTop" v-if="$route.name!='index'">
+                <nuxt-link :to="{ name:'index'}">
+                    <i v-if="$route.name=='index-article-id'|$route.name=='index-about'" class="fa fa-upload"></i>
+                    <i v-else-if="$route.name!='index-article-id'" class="fa fa-home"></i>
+                </nuxt-link>
+            </menu>
+        </transition>
         <nav id="phone-menu-box">
             <nuxt-link id="logo" to="/" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
             <div id="phone-menu-button" @click="onClickDisplayMenu">
@@ -92,6 +104,9 @@ export default {
             links: [
                 { itemName:'',url:'',orders:''}
             ],
+            userLinks: [
+                { iconClass:null,itemName:null,url:null,orders:null }
+            ],
             randomArticles: [
                 { id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''}
             ]
@@ -101,10 +116,13 @@ export default {
         let linksRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
         let MenuRes = await axios.post('http://api.glumi.cn/api/Menu.php',qs.stringify({class:'TopMenu'}))
         let RandomArticlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
+        let userLinksRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
+        console.log(userLinksRes.data)
         return { 
             header: MenuRes.data,
             links: linksRes.data,
-            randomArticles: RandomArticlesRes.data
+            randomArticles: RandomArticlesRes.data,
+            userLinks:userLinksRes.data
         }
     },
     filters: {
@@ -189,7 +207,7 @@ export default {
             text-decoration: none;
             &:hover {
                 cursor: pointer;
-                color: cornflowerblue !important;
+                // color: cornflowerblue !important;
             }
         }
         a:nth-child(1){
@@ -297,6 +315,11 @@ export default {
             list-style: none;
             margin: 15px 0px 0px 30px;
             padding: 0;
+            #music {
+                iframe {
+                    width: 100%;
+                }
+            }
             #ToHome {
                 width: 100px;
                 li {
@@ -521,9 +544,14 @@ export default {
                 height: 100%;
                 transform: scale(2);
             }
+            a {
+                color: #000000;
+            }
             &:hover {
                 background-color: #000000;
-                color: #ffffff;
+                a {
+                    color: #ffffff;
+                }
             }
         }
     }

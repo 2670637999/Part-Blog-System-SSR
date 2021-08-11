@@ -2,14 +2,17 @@
     <div id="box">
         <div>
             <img src="~/static/blog-project.png" alt="图片失效">
-            <span>前后端分离 Vue.js 博客</span>
+            <span>Part-Blog</span>
+            <span>前后端分离博客系统</span>
         </div>
         <div>
             <img src="~/static/part-animator.png" alt="">
+            <span>Part-Animator</span>
             <span>轻量级动画库</span>
         </div>
         <div>
             <img src="~/static/hexo.svg" alt="图片失效">
+            <span>Scroll</span>
             <span>Hexo 主题</span>
         </div>
         <div>
@@ -47,11 +50,14 @@ export default {
             box-shadow: 0px 0px 10px 0px #ebebeb;
             img {
                 transition: 0.5s;
+                width: 100%;
+                // height: 10rem;
             }
         }
         div:hover {
             // transform: scale(3);
             img {
+
             }
         }
         @media all and(max-width:900px) {

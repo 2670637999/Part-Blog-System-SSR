@@ -10,7 +10,7 @@
             <button @click="AddComment">提交</button>
         </div>
         <div id="comment">
-            <h3>留言</h3>
+            <h3 v-if="comments[0]">留言</h3>
             <transition-group enter-active-class="part-enter-2" leave-active-class="part-leave-2">
                 <ul :key="data+1" v-for="(item,data) in comments">
                     <li><img :src="comments[data].sex=='男'?'/man.png':'/woman.png'" alt=""></li>
@@ -47,7 +47,7 @@ export default {
         return { comments: commentsRes.data }
     },
     methods:{
-        AddComment(){
+        async AddComment(){
             var requ = "^[ ]+$"
             var re = new RegExp(requ)
             if(this.inputValue.name =='' 
@@ -74,10 +74,16 @@ export default {
                     }else if(response.data=='0'){
                         alert('提交失败')
                     }
-                    console.log(response.data)
                 }).catch((error)=>console.log(error))
             }
         }
+    },
+    beforeCreate(){
+        setInterval(()=>{
+            axios.get('http://api.glumi.cn/api/comment.php',{ params: { data: 'getAllComment' }}).then((res)=>{
+                this.comments = res.data
+            })
+        },3000)
     }
 }
 </script>

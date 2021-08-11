@@ -1,10 +1,10 @@
 <template>
     <div id="updateBox">
-        <div><input type="text" placeholder="标题" v-model="Title"></div>
-        <div><input type="text" placeholder="子标题" v-model="subtitle"></div>
-        <div><input type="text" placeholder="作者" v-model="Author"></div>
-        <div><input type="text" placeholder="分类" v-model="categorie"></div>
-        <div><input type="text" placeholder="时间" v-model="Time"></div>
+        <input type="text" placeholder="标题" v-model="Title">
+        <input type="text" placeholder="子标题" v-model="subtitle">
+        <input type="text" placeholder="作者" v-model="Author">
+        <input type="text" placeholder="分类" v-model="categorie">
+        <input type="text" placeholder="时间" v-model="Time">
         <div id="editor"><div v-html="Content"></div></div>
         <button @click="updateAboutData">更新</button>
         <nuxt-link :to="{name:'index-admin-articles'}"><button @click="$store.commit('ChangeAdminEditorPageState')">返回</button></nuxt-link>
@@ -80,3 +80,14 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+    #updateBox {
+        margin: 10px;
+        input,button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    }
+</style>
