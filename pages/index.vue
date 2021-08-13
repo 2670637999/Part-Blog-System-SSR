@@ -7,12 +7,12 @@
             </nuxt-link>
         </nav>
         <header id="header" >
-            <video muted="" loop="" playsinline="" autoplay="" preload="auto">
-                <!-- <source src="https://www.bertani.net/bert-loop-3.mp4" type="video/mp4"> -->
-                <!-- <source src="~/static/header.mp4" type="video/mp4"> -->
-                balbalblablablalbla
-            </video>
-            <div>
+            <!-- <video muted="" loop="" playsinline="" autoplay="" preload="auto">
+                <source src="https://www.bertani.net/bert-loop-3.mp4" type="video/mp4">
+                <source src="~/static/header2.mp4" type="video/mp4">
+                <source src="~/static/header.mp4" type="video/mp4">
+            </video> -->
+            <div id="TitleBox">
                 <h1 id="headerTitle" v-if="$route.name=='index'">L.I.F.E</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-about'">关于</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-articles'">历史</h1>
@@ -30,12 +30,26 @@
                 <h1 id="headerTitle" v-else-if="$route.name=='index-project'">项目作品</h1>
                 <vue-typed-js v-if="$route.name=='index'" id="text" :smartBackspace="true" :backSpeed="30" :loop="true" :backDelay="3000" :strings="
                 [
+                    'Code Life',
                     '有一分热，发一分光','就像萤火一般','也可以在黑暗里发一点光',
                     '不必等候炬火','此后如果没有炬火','我便是唯一的光','愿与所有中国青年共勉',
                     '去创造,想要的','给这个世界带来美好和便利',
                 ]">
                     <span class="typing"></span>
                 </vue-typed-js>
+            </div>
+            <div class="preview-overlay">
+                <svg class="preview-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+                </defs>
+                <g class="preview-parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="var(--gentle-wave1)"></use>
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="var(--gentle-wave2)"></use>
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="var(--gentle-wave3)"></use>
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--gentle-wave)"></use>
+                </g>
+                </svg>
             </div>
         </header>
         <div id="main">
@@ -48,26 +62,31 @@
                 </ul>
                 <ul id="music">
                     <h3>音乐</h3>
-                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1424621347&auto=0&height=66"></iframe>
+                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1491212&auto=0&height=66"></iframe>
                 </ul>
-                <ul id="randomArticles">
+                <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
+                <ul id="randomArticles" v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
                     <h3>随机文章<span @click="getRandomArticles"><i class="fa fa-random"> 随机一下</i></span></h3>
                     <li @click="ToTop" :key="data" v-for="(item,data) in randomArticles"><nuxt-link :to="{ name: 'index-article-id', params:{id: randomArticles[data].id}}"><i class="fa fa-share"></i> {{ randomArticles[data].Title|ellipsis }} <span>阅读文章</span></nuxt-link></li>
                 </ul>
-                <!-- <ul>
+                </transition>
+                <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
+                <ul v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
                     <h3>更多内容</h3>
-                    <li><nuxt-link :to="{name:'index-project'}"><i class="fa fa-code"></i> 我的项目</nuxt-link></li>
-                    <li><nuxt-link :to="{name:'index-project'}"><i class="fa fa-video-camera"></i> 我的豆瓣</nuxt-link></li>
-                </ul> -->
-                <ul>
+                    <li><nuxt-link :to="{name:'index-document'}"><i class="fa fa-code"></i> 文档中心（开发中）</nuxt-link></li>
+                </ul>
+                </transition>
+                <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
+                <ul v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
                     <h3>邻居</h3>
                     <li :key="data" v-for="(item,data) in links">
                         <a :href="links[data].url">{{links[data].itemName}}</a>
                     </li>
                 </ul>
+                </transition>
             </menu>
         </div>
-        <footer id="footer" >
+        <footer id="footer" v-if="$route.name=='index'">
             <div v-show="userLinks[0].orders" :key="data" v-for="(item,data) in userLinks"><a :href="userLinks[data].url"><i :class="userLinks[data].iconClass"></i></a></div>
         </footer>
         <transition mode="out-in" enter-active-class="part-enter-10" leave-active-class="part-leave-3">
@@ -96,6 +115,15 @@
 import axios from 'axios'
 import qs from 'qs'
 export default {
+    head: {
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        ],
+        link: [
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+        ]
+    },
     data(){
         return {
             header: [
@@ -117,7 +145,6 @@ export default {
         let MenuRes = await axios.post('http://api.glumi.cn/api/Menu.php',qs.stringify({class:'TopMenu'}))
         let RandomArticlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
         let userLinksRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
-        console.log(userLinksRes.data)
         return { 
             header: MenuRes.data,
             links: linksRes.data,
@@ -190,7 +217,7 @@ export default {
     #nav {
         // background-color: rgba(#ffffff,0.91);
         // box-shadow: 0px 0px 10px 0px #777777;
-        position: fixed;
+        position: absolute;
         display: flex;
         transition: 0.51s;
         width: 100%;
@@ -260,24 +287,90 @@ export default {
             opacity: 1;
         }
     }
+    @keyframes move-forever {
+        0% {
+            transform: translate3d(-90px, 0, 0);
+        }
+        100% {
+            transform: translate3d(85px, 0, 0);
+        }
+    }
+
+    #svgbox {
+        // position: absolute;
+        // background-color: cornflowerblue;
+        color: cornflowerblue;
+        svg {
+            g {
+                use:nth-child(1) {
+                    animation: svgAnimation 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+                    animation-delay: -2s;
+                    animation-duration: 7s;
+                    background-repeat: repeat-x;
+                    background-position: 0 10px;
+                    opacity: 0.5;
+                }
+                use:nth-child(2) {
+                    animation: svgAnimation 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+                    animation-delay: -3s;
+                    animation-duration: 10s;
+                    background-repeat: repeat-x;
+                    background-position: 0 10px;
+                    opacity: 0.7;
+                }
+                use:nth-child(3) {
+                    animation: svgAnimation 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+                    animation-delay: -4s;
+                    animation-duration: 13s;
+                    background-repeat: repeat-x;
+                    background-position: 0 10px;
+                    opacity: 1;
+                }
+                use:nth-child(4) {
+                    animation: svgAnimation 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+                    animation-delay: -5s;
+                    animation-duration: 20s;
+                    background-repeat: repeat-x;
+                    background-position: 0 10px;
+                    opacity: 0.6;
+                }
+            }
+        }
+    }
     #header {
         transition: 1s;
         height: 417px;
+        // height: 100%;
         overflow: hidden;
         background: no-repeat center center;
         // background-image: url('https://huangxuan.me/img/home-bg.jpg');
-        background-image: url('~/static/home-bg2.jpg');
+        background-image: url('~/static/header.jpg');
         // background-image: url('https://blog.glumi.cn/img/album/21.jpg');
         background-size: cover;
         display: flex;
-        justify-content: center;
+        justify-content:space-around;
         align-items: center;
         text-align: center;
-        div {
+        flex-direction: column;
+        video {
+            @media all and(min-width:900px) {
+                width: 100%;
+            }
+            @media all and(max-width:900px) {
+                height: 100%;
+            }
+            source {
+
+            }
+        }
+        #TitleBox {
             width: 600px;
             position: absolute;
             color: #ffffff;
             justify-content: center;
+            div {
+                justify-content: center;
+            }
             h1 {
                 font-size: 80px;
                 // font-size: 3rem;
@@ -287,15 +380,61 @@ export default {
                 font-size: 1.2rem;
                 color: #ffffff;
             }
-        }
-        @media all and(max-width: 605px) {
-            div h1 {
-                // font-size: 3rem;
-                font-size: 50px;
-            }
-            div {
+            @media all and(max-width:605px) {
+                h1 {
+                    // font-size: 3rem;
+                    font-size: 50px;
+                }
                 width: 100%;
             }
+        }
+        .preview-overlay {
+            // position: relative;
+            position: relative ;
+            bottom: 0px;
+            // top: 217px;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            svg {
+                display: block;
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                @media all and(min-width: 900px) {
+                    height: 100px;
+                }
+                @media all and (max-width: 900px) {
+                    height: 50px;
+                }
+            }
+        }
+        .preview-overlay .preview-parallax>use {
+            animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+            fill: #ffffff;
+        }
+
+        .preview-overlay .preview-parallax>use:nth-child(1) {
+            animation-delay: -2s;
+            animation-duration: 7s;
+            opacity: 0.51;
+        }
+        .preview-overlay .preview-parallax>use:nth-child(2) {
+            animation-delay: -3s;
+            animation-duration: 10s;
+            opacity: 0.5;
+        }
+        .preview-overlay .preview-parallax>use:nth-child(3) {
+            animation-delay: -4s;
+            animation-duration: 13s;
+            opacity: 1;
+        }
+        .preview-overlay .preview-parallax>use:nth-child(4) {
+            animation-delay: -5s;
+            animation-duration: 20s;
+            opacity: 0.51;
+        }
+        @media all and(max-width: 605px) {
             height: 317px;
         }
     }
@@ -303,11 +442,11 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: center;
+        z-index: 10000 !important;
         div {
             width: 750px;
             @media all and(max-width:900px) {
                 width: 100%;
-
             }
         }
         menu {

@@ -5,8 +5,8 @@
             <input type="text" v-model="inputValue.Email" placeholder="请输入邮箱（可选）">
             <input type="text" v-model="inputValue.url" placeholder="地址（可选）">
             <textarea type="text" v-model="inputValue.content" placeholder="内容"></textarea>
-            先生 <input type="radio" value="男" v-model="inputValue.sex" name="sex">
-            女士 <input type="radio" value="女" v-model="inputValue.sex" name="sex">
+            man <input type="radio" value="男" v-model="inputValue.sex" name="sex">
+            woman <input type="radio" value="女" v-model="inputValue.sex" name="sex">
             <button @click="AddComment">提交</button>
         </div>
         <div id="comment">
@@ -98,8 +98,8 @@ export default {
     }
 }
 img {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 }
 #form {
     &>* {

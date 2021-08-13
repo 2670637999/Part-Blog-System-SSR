@@ -41,6 +41,12 @@ export default ({ app })=>{
             document.getElementById('nav').style.visibility = 'hidden'
             document.getElementById('nav').style.opacity = '0'  
         break;
+        case 'index-document':
+            document.getElementById('phone-menu-box').style.visibility = 'hidden'
+            document.getElementById('phone-menu-box').style.opacity = '0'
+            document.getElementById('nav').style.visibility = 'hidden'
+            document.getElementById('nav').style.opacity = '0'  
+        break;
       }
     }
 

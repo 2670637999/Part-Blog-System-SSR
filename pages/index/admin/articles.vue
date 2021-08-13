@@ -39,21 +39,31 @@ export default {
         return { sum:getAllArticleSum.data, posts:getAllArticle.data }
     },
     methods: {
-        DeletePost(Title){
-            var user = this.$route.params.user
-            axios.get(`http://api.glumi.cn/api/Article.php`,{
-                params: {
-                    data: 'delArticle',
-                    deletePost: `${Title}`
-                }
-            }).then(function(res){
-                if(res.data=='删除成功'){
-                    alert('删除成功')
-                }else if(res.data=='删除失败') {
-                    alert('删除失败')
-                }
-            }).catch((error)=>console.log(error))
-        },
+        async DeletePost(Title){
+            if(confirm('确定删除吗 ？')){
+                var user = this.$route.params.user
+                axios.get(`http://api.glumi.cn/api/Article.php`,{
+                    params: {
+                        data: 'delArticle',
+                        deletePost: `${Title}`
+                    }
+                }).then(function(res){
+                    if(res.data=='删除成功'){
+                        alert('删除成功')
+                    }else if(res.data=='删除失败') {
+                        alert('删除失败')
+                    }
+                }).catch((error)=>console.log(error))
+                let getAllArticle = await axios.get(`http://api.glumi.cn/api/Article.php`,{ params: {data: 'getAllArticle'} })
+                let getAllArticle2 = await axios.get(`http://api.glumi.cn/api/Article.php`,{ params: {data: 'getAllArticle'} })
+                let getAllArticleSum = await axios.get(`http://api.glumi.cn/api/Article.php`,{params: {data: 'getAllArticleSum'}})
+                let getAllArticleSum2 = await axios.get(`http://api.glumi.cn/api/Article.php`,{params: {data: 'getAllArticleSum'}})
+                this.posts = getAllArticle.data
+                this.posts = getAllArticle2.data
+                this.sum = getAllArticleSum.data
+                this.sum = getAllArticleSum2.data
+            }
+        }
     }
 }
 </script>

@@ -119,6 +119,15 @@ export default {
             margin-left: 100px;
             border-top: 1px solid #ebebeb;
             border-bottom: 1px solid #ebebeb;
+            p {
+                a {
+                    text-decoration: none;
+                    :hover{
+                        text-decoration: initial;
+                    }
+                }
+
+            }
             // margin-bottom: 10px;
             @media all and(max-width: 900px) {
                 margin: 0;
