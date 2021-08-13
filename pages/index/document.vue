@@ -1,3 +1,4 @@
+<!-- 文档系统，暂未开发完成。请忽略此页面，如有能力可自行自定义 -->
 <template>
     <div id="documentBox">
         <ul>
@@ -34,14 +35,12 @@
             <li>TSQL</li>
             <li>MySQL</li>
         </ul>
-        <ul>
-            <span>问题解决</span>
-        </ul>
     </div>
 </template>
 
 <script>
 export default {
+    // 如果你看到这里有个奇怪的代码🤔，那么它负责导航抬头（header）收放的动画效果。
     beforeCreate(){
         if(process.client){
             window.scrollTo(0,0)

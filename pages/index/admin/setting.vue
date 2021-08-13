@@ -1,7 +1,8 @@
+<!-- 站点设置 -->
 <template>
     <div id="settingBox">
         <div>
-            <h3>音乐设置</h3>
+            <h3>音乐设置（未开发）</h3>
             <p>网易云音乐设置：</p>
             <p><input type="text" placeholder="（填入专辑或者歌单ID）"></p>
         </div>

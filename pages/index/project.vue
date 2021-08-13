@@ -1,3 +1,4 @@
+<!-- 项目作品展示页，暂时未做后台，可自行自定义 -->
 <template>
     <div id="box">
         <div>
@@ -26,10 +27,6 @@ export default {
 
 <style lang="scss" scoped>
     #box {
-        // display: flex;
-        // justify-content:flex-start;
-        // flex-direction: column;
-        // flex-wrap: nowrap;
         margin-top: 30px;
         box-sizing: border-box;
 
@@ -51,7 +48,6 @@ export default {
             }
             img {
                 transition: 0.5s;
-                // height: 10rem;
             }
         }
         div:hover {

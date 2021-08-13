@@ -1,3 +1,4 @@
+<!-- 文章详情页 -->
 <template>
     <div id="article">
         <article>
@@ -7,8 +8,6 @@
             <p id="content" v-html="article.Content"></p>
         </article>
         <div>
-            <!-- <p>Author：{{ article.Author }}</p> -->
-            <!-- <p>Time：{{ article.Time }}</p> -->
             <p>本链接：<a :href="$route.path">https://blog.glumi.cn{{$route.path}}</a></p>
             <p>@陈杰海 版权所有，遵循许可 <a href="http://creativecommons.org/licenses/by-nc/4.0/"> CC-BY-NC-4.0 </a></p>
         </div>
@@ -18,6 +17,7 @@
 <script>
 import axios from 'axios'
 export default {
+    // 文章详情页的 SEO 设置，默认绑定为文章所写内容
     head(){
         return {
             title: this.article.Title,
@@ -55,18 +55,24 @@ export default {
         }
     },
     async asyncData({route}){
+        // 获得文章详情页的 html 元素
         let article = await axios.get('http://api.glumi.cn/api/Article.php',{ params:{ data: 'getArticleindexOfData',getidArticle: route.params.id }}).then((res)=>res.data)
         var html = article.Content
+        // 处理 html 内容为普通文本
         var value = html.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi,'').replace(/<[^>]+?>/g,'').replace(/\s+/g,' ').replace(/ /g,' ').replace(/>/g,' ')
+        // 从过滤器中裁剪字符数，i 为最大字符数
         let i = 100
         if(value.length > i){
             var content = value.slice(0,i)+'...'
         }
         return {
+            // 将用于显示正文的 html 元素返回
             article: article,
+            // 将处理过的 html 作为普通文本返回。
             SEOContent: content
         }
     },
+    // 如果你看到这里有个奇怪的代码🤔，那么它负责导航抬头（header）收放的动画效果。
     beforeCreate(){
         if(process.client){
             window.scrollTo(0,0)

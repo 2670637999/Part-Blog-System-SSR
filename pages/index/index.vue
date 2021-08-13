@@ -1,3 +1,4 @@
+<!-- 首页文章 -->
 <template>
     <div id="articles">
         <article :key="data" v-for="(item,data) in articles">

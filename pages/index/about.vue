@@ -24,22 +24,14 @@ export default {
     },
     async asyncData(){
         const query_data = { data:'getData' }
+        // 获取关于页面的 html
         let contentRes = await axios.post('http://api.glumi.cn/api/About.php',qs.stringify(query_data))
         return { content:contentRes.data }
-    },
-    async beforeCreate(){
-        // if(process.client){
-        //     window.scrollTo(0,0)
-        //     document.getElementById('header').style.height="0px"
-        // }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    #box {
-        // overflow: hidden;
-    }
     #aboutBox {
         padding: 10px;
         box-sizing: border-box;
@@ -54,7 +46,6 @@ export default {
         margin-top: 40px;
         margin-left: 100px;
         box-sizing: border-box;
-        // height: 400px;
         border-radius: 15px;
         background-color: cornflowerblue;
         color: #ffffff;
@@ -67,8 +58,6 @@ export default {
         }
         @media all and(max-width:900px) {
             margin: 15px;
-            // padding: 15px;
-            // height: 300px;
         }
     }
 </style>

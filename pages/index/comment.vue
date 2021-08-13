@@ -1,3 +1,4 @@
+<!-- 留言 -->
 <template>
     <div id="commentBox">
         <div id="form">
@@ -34,19 +35,23 @@ import axios from 'axios'
 export default {
     data(){
         return {
+            // 输入表单
             inputValue: {
                 Email:'',url:'',name:'',content:'',sex:'男'
             },
+            // 评论数据
             comments:[
                 { Email:'',url:'',name:'',sex:'',content:'',time:''}
             ]
         }
     },
     async asyncData(){
+        // 发起请求获取所有评论数据，把值返回给 Data 
         let commentsRes = await axios.get('http://api.glumi.cn/api/comment.php',{ params: { data: 'getAllComment' }})
         return { comments: commentsRes.data }
     },
     methods:{
+        // 添加评论函数
         async AddComment(){
             var requ = "^[ ]+$"
             var re = new RegExp(requ)
@@ -59,6 +64,7 @@ export default {
             | re.test(this.inputValue.name)){
                 alert('不能填写空内容')
             }else {
+                // 请求留言接口，response.data 为 ok 提交成功，为 0 则提交失败。
                  axios.get('http://api.glumi.cn/api/comment.php',{
                     params: {
                         data: 'addComment',
@@ -79,6 +85,7 @@ export default {
         }
     },
     beforeCreate(){
+        // 定时请求获取评论数据
         setInterval(()=>{
             axios.get('http://api.glumi.cn/api/comment.php',{ params: { data: 'getAllComment' }}).then((res)=>{
                 this.comments = res.data

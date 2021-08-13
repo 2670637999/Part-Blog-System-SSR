@@ -1,6 +1,8 @@
+<!-- 后台管理 -->
 <template>
     <main id="admin-view">
         <div id="admin-nav">
+            <!-- 路由指向 -->
             <nuxt-link :to="{ name:'index-admin-articles' }"><ul><li>文章管理</li></ul></nuxt-link>
             <nuxt-link :to="{ name:'index-admin-comments'}"><ul><li>评论管理</li></ul></nuxt-link>
             <nuxt-link :to="{ name:'index-admin-pages'}"><ul><li>关于页面</li></ul></nuxt-link>
@@ -9,6 +11,7 @@
             <ul @click="outUser()"><li>退出后台</li></ul>
         </div>
         <div id="admin-content">
+            <!-- 显示 admin 文件夹下的子页面 -->
             <nuxt-child/>
         </div>
     </main>
@@ -17,6 +20,7 @@
 <script>
 export default {
     methods: {
+        // 退出账号
         outUser(){
             if(confirm('确定退出后台吗 ？')){
                 window.localStorage.removeItem('token')

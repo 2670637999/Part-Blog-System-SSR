@@ -1,5 +1,7 @@
+<!-- 整站页面的布局 -->
 <template>
     <div>
+        <!-- PC 端导航菜单 -->
         <nav id="nav">
             <nuxt-link id="logo" to="/" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
             <nuxt-link :key="data" v-for="(item,data) in header" :to="{ name:header[data].url }">
@@ -7,11 +9,7 @@
             </nuxt-link>
         </nav>
         <header id="header" >
-            <!-- <video muted="" loop="" playsinline="" autoplay="" preload="auto">
-                <source src="https://www.bertani.net/bert-loop-3.mp4" type="video/mp4">
-                <source src="~/static/header2.mp4" type="video/mp4">
-                <source src="~/static/header.mp4" type="video/mp4">
-            </video> -->
+            <!-- 顶部标题文字显示 -->
             <div id="TitleBox">
                 <h1 id="headerTitle" v-if="$route.name=='index'">L.I.F.E</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-about'">关于</h1>
@@ -28,6 +26,7 @@
                 <h1 id="headerTitle" v-else-if="$route.name=='index-login'">登录</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-comment'">留言</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-project'">项目作品</h1>
+                <!-- 用于显示打字效果的组件，往数组内写参数即可。 -->
                 <vue-typed-js v-if="$route.name=='index'" id="text" :smartBackspace="true" :backSpeed="30" :loop="true" :backDelay="3000" :strings="
                 [
                     'Code Life',
@@ -38,6 +37,7 @@
                     <span class="typing"></span>
                 </vue-typed-js>
             </div>
+            <!-- svg 波浪效果的实现 -->
             <div class="preview-overlay">
                 <svg class="preview-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
                 <defs>
@@ -54,28 +54,34 @@
         </header>
         <div id="main">
             <div>
+                <!-- 显示子页面 -->
                 <nuxt-child/>
             </div>
             <menu>
+                <!-- 根据三目运算符判断结果显示该按钮，（仅PC端显示） -->
                 <ul id="ToHome" v-if="($route.name!='index'?true:false)">
                     <li @click="onTop"><nuxt-link :to="{name:'index'}">⬆️ 返回首页</nuxt-link></li>
                 </ul>
+                <!-- 网易云音乐外部播放器 -->
                 <ul id="music">
                     <h3>音乐</h3>
                     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1491212&auto=0&height=66"></iframe>
                 </ul>
+                <!-- 随机文章组件 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
                 <ul id="randomArticles" v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
                     <h3>随机文章<span @click="getRandomArticles"><i class="fa fa-random"> 随机一下</i></span></h3>
                     <li @click="ToTop" :key="data" v-for="(item,data) in randomArticles"><nuxt-link :to="{ name: 'index-article-id', params:{id: randomArticles[data].id}}"><i class="fa fa-share"></i> {{ randomArticles[data].Title|ellipsis }} <span>阅读文章</span></nuxt-link></li>
                 </ul>
                 </transition>
+                <!-- 更多内容（待完善） -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
                 <ul v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
                     <h3>更多内容</h3>
                     <li><nuxt-link :to="{name:'index-document'}"><i class="fa fa-code"></i> 文档中心（开发中）</nuxt-link></li>
                 </ul>
                 </transition>
+                <!-- 友情链接 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
                 <ul v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
                     <h3>邻居</h3>
@@ -86,9 +92,11 @@
                 </transition>
             </menu>
         </div>
+        <!-- 页脚的社交账号显示 -->
         <footer id="footer" v-if="$route.name=='index'">
             <div v-show="userLinks[0].orders" :key="data" v-for="(item,data) in userLinks"><a :href="userLinks[data].url"><i :class="userLinks[data].iconClass"></i></a></div>
         </footer>
+        <!-- home 键（返回首页按钮） -->
         <transition mode="out-in" enter-active-class="part-enter-10" leave-active-class="part-leave-3">
             <menu id="phone-to-home" @click="onTop" v-if="$route.name!='index'">
                 <nuxt-link :to="{ name:'index'}">
@@ -97,6 +105,7 @@
                 </nuxt-link>
             </menu>
         </transition>
+        <!-- 手机端导航菜单 -->
         <nav id="phone-menu-box">
             <nuxt-link id="logo" to="/" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
             <div id="phone-menu-button" @click="onClickDisplayMenu">
@@ -115,6 +124,7 @@
 import axios from 'axios'
 import qs from 'qs'
 export default {
+    // 整站的 head 属性
     head: {
         meta: [
             { charset: 'utf-8' },
@@ -141,9 +151,13 @@ export default {
         }
     },
     async asyncData(){
+        // 获取友情链接列表数据
         let linksRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
+        // 获取导航菜单列表数据
         let MenuRes = await axios.post('http://api.glumi.cn/api/Menu.php',qs.stringify({class:'TopMenu'}))
+        // 获取随机文章列表数据
         let RandomArticlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
+        // 获取社交账号列表数据
         let userLinksRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
         return { 
             header: MenuRes.data,
@@ -152,6 +166,7 @@ export default {
             userLinks:userLinksRes.data
         }
     },
+    // 过滤器，用于裁剪字符数。通过改变 i 来修改字符最大值。
     filters: {
         ellipsis: function(value) {
             let i = 15;
@@ -162,21 +177,26 @@ export default {
         }
     },
     methods:{
+        // 返回首页
         onTop(){
             window.scrollTo(0,0)
             document.getElementById('phone-to-home').style.animation = "phone-to-home-button-animation 1s"
             console.log('Top!')
         },
+        // 跳转站外链接
         ToUrl(url){
             window.location.href = url
         },
+        // 点击随机文章时自动调用
         ToTop(){
             window.scrollTo(0,0)
         },
         async getRandomArticles(){
+            // 获取随机文章列表数据
             let RandomArticlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
             this.randomArticles = RandomArticlesRes.data
         },
+        // 移动端导航菜单的交互动画效果。
         async onClickDisplayMenu(){
             this.$store.commit('ChangeDisplayMenuState')
             if(this.$store.state.DisplayMenuState){

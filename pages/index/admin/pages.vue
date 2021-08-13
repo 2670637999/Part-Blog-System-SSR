@@ -1,3 +1,4 @@
+<!-- 关于页面的修改 -->
 <template>
     <div id="pages">
         <div id="editor" style="height:90%;"></div>
