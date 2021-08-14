@@ -27,7 +27,7 @@
             <span>工具</span>
             <li>Visual Studio Code</li>
             <li>Android Studio</li>
-            <li>dveco Studio</li>
+            <li>devco Studio</li>
         </ul>
         <ul>
             <span>数据库</span>
