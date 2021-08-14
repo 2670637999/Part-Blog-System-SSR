@@ -24,13 +24,13 @@ export default {
         }
     },
     async asyncData({app}){
-        let getAllComment = await axios.get(`http://api.glumi.cn/api/comment.php`,{params: {data: 'getAllComment'}})
-        let getAllCommentSum = await axios.get(`http://api.glumi.cn/api/comment.php`,{params: {data: 'getAllCommentSum'}})
+        let getAllComment = await axios.get(`https://api.glumi.cn/api/comment.php`,{params: {data: 'getAllComment'}})
+        let getAllCommentSum = await axios.get(`https://api.glumi.cn/api/comment.php`,{params: {data: 'getAllCommentSum'}})
         return { sum:getAllCommentSum.data, comments:getAllComment.data }
     },
     methods: {
         async DelComment(name,content,time){
-            axios.get(`http://api.glumi.cn/api/comment.php`,{
+            axios.get(`https://api.glumi.cn/api/comment.php`,{
                 params: {
                     data: 'delComment',
                     Comment_userName: `${ name }`,
@@ -45,13 +45,13 @@ export default {
                 }
             }).catch((error)=>console.log(error))
             
-            await axios.get(`http://api.glumi.cn/api/comment.php`,{params: {data: 'getAllComment'}
+            await axios.get(`https://api.glumi.cn/api/comment.php`,{params: {data: 'getAllComment'}
             }).then((response)=>this.comments = response.data)
-            await axios.get(`http://api.glumi.cn/api/comment.php`,{params: {data: 'getAllCommentSum'}
+            await axios.get(`https://api.glumi.cn/api/comment.php`,{params: {data: 'getAllCommentSum'}
             }).then((response)=>this.sum = response.data)
-            await axios.get(`http://api.glumi.cn/api/comment.php`,{params: {data: 'getAllComment'}
+            await axios.get(`https://api.glumi.cn/api/comment.php`,{params: {data: 'getAllComment'}
             }).then((response)=>this.comments = response.data)
-            await axios.get(`http://api.glumi.cn/api/comment.php`,{params: {data: 'getAllCommentSum'}
+            await axios.get(`https://api.glumi.cn/api/comment.php`,{params: {data: 'getAllCommentSum'}
             }).then((response)=>this.sum = response.data)
         }
     }

@@ -152,13 +152,13 @@ export default {
     },
     async asyncData(){
         // 获取友情链接列表数据
-        let linksRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
+        let linksRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
         // 获取导航菜单列表数据
-        let MenuRes = await axios.post('http://api.glumi.cn/api/Menu.php',qs.stringify({class:'TopMenu'}))
+        let MenuRes = await axios.post('https://api.glumi.cn/api/Menu.php',qs.stringify({class:'TopMenu'}))
         // 获取随机文章列表数据
-        let RandomArticlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
+        let RandomArticlesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
         // 获取社交账号列表数据
-        let userLinksRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
+        let userLinksRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
         return { 
             header: MenuRes.data,
             links: linksRes.data,
@@ -193,7 +193,7 @@ export default {
         },
         async getRandomArticles(){
             // 获取随机文章列表数据
-            let RandomArticlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
+            let RandomArticlesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
             this.randomArticles = RandomArticlesRes.data
         },
         // 移动端导航菜单的交互动画效果。

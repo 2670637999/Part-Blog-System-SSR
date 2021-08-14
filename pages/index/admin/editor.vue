@@ -1,3 +1,4 @@
+<!-- 发布文章 -->
 <template>
     <div id="editorbox">
         <input type="text" v-model="title" placeholder="标题">
@@ -51,7 +52,7 @@ export default {
                     article_categorie: this.categorie,
                     article_time: this.time
                 }
-                axios.post('http://api.glumi.cn/api/Article.php',qs.stringify(data)).then((res)=>{
+                axios.post('https://api.glumi.cn/api/Article.php',qs.stringify(data)).then((res)=>{
                     if(re.test(this.title) | re.test(this.content)){
                         alert('不能发布空文章')
                     }else {
@@ -71,14 +72,14 @@ export default {
     //     })
     // },
     async mounted() {
-        let ArticleIdRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params:{ data:'getNewArticleId'} })
+        let ArticleIdRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data:'getNewArticleId'} })
         this.id = ArticleIdRes.data
         const editor = new wangEditor(`#editor`)
         editor.config.onchange = (newHtml) => {
             this.editorData = newHtml
         }
         editor.highlight = hljs
-        editor.config.uploadImgServer = 'http://api.glumi.cn/api/File.php'
+        editor.config.uploadImgServer = 'https://api.glumi.cn/api/File.php'
         editor.config.uploadImgParams = {
             token: window.localStorage.getItem('token'),
             id: this.id

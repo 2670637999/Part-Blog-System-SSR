@@ -1,7 +1,6 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
-
-
+  
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     'part-animator/PartAnimator.css',
@@ -9,7 +8,7 @@ export default {
     '~/static/global.css',
     '~/static/css/font-awesome.min.css'
   ],
-
+  
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/route',

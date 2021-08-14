@@ -67,7 +67,7 @@ export default {
             if(this.input.itemName=='' | this.input.url=='' | re.test(this.input.itemName) | re.test(this.input.url)){
                 alert('输入不能为空')    
             }else {
-                axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'addLink',itemName:this.input.itemName,url:this.input.url,token:token})).then((res)=>{
+                axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'addLink',itemName:this.input.itemName,url:this.input.url,token:token})).then((res)=>{
                     if(res.data=='添加成功'){
                         alert('添加成功')
                     }else if(res.data=='添加失败'){
@@ -75,8 +75,8 @@ export default {
                     }
                 })
             }
-            let res = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
-            let res2 = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
+            let res = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
+            let res2 = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
             this.Links = res.data
             this.Links = res2.data
         },
@@ -89,7 +89,7 @@ export default {
             if(this.account.itemName=='' | this.account.url=='' | re.test(this.account.itemName) | re.test(this.account.url)){
                 alert('输入不能为空')    
             }else {
-                let updateRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({
+                let updateRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({
                     data:'addUserLink',
                     token: token,
                     iconClass: this.account.iconClass,
@@ -101,16 +101,16 @@ export default {
                 }else if(updateRes.data=='添加失败'){
                     alert('添加失败')
                 }
-                let accountRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
-                let accountRes2 = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
+                let accountRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
+                let accountRes2 = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
                 this.accounts = accountRes.data
                 this.accounts = accountRes2.data
             }
         }
     },
     async asyncData(){
-        let linksRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
-        let accountRes = await axios.post('http://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
+        let linksRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
+        let accountRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
         return {
             Links:linksRes.data,
             accounts:accountRes.data,

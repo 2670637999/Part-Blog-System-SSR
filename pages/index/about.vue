@@ -25,7 +25,7 @@ export default {
     async asyncData(){
         const query_data = { data:'getData' }
         // 获取关于页面的 html
-        let contentRes = await axios.post('http://api.glumi.cn/api/About.php',qs.stringify(query_data))
+        let contentRes = await axios.post('https://api.glumi.cn/api/About.php',qs.stringify(query_data))
         return { content:contentRes.data }
     }
 }

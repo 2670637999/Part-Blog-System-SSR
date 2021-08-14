@@ -1,9 +1,9 @@
+<!-- 文章管理 -->
 <template>
     <div id="admin-articles">
         <header>
             <span v-if="$store.state.AdminEditorPageState">欢迎回来👏 ，目前有 {{sum}} 篇文章可以管理 </span>
             <span v-if="!$store.state.AdminEditorPageState">编辑文章</span>
-            <!-- <span>写文章</span> -->
         </header>
         <main id="admin-articles-list">
             <div>
@@ -34,15 +34,15 @@ export default {
         }
     },
     async asyncData(){
-        let getAllArticle = await axios.get(`http://api.glumi.cn/api/Article.php`,{ params: {data: 'getAllArticle'} })
-        let getAllArticleSum = await axios.get(`http://api.glumi.cn/api/Article.php`,{params: {data: 'getAllArticleSum'}})
+        let getAllArticle = await axios.get(`https://api.glumi.cn/api/Article.php`,{ params: {data: 'getAllArticle'} })
+        let getAllArticleSum = await axios.get(`https://api.glumi.cn/api/Article.php`,{params: {data: 'getAllArticleSum'}})
         return { sum:getAllArticleSum.data, posts:getAllArticle.data }
     },
     methods: {
         async DeletePost(Title){
             if(confirm('确定删除吗 ？')){
                 var user = this.$route.params.user
-                axios.get(`http://api.glumi.cn/api/Article.php`,{
+                axios.get(`https://api.glumi.cn/api/Article.php`,{
                     params: {
                         data: 'delArticle',
                         deletePost: `${Title}`
@@ -54,10 +54,10 @@ export default {
                         alert('删除失败')
                     }
                 }).catch((error)=>console.log(error))
-                let getAllArticle = await axios.get(`http://api.glumi.cn/api/Article.php`,{ params: {data: 'getAllArticle'} })
-                let getAllArticle2 = await axios.get(`http://api.glumi.cn/api/Article.php`,{ params: {data: 'getAllArticle'} })
-                let getAllArticleSum = await axios.get(`http://api.glumi.cn/api/Article.php`,{params: {data: 'getAllArticleSum'}})
-                let getAllArticleSum2 = await axios.get(`http://api.glumi.cn/api/Article.php`,{params: {data: 'getAllArticleSum'}})
+                let getAllArticle = await axios.get(`https://api.glumi.cn/api/Article.php`,{ params: {data: 'getAllArticle'} })
+                let getAllArticle2 = await axios.get(`https://api.glumi.cn/api/Article.php`,{ params: {data: 'getAllArticle'} })
+                let getAllArticleSum = await axios.get(`https://api.glumi.cn/api/Article.php`,{params: {data: 'getAllArticleSum'}})
+                let getAllArticleSum2 = await axios.get(`https://api.glumi.cn/api/Article.php`,{params: {data: 'getAllArticleSum'}})
                 this.posts = getAllArticle.data
                 this.posts = getAllArticle2.data
                 this.sum = getAllArticleSum.data

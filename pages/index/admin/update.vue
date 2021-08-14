@@ -38,7 +38,7 @@ export default {
             data: 'post_getArticleindexOfData',
             id: query.id
         }
-        let article = await axios.post('http://api.glumi.cn/api/Article.php',qs.stringify(obj_1))
+        let article = await axios.post('https://api.glumi.cn/api/Article.php',qs.stringify(obj_1))
         return {
             id: article.data.id,
             Title: article.data.Title,
@@ -61,7 +61,7 @@ export default {
                 categorie: this.categorie,
                 Time: this.Time
             }
-            let res = await axios.post('http://api.glumi.cn/api/Article.php',qs.stringify(obj))
+            let res = await axios.post('https://api.glumi.cn/api/Article.php',qs.stringify(obj))
             if(res.data=='更新成功'){
                 alert('更新成功')
             }else if(res.data=='更新失败') {

@@ -22,13 +22,13 @@ export default {
     },
     async asyncData(){
         const obj = { data:'getData'}
-        let res = await axios.post('http://api.glumi.cn/api/About.php',qs.stringify(obj))
+        let res = await axios.post('https://api.glumi.cn/api/About.php',qs.stringify(obj))
         return { editorData: res.data }
     },
     methods:{
         async updateAboutData(){
             const obj = { data:'updateData',editorData: this.editorData }
-            let res = await axios.post('http://api.glumi.cn/api/About.php',qs.stringify(obj))
+            let res = await axios.post('https://api.glumi.cn/api/About.php',qs.stringify(obj))
             if(res.data=='更新成功'){
                 alert('更新成功')
             }else if(res.data=='更新失败') {

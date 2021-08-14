@@ -4,7 +4,7 @@ export default ({ app })=>{
       if (process.browser) {
           var tokenstr = window.localStorage.getItem('token')
           var http = new XMLHttpRequest();
-          http.open('GET',`http://api.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
+          http.open('GET',`https://api.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
           http.send()
       }
       // if(process.client){

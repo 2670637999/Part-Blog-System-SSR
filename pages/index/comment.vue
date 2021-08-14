@@ -3,7 +3,7 @@
     <div id="commentBox">
         <div id="form">
             <input type="text" v-model="inputValue.name" placeholder="用户名">
-            <input type="text" v-model="inputValue.Email" placeholder="请输入邮箱（可选）">
+            <input type="text" v-model="inputValue.Email" placeholder="请输入QQ邮箱（可选，用于获取头像）">
             <input type="text" v-model="inputValue.url" placeholder="地址（可选）">
             <textarea type="text" v-model="inputValue.content" placeholder="内容"></textarea>
             man <input type="radio" value="男" v-model="inputValue.sex" name="sex">
@@ -14,11 +14,12 @@
             <h3 v-if="comments[0]">留言</h3>
             <transition-group enter-active-class="part-enter-2" leave-active-class="part-leave-2">
                 <ul :key="data+1" v-for="(item,data) in comments">
-                    <li><img :src="comments[data].sex=='男'?'/man.png':'/woman.png'" alt=""></li>
+                    <li><img :src="comments[data].Email!=''?`http://q1.qlogo.cn/g?b=qq&nk=${comments[data].Email}&s=100`:(comments[data].sex=='男'?'/man.png':'/woman.png')" alt="图片失效了"></li>
                     <li>
                         <div>
-                            <span><b>{{comments[data].name}}</b></span>
-                        </div>
+                            <nuxt-link v-if="comments[data].url==null" :to="{name:'index-comment'}"><span><b>{{comments[data].name}}</b></span></nuxt-link>
+                            <a v-else-if="comments[data].url!=null" :href="comments[data].url"><span><b>{{comments[data].name}}</b></span></a>
+                        </div><br>
                         <div>
                             <span>{{comments[data].content}}</span>
                             <span id="time">{{comments[data].time}}</span>
@@ -47,7 +48,7 @@ export default {
     },
     async asyncData(){
         // 发起请求获取所有评论数据，把值返回给 Data 
-        let commentsRes = await axios.get('http://api.glumi.cn/api/comment.php',{ params: { data: 'getAllComment' }})
+        let commentsRes = await axios.get('https://api.glumi.cn/api/comment.php',{ params: { data: 'getAllComment' }})
         return { comments: commentsRes.data }
     },
     methods:{
@@ -65,7 +66,7 @@ export default {
                 alert('不能填写空内容')
             }else {
                 // 请求留言接口，response.data 为 ok 提交成功，为 0 则提交失败。
-                 axios.get('http://api.glumi.cn/api/comment.php',{
+                 axios.get('https://api.glumi.cn/api/comment.php',{
                     params: {
                         data: 'addComment',
                         Email: this.inputValue.Email,
@@ -87,7 +88,7 @@ export default {
     beforeCreate(){
         // 定时请求获取评论数据
         setInterval(()=>{
-            axios.get('http://api.glumi.cn/api/comment.php',{ params: { data: 'getAllComment' }}).then((res)=>{
+            axios.get('https://api.glumi.cn/api/comment.php',{ params: { data: 'getAllComment' }}).then((res)=>{
                 this.comments = res.data
             })
         },3000)
@@ -96,6 +97,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+a {
+    text-decoration: none;
+    color: #7c7c7c;
+}
 #commentBox {
     margin-top: 40px;
     padding: 0px 10px;
@@ -107,6 +112,8 @@ export default {
 img {
     width: 50px;
     height: 50px;
+    border-radius: 20%;
+
 }
 #form {
     &>* {
@@ -141,6 +148,11 @@ img {
         border: 1px solid rgb(231, 231, 231);
         border-radius: 15px;
         color: #7c7c7c;
+        li {
+            div:nth-child(1) {
+                margin-top: 10px;
+            }
+        }
     }
     #time {
         float: right;

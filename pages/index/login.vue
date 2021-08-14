@@ -26,7 +26,7 @@ export default {
                     alert('输入不能为空')
             }else {
                 var datetime = new Date()
-                axios.get(`http://api.glumi.cn/api/Login.php`,{
+                axios.get(`https://api.glumi.cn/api/Login.php`,{
                     params: {
                         data: 'Manual_login',
                         user: this.user, 
@@ -39,7 +39,7 @@ export default {
                         alert('找不到用户')
                     }else {
                         alert('登录成功')
-                        axios.get('http://api.glumi.cn/api/Login.php',{
+                        axios.get('https://api.glumi.cn/api/Login.php',{
                             params: {
                                 data: 'AutoLogin',
                                 user: this.user, 

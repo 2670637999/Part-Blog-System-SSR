@@ -38,7 +38,7 @@ export default {
     },
     async asyncData(){
         // 获取所有文章数据
-        let articlesRes = await axios.get('http://api.glumi.cn/api/Article.php',{ params:{ data:'getAllArticle' } })
+        let articlesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data:'getAllArticle' } })
         return { articles: articlesRes.data }
     }
 }
