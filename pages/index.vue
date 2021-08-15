@@ -421,7 +421,7 @@ export default {
         .preview-overlay {
             // position: relative;
             position: relative ;
-            bottom: 0px;
+            bottom: -1px;
             // top: 217px;
             width: 100%;
             height: 100%;

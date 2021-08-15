@@ -86,9 +86,6 @@ export default {
     .page-enter-active {
         animation: part-enter-20 1s;
     }
-    .page-leave-active {
-        animation: part-leave-1 0.51s cubic-bezier(0.1, 1, 1, 1);
-    }
     #article {
         margin-top: 40px;
         z-index: 20000;

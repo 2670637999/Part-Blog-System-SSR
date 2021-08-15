@@ -4,7 +4,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     'part-animator/PartAnimator.css',
-    'highlight.js/styles/xcode.css',
+    'highlight.js/styles/vs2015.css',
     '~/static/global.css',
     '~/static/css/font-awesome.min.css'
   ],
