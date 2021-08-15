@@ -29,24 +29,12 @@
             <li>Android Studio</li>
             <li>devco Studio</li>
         </ul>
-        <ul>
-            <span>数据库</span>
-            <li>SQL</li>
-            <li>TSQL</li>
-            <li>MySQL</li>
-        </ul>
     </div>
 </template>
 
 <script>
 export default {
-    // 如果你看到这里有个奇怪的代码🤔，那么它负责导航抬头（header）收放的动画效果。
-    beforeCreate(){
-        if(process.client){
-            window.scrollTo(0,0)
-            document.getElementById('header').style.height="0px"
-        }
-    }
+
 }
 </script>
 

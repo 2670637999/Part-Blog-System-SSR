@@ -26,6 +26,8 @@
                 <h1 id="headerTitle" v-else-if="$route.name=='index-login'">登录</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-comment'">留言</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-project'">项目作品</h1>
+                <h1 id="headerTitle" v-else-if="$route.name=='index-document'">文档中心</h1>
+                <h1 id="headerTitle" v-else-if="$route.name=='index-douban'">我的豆瓣</h1>
                 <!-- 用于显示打字效果的组件，往数组内写参数即可。 -->
                 <vue-typed-js v-if="$route.name=='index'" id="text" :smartBackspace="true" :backSpeed="30" :loop="true" :backDelay="3000" :strings="
                 [
@@ -78,7 +80,8 @@
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
                 <ul v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
                     <h3>更多内容</h3>
-                    <li><nuxt-link :to="{name:'index-document'}"><i class="fa fa-code"></i> 文档中心（开发中）</nuxt-link></li>
+                    <li @click="ToTop"><nuxt-link :to="{name:'index-document'}"><i class="fa fa-code"></i> 文档中心（开发中）</nuxt-link></li>
+                    <li @click="ToTop"><nuxt-link :to="{name:'index-douban'}"><i class="fa fa-code"></i> 豆瓣观影（开发中）</nuxt-link></li>
                 </ul>
                 </transition>
                 <!-- 友情链接 -->
@@ -147,10 +150,14 @@ export default {
             ],
             randomArticles: [
                 { id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''}
-            ]
+            ],
+            article: { 
+                id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''
+            }
+            
         }
     },
-    async asyncData(){
+    async asyncData({route}){
         // 获取友情链接列表数据
         let linksRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
         // 获取导航菜单列表数据
@@ -159,11 +166,14 @@ export default {
         let RandomArticlesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
         // 获取社交账号列表数据
         let userLinksRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
+        // 获取指定文章数据（根据id）
+        // let articleRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data: 'getArticleindexOfData',getidArticle: route.params.id }}).then((res)=>res.data)
         return { 
             header: MenuRes.data,
             links: linksRes.data,
             randomArticles: RandomArticlesRes.data,
-            userLinks:userLinksRes.data
+            userLinks:userLinksRes.data,
+            // article: articleRes
         }
     },
     // 过滤器，用于裁剪字符数。通过改变 i 来修改字符最大值。
@@ -384,7 +394,7 @@ export default {
             }
         }
         #TitleBox {
-            width: 600px;
+            width: 100%;
             position: absolute;
             color: #ffffff;
             justify-content: center;
