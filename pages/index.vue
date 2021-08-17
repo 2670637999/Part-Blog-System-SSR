@@ -100,7 +100,10 @@
 
             <div v-show="userLinks[0].orders" :key="data" v-for="(item,data) in userLinks"><a :href="userLinks[data].url"><i :class="userLinks[data].iconClass"></i></a></div>
         </footer>
-        <p id="Keep-on-record">粤ICP备18077886号<br>© https://blog.glumi.cn</p>
+        <div id="Keep-on-record">
+            <p>粤ICP备18077886号</p>
+            <p>© https://blog.glumi.cn</p>
+        </div>
         <!-- home 键（返回首页按钮） -->
         <transition mode="out-in" enter-active-class="part-enter-10" leave-active-class="part-leave-3">
             <menu id="phone-to-home" @click="onTop" v-if="$route.name!='index'">
@@ -246,7 +249,11 @@ export default {
         justify-content: center;
         margin-top: 0;
         margin-bottom: 30px;
+        flex-direction: column;
         text-align: center;
+        p {
+            margin: 0;
+        }
     }
     #nav.sticky {
         background-color: rgba(#ffffff,0.91);
