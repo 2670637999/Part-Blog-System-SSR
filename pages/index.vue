@@ -97,8 +97,10 @@
         </div>
         <!-- 页脚的社交账号显示 -->
         <footer id="footer" v-if="$route.name=='index'">
+
             <div v-show="userLinks[0].orders" :key="data" v-for="(item,data) in userLinks"><a :href="userLinks[data].url"><i :class="userLinks[data].iconClass"></i></a></div>
         </footer>
+        <p id="Keep-on-record">粤ICP备18077886号<br>© https://blog.glumi.cn</p>
         <!-- home 键（返回首页按钮） -->
         <transition mode="out-in" enter-active-class="part-enter-10" leave-active-class="part-leave-3">
             <menu id="phone-to-home" @click="onTop" v-if="$route.name!='index'">
@@ -238,6 +240,13 @@ export default {
     }
     .page-leave-active {
         animation: part-leave-1 0.51s cubic-bezier(0.1, 1, 1, 1);
+    }
+    #Keep-on-record {
+        display: flex;
+        justify-content: center;
+        margin-top: 0;
+        margin-bottom: 30px;
+        text-align: center;
     }
     #nav.sticky {
         background-color: rgba(#ffffff,0.91);
@@ -696,7 +705,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
         div {
             transition: 0.5s;
             text-align: center;
