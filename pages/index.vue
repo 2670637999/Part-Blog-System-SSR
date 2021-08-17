@@ -67,7 +67,7 @@
                 <!-- 网易云音乐外部播放器 -->
                 <ul id="music">
                     <h3>音乐</h3>
-                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=19934760&auto=1&height=66"></iframe>
+                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 :src="`//music.163.com/outchain/player?type=2&id=${ musicID }&auto=1&height=66`"></iframe>
                 </ul>
                 <!-- 随机文章组件 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
@@ -153,8 +153,8 @@ export default {
             ],
             article: { 
                 id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''
-            }
-            
+            },
+            musicID: ''
         }
     },
     async asyncData({route}){
@@ -168,11 +168,13 @@ export default {
         let userLinksRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
         // 获取指定文章数据（根据id）
         // let articleRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data: 'getArticleindexOfData',getidArticle: route.params.id }}).then((res)=>res.data)
+        let musicIDres = await axios.get('https://api.glumi.cn/api/setting.php',{ params: { data:'getMusicID' }})
         return { 
             header: MenuRes.data,
             links: linksRes.data,
             randomArticles: RandomArticlesRes.data,
-            userLinks:userLinksRes.data,
+            userLinks: userLinksRes.data,
+            musicID: musicIDres.data
             // article: articleRes
         }
     },

@@ -2,9 +2,10 @@
 <template>
     <div id="settingBox">
         <div>
-            <h3>音乐设置（未开发）</h3>
+            <h3>音乐设置</h3>
             <p>网易云音乐设置：</p>
-            <p><input type="text" placeholder="（填入专辑或者歌单ID）"></p>
+            <p><input type="text" v-model="musicID" placeholder="（填入单曲 ID）"></p>
+            <p><input type="button" @click="saveMusicSetting" value="保存设置"></p>
         </div>
         <div>
             <h3>友情链接</h3>
@@ -43,6 +44,7 @@ if(process.client){
 export default {
     data(){
         return {
+            musicID: '',
             Links: [
                 { itemName:'',url:'',orders:'' }
             ],
@@ -106,14 +108,34 @@ export default {
                 this.accounts = accountRes.data
                 this.accounts = accountRes2.data
             }
+        },
+        async saveMusicSetting(){
+            if(process.client){
+                token = window.localStorage.getItem('token')
+            }
+            var requ = "^[ ]+$"
+            var re = new RegExp(requ)
+            if(this.musicID=='' |  re.test(this.musicID)){
+                alert('输入不能为空')    
+            }else {
+                axios.get('https://api.glumi.cn/api/setting.php',{ params: { token: window.localStorage.getItem('token'),data:'setMusicID',musicID:this.musicID }}).then((res)=>{
+                    if(res.data=='设置成功'){
+                        alert('设置成功')
+                    }else if(res.data=='设置失败'){
+                        alert('设置失败')
+                    }
+                })
+            }
         }
     },
     async asyncData(){
+        let musicIDres = await axios.get('https://api.glumi.cn/api/setting.php',{ params: { data:'getMusicID' }})
         let linksRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getLinks'}))
         let accountRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
         return {
             Links:linksRes.data,
             accounts:accountRes.data,
+            musicID:musicIDres.data
         }
     }
 }
