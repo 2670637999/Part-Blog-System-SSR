@@ -27,7 +27,7 @@ export default {
     },
     methods:{
         async updateAboutData(){
-            const obj = { data:'updateData',editorData: this.editorData }
+            const obj = { token: window.localStorage.getItem('token'),data:'updateData',editorData: this.editorData }
             let res = await axios.post('https://api.glumi.cn/api/About.php',qs.stringify(obj))
             if(res.data=='更新成功'){
                 alert('更新成功')

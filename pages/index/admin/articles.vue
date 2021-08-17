@@ -44,6 +44,7 @@ export default {
                 var user = this.$route.params.user
                 axios.get(`https://api.glumi.cn/api/Article.php`,{
                     params: {
+                        token: window.localStorage.getItem('token'),
                         data: 'delArticle',
                         deletePost: `${Title}`
                     }

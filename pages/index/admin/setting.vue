@@ -24,7 +24,7 @@
                 <li :key="data" v-for="(item,data) in accounts"><i :class="accounts[data].iconClass"></i> {{ accounts[data].itemName }} {{ accounts[data].url }}</li>
             </ul>
             <p>图标</p>
-            <p><input type="text" v-model="account.iconClass" placeholder="CSS 图标类名"></p>
+            <p><input type="text" v-model="account.iconClass" placeholder="Font Awesome CSS 图标类名"></p>
             <p>账号</p>
             <p><input type="text" v-model="account.itemName" placeholder="账号平台"></p>
             <p>地址</p>

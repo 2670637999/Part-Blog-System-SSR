@@ -52,6 +52,7 @@ export default {
     methods: {
         async updateAboutData(){
             const obj = { 
+                token: window.localStorage.getItem('token'),
                 data:'post_updateData',
                 id: this.id,
                 Title: this.Title,

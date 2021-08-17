@@ -36,13 +36,14 @@ import axios from 'axios'
 export default {
     data(){
         return {
+            newCommentid: '',
             // 输入表单
             inputValue: {
                 Email:'',url:'',name:'',content:'',sex:'男'
             },
             // 评论数据
             comments:[
-                { Email:'',url:'',name:'',sex:'',content:'',time:''}
+                { id:'',Email:'',url:'',name:'',sex:'',content:'',time:''}
             ]
         }
     },
@@ -65,10 +66,17 @@ export default {
             | re.test(this.inputValue.name)){
                 alert('不能填写空内容')
             }else {
+                let NewCommentID = await axios.get('https://api.glumi.cn/api/comment.php',{
+                    params: {
+                        data: 'getNewCommentID'
+                    }
+                })
+                this.newCommentid = NewCommentID.data
                 // 请求留言接口，response.data 为 ok 提交成功，为 0 则提交失败。
                  axios.get('https://api.glumi.cn/api/comment.php',{
                     params: {
                         data: 'addComment',
+                        id: this.newCommentid,
                         Email: this.inputValue.Email,
                         url: this.inputValue.url,
                         name: this.inputValue.name,
