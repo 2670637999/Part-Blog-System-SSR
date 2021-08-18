@@ -91,6 +91,7 @@ export default {
         z-index: 20000;
         padding: 0px 10px;
         box-sizing: border-box;
+        overflow: auto;
         article {
             margin-left: 100px;
             @media all and(max-width: 900px) {
