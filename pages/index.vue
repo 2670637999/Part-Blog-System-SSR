@@ -100,7 +100,7 @@
 
             <div v-show="userLinks[0].orders" :key="data" v-for="(item,data) in userLinks"><a :href="userLinks[data].url"><i :class="userLinks[data].iconClass"></i></a></div>
         </footer>
-        <div id="Keep-on-record">
+        <div v-if="$route.name=='index'" id="Keep-on-record">
             <p>粤ICP备18077886号</p>
             <p>© https://blog.glumi.cn</p>
         </div>
