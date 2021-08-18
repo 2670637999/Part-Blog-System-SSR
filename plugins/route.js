@@ -1,21 +1,10 @@
 export default ({ app })=>{
     app.router.beforeEach((to, from, next) => {
-      
-      if (process.browser) {
-          var tokenstr = window.localStorage.getItem('token')
-          var http = new XMLHttpRequest();
-          http.open('GET',`https://api.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
-          http.send()
-      }
-      // if(process.client){
-      //   if(to.name=='index'){
-      //     window.addEventListener("scroll",function(){
-      //         var header = this.document.querySelector("#nav");
-      //         header.classList.toggle("sticky",window.scrollY > 60);
-      //     })
-      //   }
-      // }
     if(process.client){
+      var tokenstr = window.localStorage.getItem('token')
+      var http = new XMLHttpRequest();
+      http.open('GET',`https://api.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
+      http.send()
       switch(to.name){
         case 'index':
           if(window.innerWidth > 900){
