@@ -28,6 +28,7 @@
                 <h1 id="headerTitle" v-else-if="$route.name=='index-project'">项目作品</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-document'">文档中心</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-douban'">我的豆瓣</h1>
+                <h1 id="headerTitle" v-else-if="$route.name=='index-categorie-id'">{{ $route.params.id }}</h1>
                 <!-- 用于显示打字效果的组件，往数组内写参数即可。 -->
                 <vue-typed-js v-if="$route.name=='index'" id="text" :smartBackspace="true" :backSpeed="30" :loop="true" :backDelay="3000" :strings="
                 [
@@ -74,6 +75,13 @@
                 <ul id="randomArticles" v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
                     <h3>随机文章<span @click="getRandomArticles"><i class="fa fa-random"> 随机一下</i></span></h3>
                     <li @click="ToTop" :key="data" v-for="(item,data) in randomArticles"><nuxt-link :to="{ name: 'index-article-id', params:{id: randomArticles[data].id}}"><i class="fa fa-share"></i> {{ randomArticles[data].Title|ellipsis }} <span>阅读文章</span></nuxt-link></li>
+                </ul>
+                </transition>
+                <!-- 文章分类 -->
+                <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
+                <ul>
+                    <h3>文章分类</h3>
+                    <li :key="data" v-for="(item,data) in categories"><nuxt-link :to="{ name:'index-categorie-id', params:{ id: categories[data].categorie } }"><span @click="ToTop">{{ categories[data].categorie }}</span></nuxt-link></li>
                 </ul>
                 </transition>
                 <!-- 更多内容（待完善） -->
@@ -159,6 +167,9 @@ export default {
             article: { 
                 id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''
             },
+            categories: [
+                { categorie: '' }
+            ],
             musicID: ''
         }
     },
@@ -171,16 +182,17 @@ export default {
         let RandomArticlesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
         // 获取社交账号列表数据
         let userLinksRes = await axios.post('https://api.glumi.cn/api/Links.php',qs.stringify({data:'getUserLinks'}))
-        // 获取指定文章数据（根据id）
-        // let articleRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data: 'getArticleindexOfData',getidArticle: route.params.id }}).then((res)=>res.data)
+        // 获取网易云音乐歌曲ID
         let musicIDres = await axios.get('https://api.glumi.cn/api/setting.php',{ params: { data:'getMusicID' }})
+        // 获取分类数据
+        let categoriesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data:'getCategories' } })
         return { 
             header: MenuRes.data,
             links: linksRes.data,
             randomArticles: RandomArticlesRes.data,
             userLinks: userLinksRes.data,
-            musicID: musicIDres.data
-            // article: articleRes
+            musicID: musicIDres.data,
+            categories: categoriesRes.data
         }
     },
     // 过滤器，用于裁剪字符数。通过改变 i 来修改字符最大值。

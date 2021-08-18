@@ -1,13 +1,13 @@
 <!-- 首页文章 -->
 <template>
     <div id="articles">
-        <article :key="data" v-for="(item,data) in articles">
+        <article :key="data" v-for="(item,data) in articles" v-show="articles[data].categorie==$route.params.id">
             <nuxt-link :to="{ name: 'index-article-id', params:{ id: articles[data].id  } }">
                 <h2 @click="ToTop">{{ articles[data].Title }}</h2>
             </nuxt-link>
             <h3 v-show="articles[data].subtitle==''?false:true">{{ articles[data].subtitle }}</h3>
             <p>{{ ToText(articles[data].Content)|ellipsis}}</p>
-            <p>{{ articles[data].Author }} 写于 {{ articles[data].Time }} <nuxt-link :to="{name:'index-categorie-id',params:{ id:articles[data].categorie }}"><span @click="ToTop">「{{ articles[data].categorie }}」</span></nuxt-link> <nuxt-link :to="{ name: 'index-article-id', params:{ id: articles[data].id  } }"><span @click="ToTop" >查看更多</span></nuxt-link></p>
+            <p>{{ articles[data].Author }} 写于 {{ articles[data].Time }} 「{{ articles[data].categorie }}」 <nuxt-link :to="{ name: 'index-article-id', params:{ id: articles[data].id  } }"><span @click="ToTop" >查看更多</span></nuxt-link></p>
         </article>
     </div>
 </template>
@@ -16,32 +16,30 @@
 import axios from 'axios'
 import qs from 'qs'
 export default {
-    head: {
-        title: '陈陈菌博客',
-        htmlAttrs: {
-        lang: 'cn'
-        },
-        meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'keywords',name: 'keywords',content: '陈陈菌博客,陈陈菌,陈杰海,陈杰海博客' },
-        { hid: 'description', name: 'description', content: '技术、学习、笔记。1名电脑技术爱好者的个人博客，不定期更新记录一些技术学习相关的笔记和内容。' },
-        { name: 'format-detection', content: 'telephone=no' }
-        ],
-        link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-        ]
+    head() {
+        return {
+            title: this.categorieTitle,
+            meta:[
+                { charset: 'utf-8' },
+                { 
+                    name: 'viewport',
+                    content: 'width=device-width, initial-scale=1'
+                },
+            ]
+        }
     },
     data(){
         return {
+            categorieTitle: '',
             articles: [
                 { id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''}
             ],
         }
     },
-    async asyncData(){
+    async asyncData({params}){
         let articlesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data: 'getAllArticle' }})
         return { 
+            categorieTitle: params.id,
             articles: articlesRes.data,
         }
     },
@@ -74,7 +72,7 @@ export default {
         text-decoration: none;
     }
     p {
-        a:last-child {
+        a {
             float: right;
         }
     }
