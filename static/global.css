@@ -40,4 +40,6 @@ blockquote {
 a {
     color: cornflowerblue;
 }
-
+font {
+    display: inline-block;
+}
