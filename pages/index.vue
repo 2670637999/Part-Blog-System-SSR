@@ -65,7 +65,7 @@
                 <ul id="ToHome" v-if="($route.name!='index'?true:false)">
                     <li @click="onTop"><nuxt-link :to="{name:'index'}">⬆️ 返回首页</nuxt-link></li>
                 </ul>
-                <!-- 统计 -->
+                <!-- 统计(未开发)图标 -->
                 <!-- <ul> -->
                     <!-- <h3><i class="fa fa-user"></i> {{ PeopleSum }} 访问</h3> -->
                     <!-- <div style="width:100%;height:300px" id="echarts_data"></div> -->
@@ -106,8 +106,9 @@
                     </li>
                 </ul>
                 </transition>
+                <!-- 统计 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
-                <ul>
+                <ul v-show="$route.name=='index'">
                     <h3>统计</h3>
                     <i class="fa fa-user"></i> {{ PeopleSum }} 位访客
                 </ul>
