@@ -65,6 +65,11 @@
                 <ul id="ToHome" v-if="($route.name!='index'?true:false)">
                     <li @click="onTop"><nuxt-link :to="{name:'index'}">⬆️ 返回首页</nuxt-link></li>
                 </ul>
+                <!-- 统计 -->
+                <!-- <ul> -->
+                    <!-- <h3><i class="fa fa-user"></i> {{ PeopleSum }} 访问</h3> -->
+                    <!-- <div style="width:100%;height:300px" id="echarts_data"></div> -->
+                <!-- </ul> -->
                 <!-- 网易云音乐外部播放器 -->
                 <ul id="music">
                     <h3>音乐</h3>
@@ -99,6 +104,12 @@
                     <li :key="data" v-for="(item,data) in links">
                         <a :href="links[data].url">{{links[data].itemName}}</a>
                     </li>
+                </ul>
+                </transition>
+                <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
+                <ul>
+                    <h3>统计</h3>
+                    <i class="fa fa-user"></i> {{ PeopleSum }} 位访客
                 </ul>
                 </transition>
             </menu>
@@ -139,6 +150,7 @@
 <script>
 import axios from 'axios'
 import qs from 'qs'
+import * as echarts from 'echarts'
 export default {
     // 整站的 head 属性
     head: {
@@ -152,6 +164,8 @@ export default {
     },
     data(){
         return {
+            // charData: '',
+            PeopleSum: '',
             header: [
                 { iconClass:'',itemName:'',url:'',orders:'',action:'' }
             ],
@@ -186,13 +200,16 @@ export default {
         let musicIDres = await axios.get('https://api.glumi.cn/api/setting.php',{ params: { data:'getMusicID' }})
         // 获取分类数据
         let categoriesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data:'getCategories' } })
+        // 获取访问人数
+        let peopleSumRes = await axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getNumberPeople' } })
         return { 
             header: MenuRes.data,
             links: linksRes.data,
             randomArticles: RandomArticlesRes.data,
             userLinks: userLinksRes.data,
             musicID: musicIDres.data,
-            categories: categoriesRes.data
+            categories: categoriesRes.data,
+            PeopleSum: peopleSumRes.data
         }
     },
     // 过滤器，用于裁剪字符数。通过改变 i 来修改字符最大值。
@@ -246,6 +263,40 @@ export default {
             }
         }
     },
+    mounted(){
+        axios.get('https://api.glumi.cn/api/echarts.php',{params: {
+            data:'setNumberPeople',
+            people: window.localStorage.getItem('people')
+        }})
+        window.localStorage.setItem('people','visit')
+        setInterval(()=>{
+            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getNumberPeople' } }).then((res)=>this.PeopleSum=res.data)
+        },2500)
+        // var time = new Date()
+        // var Month = time.getMonth()
+        // var day = time.getDate()
+        // var times = new Array()
+        // let res = new Array()
+        // var charDom = document.getElementById('echarts_data')
+        // var myChart = echarts.init(charDom)
+        // var option;
+        // option = {
+        //     xAxis: {
+        //         type: 'category',
+        //         data: times
+        //     },
+        //     yAxis: {
+        //         type: 'value'
+        //     },
+        //     series: [{
+        //         type: 'line',
+        //         data: res,
+        //     }]
+        // };
+        // times.push(`${Month}月${day-1}日`,`${Month}月${day}日`)
+        // res.push(1,3)
+        // option && myChart.setOption(option)
+    }
 }
 </script>
 
