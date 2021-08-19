@@ -1,6 +1,6 @@
 <!-- 整站页面的布局 -->
 <template>
-    <div>
+    <div id="appbox">
         <!-- PC 端导航菜单 -->
         <nav id="nav">
             <nuxt-link id="logo" to="/" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
@@ -319,6 +319,9 @@ export default {
             margin: 0;
         }
     }
+    #appbox {
+
+    }
     #nav.sticky {
         background-color: rgba(#ffffff,0.91);
         box-shadow: 0px 0px 10px 0px #777777;
@@ -451,9 +454,8 @@ export default {
     }
     #header {
         transition: 1s;
+        width: 100%;
         height: 417px;
-        // height: 100%;
-        overflow: hidden;
         background: no-repeat center center;
         // background-image: url('https://huangxuan.me/img/home-bg.jpg');
         background-image: url('~/static/header.jpg');
