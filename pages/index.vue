@@ -75,18 +75,18 @@
                     <h3>音乐</h3>
                     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 :src="`//music.163.com/outchain/player?type=2&id=${ musicID }&auto=1&height=66`"></iframe>
                 </ul>
+                <!-- 文章分类 -->
+                <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
+                <ul v-show="$route.name=='index'|$route.name=='index-article-id'|$route.name=='index-categorie-id'">
+                    <h3>文章分类</h3>
+                    <li :key="data" v-for="(item,data) in categories"><nuxt-link :to="{ name:'index-categorie-id', params:{ id: categories[data].categorie } }"><span @click="ToTop">{{ categories[data].categorie }}</span></nuxt-link></li>
+                </ul>
+                </transition>
                 <!-- 随机文章组件 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
                 <ul id="randomArticles" v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
                     <h3>随机文章<span @click="getRandomArticles"><i class="fa fa-random"> 随机一下</i></span></h3>
                     <li @click="ToTop" :key="data" v-for="(item,data) in randomArticles"><nuxt-link :to="{ name: 'index-article-id', params:{id: randomArticles[data].id}}"><i class="fa fa-share"></i> {{ randomArticles[data].Title|ellipsis }} <span>阅读文章</span></nuxt-link></li>
-                </ul>
-                </transition>
-                <!-- 文章分类 -->
-                <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
-                <ul>
-                    <h3>文章分类</h3>
-                    <li :key="data" v-for="(item,data) in categories"><nuxt-link :to="{ name:'index-categorie-id', params:{ id: categories[data].categorie } }"><span @click="ToTop">{{ categories[data].categorie }}</span></nuxt-link></li>
                 </ul>
                 </transition>
                 <!-- 更多内容（待完善） -->
