@@ -109,8 +109,13 @@
                 <!-- 统计 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
                 <ul v-show="$route.name=='index'">
-                    <h3>统计</h3>
-                    <i class="fa fa-user"></i> {{ PeopleSum }} 位今日访客
+                    <h3>独立访客</h3>
+                    <li>
+                        <i class="fa fa-user"></i> 今日新访客：{{ EveryDayNewPeopleSum }}<br>
+                    </li>
+                    <li>
+                        <i class="fa fa-users"></i> 总访客数：{{ PeopleSum }}
+                    </li>
                 </ul>
                 </transition>
             </menu>
@@ -166,6 +171,7 @@ export default {
     data(){
         return {
             // charData: '',
+            EveryDayNewPeopleSum: '',
             PeopleSum: '',
             header: [
                 { iconClass:'',itemName:'',url:'',orders:'',action:'' }
@@ -201,8 +207,10 @@ export default {
         let musicIDres = await axios.get('https://api.glumi.cn/api/setting.php',{ params: { data:'getMusicID' }})
         // 获取分类数据
         let categoriesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data:'getCategories' } })
-        // 获取访问人数
-        let peopleSumRes = await axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getNumberPeople' } })
+        // 获取每日新访客人数
+        let EveryDayNewPeopleSumRes = await axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getEveryDayNewPeopleSum' } })
+        // 获取每日访客数
+        let PeopleSumRes = await axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } })
         return { 
             header: MenuRes.data,
             links: linksRes.data,
@@ -210,7 +218,8 @@ export default {
             userLinks: userLinksRes.data,
             musicID: musicIDres.data,
             categories: categoriesRes.data,
-            PeopleSum: peopleSumRes.data
+            EveryDayNewPeopleSum: EveryDayNewPeopleSumRes.data,
+            PeopleSum: PeopleSumRes.data
         }
     },
     // 过滤器，用于裁剪字符数。通过改变 i 来修改字符最大值。
@@ -271,7 +280,9 @@ export default {
         }})
         window.localStorage.setItem('people','visit')
         setInterval(()=>{
-            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getNumberPeople' } }).then((res)=>this.PeopleSum=res.data)
+            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getEveryDayNewPeopleSum' } }).then((res)=>this.EveryDayNewPeopleSum=res.data)
+            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } }).then((res)=>this.PeopleSum=res.data)
+
         },2500)
         // var time = new Date()
         // var Month = time.getMonth()
