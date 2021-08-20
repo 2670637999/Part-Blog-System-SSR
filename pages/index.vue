@@ -65,11 +65,6 @@
                 <ul id="ToHome" v-if="($route.name!='index'?true:false)">
                     <li @click="onTop"><nuxt-link :to="{name:'index'}">⬆️ 返回首页</nuxt-link></li>
                 </ul>
-                <!-- 统计(未开发)图标 -->
-                <!-- <ul> -->
-                    <!-- <h3><i class="fa fa-user"></i> {{ PeopleSum }} 访问</h3> -->
-                    <!-- <div style="width:100%;height:300px" id="echarts_data"></div> -->
-                <!-- </ul> -->
                 <!-- 网易云音乐外部播放器 -->
                 <ul id="music">
                     <h3>音乐</h3>
@@ -109,13 +104,7 @@
                 <!-- 统计 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
                 <ul v-show="$route.name=='index'">
-                    <h3>独立访客</h3>
-                    <li>
-                        <i class="fa fa-user"></i> 今日新访客：{{ EveryDayNewPeopleSum }}<br>
-                    </li>
-                    <li>
-                        <i class="fa fa-users"></i> 总访客数：{{ PeopleSum }}
-                    </li>
+                    <li style="width:100%;height:300px;margin:0px;padding:0px;" id="echarts_data"></li>
                 </ul>
                 </transition>
             </menu>
@@ -170,7 +159,6 @@ export default {
     },
     data(){
         return {
-            // charData: '',
             EveryDayNewPeopleSum: '',
             PeopleSum: '',
             header: [
@@ -273,41 +261,47 @@ export default {
             }
         }
     },
-    mounted(){
+    async mounted(){
+        var charDom = document.getElementById('echarts_data')
+        var myChart = echarts.init(charDom)
+
+        // 通过本地存储生成用于验证是否新访客的字段
         axios.get('https://api.glumi.cn/api/echarts.php',{params: {
             data:'setNumberPeople',
             people: window.localStorage.getItem('people')
         }})
         window.localStorage.setItem('people','visit')
+        // 模拟实时更新访客数据
         setInterval(()=>{
             axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getEveryDayNewPeopleSum' } }).then((res)=>this.EveryDayNewPeopleSum=res.data)
             axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } }).then((res)=>this.PeopleSum=res.data)
-
-        },2500)
-        // var time = new Date()
-        // var Month = time.getMonth()
-        // var day = time.getDate()
-        // var times = new Array()
-        // let res = new Array()
-        // var charDom = document.getElementById('echarts_data')
-        // var myChart = echarts.init(charDom)
-        // var option;
-        // option = {
-        //     xAxis: {
-        //         type: 'category',
-        //         data: times
-        //     },
-        //     yAxis: {
-        //         type: 'value'
-        //     },
-        //     series: [{
-        //         type: 'line',
-        //         data: res,
-        //     }]
-        // };
-        // times.push(`${Month}月${day-1}日`,`${Month}月${day}日`)
-        // res.push(1,3)
-        // option && myChart.setOption(option)
+            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllDateTime' } }).then((res)=>{
+                myChart.setOption({
+                    title: {
+                        left: 'center',
+                        text: `新访客：${this.EveryDayNewPeopleSum}，总访客：${this.PeopleSum}`
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: res.data
+                    },
+                    yAxis: {
+                        type: 'value'
+                    }
+                })
+            })
+            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllPeopleNumber' } }).then((res)=>{
+                myChart.setOption({
+                    series: [{
+                        type: 'line',
+                        data: res.data,
+                    }]
+                })
+            })
+        },1000)
     }
 }
 </script>
@@ -423,8 +417,6 @@ export default {
     }
 
     #svgbox {
-        // position: absolute;
-        // background-color: cornflowerblue;
         color: cornflowerblue;
         svg {
             g {
