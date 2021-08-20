@@ -109,8 +109,8 @@
                 <!-- 统计 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
                 <ul v-show="$route.name=='index'">
-                    <h3>今日访客</h3>
-                    <i class="fa fa-user"></i> {{ PeopleSum }} 位
+                    <h3>统计</h3>
+                    <i class="fa fa-user"></i> {{ PeopleSum }} 位今日访客
                 </ul>
                 </transition>
             </menu>
