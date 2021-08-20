@@ -279,7 +279,7 @@ export default {
                 myChart.setOption({
                     title: {
                         left: 'center',
-                        text: `新访客：${this.EveryDayNewPeopleSum}，总访客：${this.PeopleSum}`
+                        text: `今日访问：${this.EveryDayNewPeopleSum}，总访问数：${this.PeopleSum}`
                     },
                     tooltip: {
                         trigger: 'axis'
