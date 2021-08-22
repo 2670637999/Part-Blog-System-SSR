@@ -6,7 +6,8 @@ export default ({ app })=>{
       http.open('GET',`https://api.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
       http.send()
       switch(to.name){
-        case 'index':
+        case (to.name=='index'?'index':'' | to.name=='index-categorie-id'?'index-categorie-id':''):
+          console.log('to.name==index or categorie-id ')
           if(window.innerWidth > 900){
               document.getElementById('header').style.height="417px"
               document.getElementById('nav').style.visibility = "inherit"

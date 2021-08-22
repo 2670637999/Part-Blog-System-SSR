@@ -10,6 +10,7 @@
         <div>
             <p>本链接：<a :href="$route.path">https://blog.glumi.cn{{$route.path}}</a></p>
             <p>@陈杰海 版权所有，遵循许可 <a href="http://creativecommons.org/licenses/by-nc/4.0/"> CC-BY-NC-4.0 </a></p>
+            <p>分类：<nuxt-link :to="{ name:'index-categorie-id',params:{ id: article.categorie } }"><span @click="ToCategorie">{{ article.categorie }}</span></nuxt-link></p>
         </div>
     </div>
 </template>
@@ -72,11 +73,18 @@ export default {
             SEOContent: content
         }
     },
+    methods: {
+        ToCategorie(){
+            window.scrollTo(0,0)
+        }
+    },
     // 如果你看到这里有个奇怪的代码🤔，那么它负责导航抬头（header）收放的动画效果。
     beforeCreate(){
         if(process.client){
-            window.scrollTo(0,0)
-            document.getElementById('header').style.height="0px"
+            if(this.$route.name=='index-article-id'){
+                window.scrollTo(0,0)
+                document.getElementById('header').style.height="0px"
+            }
         }
     }
 }
@@ -88,6 +96,7 @@ export default {
     }
     #article {
         margin-top: 40px;
+        margin-bottom: 40px;
         z-index: 20000;
         padding: 0px 10px;
         box-sizing: border-box;
