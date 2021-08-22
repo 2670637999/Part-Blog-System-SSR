@@ -28,6 +28,7 @@
                 <h1 id="headerTitle" v-else-if="$route.name=='index-project'">项目作品</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-document'">文档中心</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-douban'">我的豆瓣</h1>
+                <h1 id="headerTitle" v-else-if="$route.name=='index-categories'">分类目录</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-categorie-id'">{{ $route.params.id }}</h1>
                 <!-- 用于显示打字效果的组件，往数组内写参数即可。 -->
                 <vue-typed-js v-if="$route.name=='index'" id="text" :smartBackspace="true" :backSpeed="30" :loop="true" :backDelay="3000" :strings="
@@ -71,15 +72,13 @@
                     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 :src="`//music.163.com/outchain/player?type=2&id=${ musicID }&auto=1&height=66`"></iframe>
                 </ul>
                 <!-- 文章分类 -->
-                <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
-                <ul v-show="$route.name=='index'|$route.name=='index-article-id'|$route.name=='index-categorie-id'">
-                    <h3>文章分类</h3>
-                    <li :key="data" v-for="(item,data) in categories"><nuxt-link :to="{ name:'index-categorie-id', params:{ id: categories[data].categorie } }"><span @click="ToTop">{{ categories[data].categorie }}</span></nuxt-link></li>
+                <ul id="categories" v-show="$route.name=='index'|$route.name=='index-article-id'|$route.name=='index-categorie-id'">
+                    <h3>文章分类<nuxt-link :to="{ name:'index-categories' }"><span @click="ToTop"><i class="fa fa-navicon"> 查看更多</i></span></nuxt-link></h3>
+                   <li :key="data" v-for="(item,data) in categories"><nuxt-link :to="{ name:'index-categorie-id', params:{ id: categories[data].categorie } }"><span @click="ToTop">{{ categories[data].categorie }}</span></nuxt-link></li>
                 </ul>
-                </transition>
                 <!-- 随机文章组件 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
-                <ul id="randomArticles" v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
+                <ul id="randomArticles" v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin'|$route.name=='index-categories')">
                     <h3>随机文章<span @click="getRandomArticles"><i class="fa fa-random"> 随机一下</i></span></h3>
                     <li @click="ToTop" :key="data" v-for="(item,data) in randomArticles"><nuxt-link :to="{ name: 'index-article-id', params:{id: randomArticles[data].id}}"><i class="fa fa-share"></i> {{ randomArticles[data].Title|ellipsis }} <span>阅读文章</span></nuxt-link></li>
                 </ul>
@@ -569,8 +568,26 @@ export default {
         menu {
             width: 300px;
             list-style: none;
-            margin: 15px 0px 0px 30px;
+            margin: 25px 0px 0px 30px;
             padding: 0;
+            #categories {
+                li {
+                    display: inline-block;
+                    border: 1px solid rgba(211, 208, 208, 0.8);
+                    border-radius: 999em;
+                    padding: 0 10px 0 10px;
+                    color: #fff;
+                    line-height: 24px;
+                    font-size: 12px;
+                    text-decoration: none;
+                    margin: 0 2px;
+                    margin-bottom: 6px;
+                    cursor: pointer;
+                    &:hover {
+                        border: 1px solid cornflowerblue;
+                    }
+                }
+            }
             #music {
                 iframe {
                     width: 100%;
@@ -594,18 +611,19 @@ export default {
                     display: none;
                 }
             }
-            #randomArticles {
-                h3 {
-                    span {
-                        float: right;
-                        font-size: 0.6rem;
-                        background-color: #868686;
-                        color: #ffffff;
-                        padding: 5px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                    }
+ 
+            h3 {
+                span {
+                    float: right;
+                    font-size: 0.6rem;
+                    background-color: #868686;
+                    color: #ffffff;
+                    padding: 5px;
+                    border-radius: 5px;
+                    cursor: pointer;
                 }
+            }
+            #randomArticles {
                 li {
                     padding: 0;
                     margin: 5px;

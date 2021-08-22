@@ -8,7 +8,7 @@ export default ({ app })=>{
       switch(to.name){
         case 'index':
           if(window.innerWidth > 900){
-            document.getElementById('header').style.height="417px"
+              document.getElementById('header').style.height="417px"
               document.getElementById('nav').style.visibility = "inherit"
               document.getElementById('nav').style.opacity = "1"
               document.getElementById('phone-menu-box').style.visibility = "hidden"
@@ -18,6 +18,7 @@ export default ({ app })=>{
               document.getElementById('header').style.height="417px"
               document.getElementById('phone-menu-box').style.visibility = "inherit"
               document.getElementById('phone-menu-box').style.opacity = "1"
+              document.querySelector('menu').style.opacity = "1"
           }else if(window.innerWidth < 605){
               document.getElementById('header').style.height="317px"
               document.getElementById('phone-menu-box').style.visibility = "inherit"
