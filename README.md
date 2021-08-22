@@ -14,22 +14,30 @@
 - 异步数据更新
 - 响应式布局
 
-## 安装
 
+## 如何使用
+### 本地调试
+
+首先需要通过 npm 安装相关依赖包
 ```bash
-# 安装相关依赖
-$ npm install
-
-# 运行调试
-$ npm run dev
-
-# 为生产和启动服务器构建
-$ npm run build
-$ npm run start
-
-# 生成静态项目
-$ npm run generate
+npm install
 ```
+本地调试
+```bash
+npm run dev
+```
+### 部署到服务器
 
+部署项目前需要完成构建
+```bash
+npm run build
+```
+本地构建完项目后，启动项目即可
+```
+npm run start
+```
+### 更新源码
+
+只需要在服务器本地下进行 ``git pull``  。但需要注意：这将会覆盖原项目的工程文件（包括配置项）。
 
 
