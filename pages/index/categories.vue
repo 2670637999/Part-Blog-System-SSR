@@ -69,6 +69,7 @@ export default {
         margin-top: 55px;
         #categoriesTag {
             display: flex;
+            padding: 5px;
             a {
                 display: inline-block;
                 border: 1px solid #ebebeb;

@@ -245,7 +245,7 @@ export default {
             if(this.$store.state.DisplayMenuState){
                 document.getElementById('phone-menu').style.top = "60px"
                 document.getElementById('phone-menu').style.width = "160px"
-                document.getElementById('phone-menu').style.height = "320px"
+                document.getElementById('phone-menu').style.height = "380px"
                 document.getElementById('phone-menu').style.boxShadow = "0px 0px 10px 0px #bdbdbd"
                 document.getElementById('phone-menu-button').style.backgroundColor = "#ebebeb"
                 document.getElementById('phone-menu-button').style.color = "#000000"
