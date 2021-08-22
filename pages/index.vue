@@ -245,16 +245,23 @@ export default {
             if(this.$store.state.DisplayMenuState){
                 document.getElementById('phone-menu').style.top = "60px"
                 document.getElementById('phone-menu').style.width = "160px"
-                document.getElementById('phone-menu').style.height = "380px"
+                document.getElementById('phone-menu').style.maxHeight = "380px"
                 document.getElementById('phone-menu').style.boxShadow = "0px 0px 10px 0px #bdbdbd"
+                document.getElementById('phone-menu').style.opacity = "1"
+                for (let i =0;i<document.getElementById('phone-menu').childNodes[0].childNodes.length;i++){ 
+                    document.querySelector('#phone-menu ul').childNodes[i].style.opacity="1" 
+                }
                 document.getElementById('phone-menu-button').style.backgroundColor = "#ebebeb"
                 document.getElementById('phone-menu-button').style.color = "#000000"
             }else {
                 document.getElementById('phone-menu').style.boxShadow = "0px 0px 0px 0px #ebebeb"
                 document.getElementById('phone-menu').style.padding = "0px"
                 document.getElementById('phone-menu').style.top = "0px"
-                document.getElementById('phone-menu').style.width = "0px"
-                document.getElementById('phone-menu').style.height = "0px"
+                document.getElementById('phone-menu').style.maxHeight = "0px"
+                document.getElementById('phone-menu').style.opacity = "0"
+                for (let i =0;i<document.getElementById('phone-menu').childNodes[0].childNodes.length;i++){ 
+                    document.querySelector('#phone-menu ul').childNodes[i].style.opacity="0" 
+                }
                 document.getElementById('phone-menu-button').style.backgroundColor = "inherit"
                 document.getElementById('phone-menu-button').style.color = "#ffffff"
             }
@@ -750,13 +757,14 @@ export default {
         }
         
         #phone-menu {
-            transition: 0.51s;
+            transition: 0.81s;
             position: absolute;
             right: 15px;
             padding: 0px;
             top: 0px;
-            width: 0px;
-            height: 0px;
+            width: 160px;
+            // max-height: 380px;
+            // height: 0px;
             overflow: hidden;
             background-color:rgba(#ffffff,1);
             border-radius: 15px;
@@ -775,7 +783,7 @@ export default {
                         display: inline-block;
                         width: 100%;
                         box-sizing: border-box;
-                        color: #000000;
+                        color: #535353;
                         font-size: 1rem;
 
                     }
