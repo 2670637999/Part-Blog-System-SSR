@@ -763,7 +763,7 @@ export default {
             padding: 0px;
             top: 0px;
             width: 160px;
-            // max-height: 380px;
+            max-height: 0px;
             // height: 0px;
             overflow: hidden;
             background-color:rgba(#ffffff,1);
