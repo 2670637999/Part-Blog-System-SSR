@@ -2,15 +2,25 @@
 <template>
     <div id="article">
         <article>
-            <h1 id="Title">{{ article.Title }}</h1>
+            <h1 id="Title">
+                {{ article.Title }}
+            </h1>
             <p>{{ article.subtitle }}</p>
             <p id="Author"><span>发布人 </span>{{article.Author}} 写于 {{article.Time}}</p>
             <p id="content" v-html="article.Content"></p>
         </article>
-        <div>
+        <div id="articleFooter">
             <p>本链接：<a :href="$route.path">https://blog.glumi.cn{{$route.path}}</a></p>
             <p>@陈杰海 版权所有，遵循许可 <a href="http://creativecommons.org/licenses/by-nc/4.0/"> CC-BY-NC-4.0 </a></p>
-            <p>分类：<nuxt-link :to="{ name:'index-categorie-id',params:{ id: article.categorie } }"><span @click="ToCategorie">{{ article.categorie }}</span></nuxt-link></p>
+            <p>分类：<nuxt-link :to="{ name:'index-categorie-id',params:{ id: article.categorie } }"><span @click="ToTop">{{ article.categorie }}</span></nuxt-link></p>
+            <p>
+                <nuxt-link v-if="article.id-1!=0?true:false" :to="{ name:'index-article-id',params:{ id: (Number(article.id)-1) } }">
+                    <span @click="ToTop">上一篇</span>
+                </nuxt-link>
+                <nuxt-link v-if="$route.params.id<articlesSum | Number($route.params.id)+1==articlesSum?true:false" :to="{ name:'index-article-id',params:{ id: (Number(article.id)+1)} }">
+                    <span @click="ToTop">下一篇</span>
+                </nuxt-link>
+            </p>
         </div>
     </div>
 </template>
@@ -43,6 +53,7 @@ export default {
     },
     data(){
         return {
+            articlesSum: Number,
             article: {
                 id: Number,
                 Title: '',
@@ -56,6 +67,8 @@ export default {
         }
     },
     async asyncData({route}){
+        // 获得所有文章数量
+        let articlesSum = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data: 'getAllArticleSum'}}).then((res)=>res.data)
         // 获得文章详情页的 html 元素
         let article = await axios.get('https://api.glumi.cn/api/Article.php',{ params:{ data: 'getArticleindexOfData',getidArticle: route.params.id }}).then((res)=>res.data)
         var html = article.Content
@@ -67,6 +80,8 @@ export default {
             var content = value.slice(0,i)+'...'
         }
         return {
+            // 返回文章数量
+            articlesSum: articlesSum,
             // 将用于显示正文的 html 元素返回
             article: article,
             // 将处理过的 html 作为普通文本返回。
@@ -74,7 +89,7 @@ export default {
         }
     },
     methods: {
-        ToCategorie(){
+        ToTop(){
             window.scrollTo(0,0)
         }
     },
@@ -91,9 +106,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .page-enter-active {
-        animation: part-enter-20 1s;
-    }
     #article {
         margin-top: 40px;
         margin-bottom: 40px;
@@ -151,6 +163,26 @@ export default {
         @media all and(max-width: 900px) {
             width: 100%;
             margin: 0;
+        }
+    }
+    #articleFooter {
+        p:last-child {
+            display: flex;
+            border-top: 1px solid #ebebeb;
+            padding-top: 15px;
+            a {
+                background-color: aliceblue;
+                text-align: center;
+                margin: 10px;
+                flex: 1;
+                span {
+                    display: inline-block;
+                    width: 100%;
+                    height: 100%;
+                    padding: 10px;
+                    box-sizing: border-box;
+                }
+            }
         }
     }
 </style>

@@ -59,13 +59,11 @@
         <div id="main">
             <div>
                 <!-- 显示子页面 -->
-                <nuxt-child/>
+                <!-- <transition mode="out-in" enter-active-class="part-enter-1" leave-active-class="part-leave-1"> -->
+                    <nuxt-child/>
+                <!-- </transition> -->
             </div>
             <menu>
-                <!-- 根据三目运算符判断结果显示该按钮，（仅PC端显示） -->
-                <ul id="ToHome" v-if="($route.name!='index'?true:false)">
-                    <li @click="onTop"><nuxt-link :to="{name:'index'}">⬆️ 返回首页</nuxt-link></li>
-                </ul>
                 <!-- 网易云音乐外部播放器 -->
                 <ul id="music">
                     <h3>音乐</h3>
@@ -75,6 +73,20 @@
                 <ul id="categories" v-show="$route.name=='index'|$route.name=='index-article-id'|$route.name=='index-categorie-id'">
                     <h3>文章分类<nuxt-link :to="{ name:'index-categories' }"><span @click="ToTop"><i class="fa fa-navicon"> 查看更多</i></span></nuxt-link></h3>
                    <li :key="data" v-for="(item,data) in categories"><nuxt-link :to="{ name:'index-categorie-id', params:{ id: categories[data].categorie } }"><span @click="ToTop">{{ categories[data].categorie }}</span></nuxt-link></li>
+                </ul>
+                <!-- 根据三目运算符判断结果显示该按钮，（仅PC端显示） -->
+                <ul id="articleNav" v-if="($route.name!='index'?true:false)">
+                    <li @click="onTop"><nuxt-link :to="{name:'index'}">⬆️ 返回首页</nuxt-link></li>
+                    <li @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id-1!=0?true:false">
+                        <nuxt-link :to="{ name:'index-article-id',params:{ id: (Number($route.params.id)-1) } }">
+                            <span @click="ToTop">上一篇</span>
+                        </nuxt-link>
+                    </li>
+                    <li @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id<randomArticles.length | Number($route.params.id)+1==randomArticles.length?true:false">
+                        <nuxt-link :to="{ name:'index-article-id',params:{ id: (Number($route.params.id)+1)} }">
+                            <span @click="ToTop">下一篇</span>
+                        </nuxt-link>
+                    </li>
                 </ul>
                 <!-- 随机文章组件 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
@@ -314,10 +326,10 @@ export default {
 
 <style lang="scss" scoped>
     .page-enter-active {
-        animation: part-enter-2 1s;
+        animation: part-enter-20 1s;
     }
     .page-leave-active {
-        animation: part-leave-1 0.51s cubic-bezier(0.1, 1, 1, 1);
+        animation: part-leave-1 0.71s;
     }
     #Keep-on-record {
         display: flex;
@@ -600,14 +612,23 @@ export default {
                     width: 100%;
                 }
             }
-            #ToHome {
-                width: 100px;
+            #articleNav {
+                width: 100%;
+                // width: 100px;
+                border: 0;
                 li {
-                    // font-size: 20px;
-                    width: 100%;
-                    height: 100%;
-                    padding: 0;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    font-size: inherit;
+                    // height: 100%;
                     box-sizing: border-box;
+                    border: 1px solid rgb(211, 211, 211);
+                    border-radius: 15px;
+                    // background-color: aliceblue;
+                    padding: 10px;
+                    text-align: center;
+                    margin: 5px 0px;
                     a {
                         display: inline-block;
                         width: 100%;

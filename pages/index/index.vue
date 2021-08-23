@@ -22,14 +22,14 @@ export default {
         lang: 'cn'
         },
         meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'keywords',name: 'keywords',content: '陈陈菌博客,陈陈菌,陈杰海,陈杰海博客' },
-        { hid: 'description', name: 'description', content: '技术、学习、笔记。1名电脑技术爱好者的个人博客，不定期更新记录一些技术学习相关的笔记和内容。' },
-        { name: 'format-detection', content: 'telephone=no' }
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            { hid: 'keywords',name: 'keywords',content: '陈陈菌博客,陈陈菌,陈杰海,陈杰海博客' },
+            { hid: 'description', name: 'description', content: '技术、学习、笔记。1名电脑技术爱好者的个人博客，不定期更新记录一些技术学习相关的笔记和内容。' },
+            { name: 'format-detection', content: 'telephone=no' }
         ],
         link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
         ]
     },
     data(){
@@ -69,6 +69,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .page-enter-active {
+        animation: part-enter-2 1s;
+    }
+    .page-leave-active {
+        animation: part-leave-1 0.51s cubic-bezier(0.1, 1, 1, 1);
+    }
     a {
         color: #575656;
         text-decoration: none;
@@ -96,11 +102,11 @@ export default {
         margin-bottom: 30px;
         h2 {
             transition: 0.21s;
-            border-left: 4px solid rgb(209, 211, 214);
-            padding-left: 10px;
+            // border-left: 4px solid rgb(209, 211, 214);
+            // padding-left: 10px;
             font-size: 21px;
             &:hover {
-                border-left: 4px solid cornflowerblue;
+                // border-left: 4px solid cornflowerblue;
             }
         }
         h3 {
