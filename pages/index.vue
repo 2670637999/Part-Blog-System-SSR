@@ -82,7 +82,7 @@
                             <span @click="ToTop">上一篇</span>
                         </nuxt-link>
                     </li>
-                    <li @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id<randomArticles.length | Number($route.params.id)+1==randomArticles.length?true:false">
+                    <li @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id<articlesLength | Number($route.params.id)+1==articlesLength?true:false">
                         <nuxt-link :to="{ name:'index-article-id',params:{ id: (Number($route.params.id)+1)} }">
                             <span @click="ToTop">下一篇</span>
                         </nuxt-link>
@@ -172,6 +172,7 @@ export default {
         return {
             EveryDayNewPeopleSum: '',
             PeopleSum: '',
+            articlesLength: Number,
             header: [
                 { iconClass:'',itemName:'',url:'',orders:'',action:'' }
             ],
@@ -210,6 +211,8 @@ export default {
         let EveryDayNewPeopleSumRes = await axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getEveryDayNewPeopleSum' } })
         // 获取每日访客数
         let PeopleSumRes = await axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } })
+        // 获取所有文章总数
+        let articlesLength = await axios.get('https://api.glumi.cn/api/Article.php',{ params: { data: 'getAllArticleSum' } })
         return { 
             header: MenuRes.data,
             links: linksRes.data,
@@ -218,7 +221,8 @@ export default {
             musicID: musicIDres.data,
             categories: categoriesRes.data,
             EveryDayNewPeopleSum: EveryDayNewPeopleSumRes.data,
-            PeopleSum: PeopleSumRes.data
+            PeopleSum: PeopleSumRes.data,
+            articlesLength: articlesLength.data
         }
     },
     // 过滤器，用于裁剪字符数。通过改变 i 来修改字符最大值。
