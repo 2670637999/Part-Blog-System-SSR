@@ -77,7 +77,7 @@
                 <!-- 网易云音乐外部播放器 -->
                 <ul id="music">
                     <h3>音乐</h3>
-                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 :src="`//music.163.com/outchain/player?type=2&id=${ musicID }&auto=1&height=66`"></iframe>
+                    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 :src="`//music.163.com/outchain/player?type=2&id=${ musicID }&auto=0&height=66`"></iframe>
                 </ul>
                 <!-- 文章分类 -->
                 <ul id="categories" v-show="$route.name=='index'|$route.name=='index-article-id'|$route.name=='index-categorie-id'">
