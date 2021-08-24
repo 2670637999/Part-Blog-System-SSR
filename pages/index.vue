@@ -64,6 +64,16 @@
                 <!-- </transition> -->
             </div>
             <menu>
+                <!-- 作者简介 -->
+                <transition enter-active-class="part-enter-4">
+                <ul id="about" v-show="$route.name=='index-about'">
+                    <img src="~/static/Me.jpg" alt="">
+                    <div>1个时而逆行的完美主义 / 极简主义者</div>
+                    <div id="callme">
+                        <li v-show="userLinks[0].orders" :key="data" v-for="(item,data) in userLinks"><a :href="userLinks[data].url"><i :class="userLinks[data].iconClass"></i></a></li>
+                    </div>
+                </ul>
+                </transition>
                 <!-- 网易云音乐外部播放器 -->
                 <ul id="music">
                     <h3>音乐</h3>
@@ -122,7 +132,6 @@
         </div>
         <!-- 页脚的社交账号显示 -->
         <footer id="footer" v-if="$route.name=='index'">
-
             <div v-show="userLinks[0].orders" :key="data" v-for="(item,data) in userLinks"><a :href="userLinks[data].url"><i :class="userLinks[data].iconClass"></i></a></div>
         </footer>
         <div v-if="$route.name=='index'" id="Keep-on-record">
@@ -591,8 +600,44 @@ export default {
         menu {
             width: 300px;
             list-style: none;
-            margin: 25px 0px 0px 30px;
+            margin: 20px 0px 0px 30px;
             padding: 0;
+            #about {
+                display: flex;
+                flex-direction: column;
+                img {
+                    border-radius: 15px;
+                    border: 1px solid #e0e0e0;
+                    margin-bottom: 15px;
+                }
+                div {
+                    text-align: center;
+                    width: 100%;
+                }
+                #callme {
+                    display: flex;
+                    justify-content: center;
+                    flex: 1;
+                    margin-top: 15px;
+                    margin-bottom: 15px;
+                    li {
+                        width: 45px;
+                        height: 45px;
+                        border: 1px solid #868686;
+                        border-radius: 50%;
+                        margin: 0px 10px;
+                        a {
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            color: #000000;
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+            }
             #categories {
                 li {
                     display: inline-block;
@@ -682,10 +727,12 @@ export default {
                     padding: 5px;
                     box-sizing: border-box;
                     img {
-                        width: 150px;
-                        height: 150px;
-                        border-radius: 50%;
-                        border: 5px solid rgb(176, 178, 180);
+                        width: 100%;
+                        // width: 110px;
+                        // height: 110px;
+                        border-radius: 10px;
+                        // border: 5px solid rgb(176, 178, 180);
+                        // box-shadow: 0px 0px 10px 0px;
                     }
                     a {
                         display: inline-block;
