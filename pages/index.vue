@@ -61,6 +61,12 @@
                 <!-- </transition> -->
             </div>
             <menu>
+                <!-- 名言语录 -->
+                <ul v-show="$route.name=='index'">
+                    <h3>名言语录</h3>
+                    <li>What I cannot create，I do not understand - Richard Feynman</li>
+                    <li>"凡我不能创造的，我都不能理解。"<br>—— 理查德·费曼<br></li>
+                </ul>
                 <!-- 作者简介 -->
                 <transition enter-active-class="part-enter-4">
                 <ul id="about" v-show="$route.name=='index-about'">

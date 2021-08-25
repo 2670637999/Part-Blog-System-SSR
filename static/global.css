@@ -36,8 +36,9 @@ td {
 
 }
 blockquote {
-    background-color: #e9f5fa;
-    border-left: 2px solid #2d96bd;
+    background-color: #fff;
+    border: 1px solid #ebebeb;
+    border-left: 3px solid #2d96bd;
     color: rgba(52,73,94,0.8);
     margin: 0;
     padding: 5px 15px;

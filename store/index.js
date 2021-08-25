@@ -1,7 +1,8 @@
 export const state = () => ({
     NavBtnChange: false,
     AdminEditorPageState: true,
-    DisplayMenuState: false
+    DisplayMenuState: false,
+    cur: 0
 })
 export const mutations = {
     ChangeAdminEditorPageState(state){
@@ -12,5 +13,8 @@ export const mutations = {
     },
     ChangeDisplayMenuState(state){
         state.DisplayMenuState = !state.DisplayMenuState
+    },
+    ChangeCur(state){
+        state.cur++
     }
 }
