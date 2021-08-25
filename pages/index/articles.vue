@@ -69,7 +69,7 @@ export default {
             color: #575656;
             li {
                 padding: 10px;
-                border-bottom: 1px solid #000000;
+                border-bottom: 1px solid #d3d3d3;
                 span:nth-child(3){
                     float: right;
                 }

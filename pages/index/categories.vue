@@ -69,6 +69,7 @@ export default {
         margin-top: 55px;
         #categoriesTag {
             display: flex;
+            flex-wrap: wrap;
             padding: 5px;
             a {
                 display: inline-block;

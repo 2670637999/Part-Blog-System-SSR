@@ -31,12 +31,9 @@
                 <h1 id="headerTitle" v-else-if="$route.name=='index-categories'">分类目录</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-categorie-id'">{{ $route.params.id }}</h1>
                 <!-- 用于显示打字效果的组件，往数组内写参数即可。 -->
-                <vue-typed-js v-if="$route.name=='index'" id="text" :smartBackspace="true" :backSpeed="30" :loop="true" :backDelay="3000" :strings="
+                <vue-typed-js v-if="$route.name=='index'" id="text" :smartBackspace="true" :backSpeed="30" :backDelay="3000" :strings="
                 [
-                    'Code Life',
-                    '有一分热，发一分光','就像萤火一般','也可以在黑暗里发一点光',
-                    '不必等候炬火','此后如果没有炬火','我便是唯一的光','愿与所有中国青年共勉',
-                    '去创造,想要的','给这个世界带来美好和便利',
+                    'Code Life'
                 ]">
                     <span class="typing"></span>
                 </vue-typed-js>
@@ -268,7 +265,7 @@ export default {
         async onClickDisplayMenu(){
             this.$store.commit('ChangeDisplayMenuState')
             if(this.$store.state.DisplayMenuState){
-                document.getElementById('phone-menu').style.top = "60px"
+                document.getElementById('phone-menu').style.top = "55px"
                 document.getElementById('phone-menu').style.width = "160px"
                 document.getElementById('phone-menu').style.maxHeight = "380px"
                 document.getElementById('phone-menu').style.boxShadow = "0px 0px 10px 0px #bdbdbd"
@@ -492,8 +489,8 @@ export default {
         height: 417px;
         background: no-repeat center center;
         // background-image: url('https://huangxuan.me/img/home-bg.jpg');
+        // background-image: url('~/static/header.jpeg');
         background-image: url('~/static/header.jpg');
-        // background-image: url('https://blog.glumi.cn/img/album/21.jpg');
         background-size: cover;
         display: flex;
         justify-content:space-around;
@@ -543,6 +540,8 @@ export default {
             // top: 217px;
             width: 100%;
             height: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
             z-index: 0;
             svg {
                 display: block;
@@ -814,13 +813,14 @@ export default {
         #phone-menu-button {
             transition: 0.5s;
             display: flex;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             align-items: center;
             position: absolute;
-            right: 15px;
+            top: 0px;
+            right: 0px;
             padding: 15px;
             cursor: pointer;
-            border-radius: 15px;
+            // border-radius: 50%;
             color: #ffffff;
             &:hover {
                 // background-color: #ebebeb;
@@ -831,15 +831,15 @@ export default {
         #phone-menu {
             transition: 0.81s;
             position: absolute;
-            right: 15px;
+            right: 0px;
             padding: 0px;
             top: 0px;
-            width: 160px;
+            // width: 0px;
             max-height: 0px;
             // height: 0px;
             overflow: hidden;
             background-color:rgba(#ffffff,1);
-            border-radius: 15px;
+            // border-radius: 15px;
             box-shadow: 0px 0px 0px 0px #ebebeb ;
             ul {
                 // width: 50px;

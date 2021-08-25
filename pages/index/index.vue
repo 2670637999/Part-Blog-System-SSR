@@ -7,7 +7,8 @@
             </nuxt-link>
             <h3 v-show="articles[data].subtitle==''?false:true">{{ articles[data].subtitle }}</h3>
             <p>{{ ToText(articles[data].Content)|ellipsis}}</p>
-            <p>{{ articles[data].Author }} 写于 {{ articles[data].Time }} <nuxt-link :to="{name:'index-categorie-id',params:{ id:articles[data].categorie }}"><span @click="ToTop">{{ articles[data].categorie }}</span></nuxt-link> <nuxt-link :to="{ name: 'index-article-id', params:{ id: articles[data].id  } }"><span @click="ToTop" >查看更多</span></nuxt-link></p>
+            <p>{{ articles[data].Author }} 写于 {{ articles[data].Time }}</p>
+            <p id="categories">分类：<nuxt-link :to="{name:'index-categorie-id',params:{ id:articles[data].categorie }}"><span @click="ToTop">{{ articles[data].categorie }}</span></nuxt-link></p>
         </article>
     </div>
 </template>
@@ -79,27 +80,48 @@ export default {
         color: #575656;
         text-decoration: none;
     }
-    p {
-        a:nth-child(1){
-            border: 1px solid #c4c4c4;
-            font-style: initial;
-            padding: 3px 10px;
-            box-sizing: border-box;
-            margin-left: 3px;
-            border-radius: 999em;
+    // p {
+    //     a:nth-child(1){
+    //         border: 1px solid #c4c4c4;
+    //         font-style: initial;
+    //         padding: 3px 10px;
+    //         box-sizing: border-box;
+    //         margin-left: 3px;
+    //         border-radius: 999em;
+    //         float: right;
+    //     }
+    // }
+    @keyframes articleAnimation {
+        from {
+            background-position-x: -50rem;
         }
-        a:last-child {
-            float: right;
+        50% {
+            background-position-x: 0rem;
+        }
+        to {
+            background-position-x: 50rem;
         }
     }
     #articles {
         overflow: hidden;
     }
     article {
-        margin-top: 40px;
+        margin-top: 20px;
         margin-left: 100px;
         border-bottom: 1px solid #e6e6e6;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
+        a {
+            transition: 1s;
+            display: inline-block;
+            background: linear-gradient(#63a3f7,#418ef3) no-repeat;
+            background-size: 100% 2px;
+            background-position-y: 50px;
+            background-position-x: -25rem;
+            &:hover {
+                color: cornflowerblue;
+                background-position-x: 0rem;
+            }
+        }
         h2 {
             transition: 0.21s;
             // border-left: 4px solid rgb(209, 211, 214);
@@ -118,6 +140,19 @@ export default {
             color: #a3a3a3;
             font-size: 14px;
             font-style: italic;
+            &:nth-child(2) {
+                background-color: red; 
+            }
+        }
+        #categories {
+            a:nth-child(1){
+                border: 1px solid #c4c4c4;
+                font-style: initial;
+                padding: 3px 10px;
+                box-sizing: border-box;
+                margin-left: 3px;
+                border-radius: 999em;
+            }
         }
         @media all and(max-width:900px) {
             margin: 0;
