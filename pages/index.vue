@@ -66,6 +66,8 @@
                     <h3>名言语录</h3>
                     <li>What I cannot create，I do not understand - Richard Feynman</li>
                     <li>"凡我不能创造的，我都不能理解。"<br>—— 理查德·费曼<br></li>
+                    <li>造轮子圣经：</li>
+                    <li><a style="color:cornflowerblue;" href="https://github.com/danistefanovic/build-your-own-x">build-your-own-x</a></li>
                 </ul>
                 <!-- 作者简介 -->
                 <transition enter-active-class="part-enter-4">
