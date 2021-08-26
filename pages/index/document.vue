@@ -2,32 +2,25 @@
 <template>
     <div id="documentBox">
         <ul>
-            <span>编程语言</span>
-            <li>Java</li>
-            <li>C 语言</li>
-            <li>C++</li>
-            <li>JavaScript</li>
-            <li>PHP</li>
-            <li>C#</li>
-        </ul>
-        <ul>
-            <span>应用框架</span>
-            <li>Vue.js</li>
-            <li>React</li>
-        </ul>
-        <ul>
-            <span>操作系统</span>
-            <li>Linux</li>
+            <h3><span>操作系统</span><span><i class="fa fa-navicon"></i></span></h3>
+            <li>Android</li>
             <li>Windows</li>
             <li>MacOS</li>
-            <li>Android</li>
-            <li>IOS</li>
         </ul>
         <ul>
-            <span>工具</span>
-            <li>Visual Studio Code</li>
-            <li>Android Studio</li>
-            <li>devco Studio</li>
+            <h3><span>前端开发</span><span><i class="fa fa-navicon"></i></span></h3>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>Vue.js</li>
+            <li>微信小程序</li>
+            <li>Echarts</li>
+        </ul>
+        <ul>
+            <h3><span>后端开发</span><span><i class="fa fa-navicon"></i></span></h3>
+            <li>Node.js</li>
+            <li>PHP</li>
+            <li>MySQL</li>
         </ul>
     </div>
 </template>
@@ -39,43 +32,70 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .page-enter-active {
+        animation: part-enter-1 1s;
+    }
+    .page-leave-active {
+        animation: part-leave-1 0.71s;
+    }
     #documentBox {
         display: flex;
         flex-wrap: wrap;
         margin-top: 40px;
-        height: 100%;
+        margin-bottom: 40px;
+        justify-content: space-between;
         @media all and(max-width:900px) {
             margin: 0;
         }
-        &>ul {
-            width: 25%;
-            border: 1px solid #ebebeb;
-            margin: 0;
-            padding-left: 0;
+        ul {
+            transition: 2s;
+            width: 100%;
+            background-color: #fff;
+            margin: 0px 0px;
             list-style: none;
-            box-sizing: border-box;
-            span {
-                display: inline-flex;
-                justify-content: center;
-                background-color: #ebebeb;
-                width: 100%;
-                padding: 5px;
-                box-sizing: border-box;
-                border: 1px solid #8d8c8c;
+            padding: 0;
+            overflow: hidden;
+            color: rgb(0, 0, 0);
+            border-bottom: 1px solid #ebebeb;
+            h3 {
+                display: flex;
+                transition: 1s;
+                padding-left: 20px;
+                margin: 0;
+                height: 60px;
+                align-items: center;
+                & span:nth-child(1){
+                    flex: 0.97;
+                }
+                i {
+                    float: right;
+                }
             }
             li {
-                transition: 0.5s;
-                padding: 5px;
+                transition: 1s;
+                background-color: #fff;
+                color: #000;
+                padding: 0px;
+                height: 0px;
+                opacity: 0;
                 border-bottom: 1px solid #ebebeb;
-                box-sizing: border-box;
-                box-shadow: 0px 0px 0px 0px #ffffff;
+                line-height: 50px;
                 &:hover {
-                    cursor: pointer;
                     background-color: #ebebeb;
-                    color: #000000;
-                    box-shadow: 0px 0px 10px 0px #8b8b8b;
+                    cursor: pointer;
                 }
-                // padding-left: 15px;
+            }
+            &:hover {
+
+                @media all and (min-width: 900px) {
+                    cursor: pointer;
+                }
+                li {
+                    height: 50px;
+                    padding: 10px;
+                    padding-left: 20px;
+                    opacity: 1;
+                }
             }
         }
     }

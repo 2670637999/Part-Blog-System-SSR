@@ -76,13 +76,13 @@ export default {
                 border: 1px solid #ebebeb;
                 border-radius: 999em;
                 padding: 5px 10px 5px 10px;
-                color: #ffffff;
+                color: #7a7a7a;
                 line-height: 24px;
                 // font-size: 12px;
                 text-decoration: none;
                 margin: 0 3px;
                 margin-bottom: 6px;
-                background-color: cornflowerblue;
+                background-color: #ebebeb;
             }
             padding-bottom: 15px;
         }
@@ -91,7 +91,7 @@ export default {
             padding: 10px;
             div {
                 h3 {
-                    color: cornflowerblue;
+                    color: #0085a1;
                 }
                 #article {
                     border-bottom: 1px solid #ebebeb;

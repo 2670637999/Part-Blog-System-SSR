@@ -30,6 +30,13 @@
                 <h1 id="headerTitle" v-else-if="$route.name=='index-douban'">我的豆瓣</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-categories'">分类目录</h1>
                 <h1 id="headerTitle" v-else-if="$route.name=='index-categorie-id'">{{ $route.params.id }}</h1>
+                <h2 id="headerTitle" v-else-if="$route.name=='index-article-id'">
+                    <div id="articleTitle">{{ articles[articlesLength-$route.params.id].Title }} </div>
+                    <div id="articleSubTitle">
+                        {{ articles[articlesLength-$route.params.id].subtitle }}
+                    </div>
+                    <div id="articleTime">{{articles[articlesLength-$route.params.id].Author}} 写于 {{ articles[articlesLength-$route.params.id].Time }}</div>
+                </h2>
                 <!-- 用于显示打字效果的组件，往数组内写参数即可。 -->
                 <vue-typed-js v-if="$route.name=='index'" id="text" :smartBackspace="true" :backSpeed="30" :backDelay="3000" :strings="
                 [
@@ -56,9 +63,9 @@
         <div id="main">
             <div>
                 <!-- 显示子页面 -->
-                <!-- <transition mode="out-in" enter-active-class="part-enter-1" leave-active-class="part-leave-1"> -->
+                <transition mode="out-in" enter-active-class="part-enter-1" leave-active-class="part-leave-1">
                     <nuxt-child/>
-                <!-- </transition> -->
+                </transition>
             </div>
             <menu>
                 <!-- 名言语录 -->
@@ -70,7 +77,7 @@
                     <li><a style="color:cornflowerblue;" href="https://github.com/danistefanovic/build-your-own-x">build-your-own-x</a></li>
                 </ul>
                 <!-- 作者简介 -->
-                <transition enter-active-class="part-enter-4">
+                <transition enter-active-class="part-enter-1">
                 <ul id="about" v-show="$route.name=='index-about'">
                     <img src="~/static/Me.jpg" alt="">
                     <div>1个时而逆行的完美主义 / 极简主义者</div>
@@ -147,11 +154,22 @@
         <transition mode="out-in" enter-active-class="part-enter-10" leave-active-class="part-leave-3">
             <menu id="phone-to-home" @click="onTop" v-if="$route.name!='index'">
                 <nuxt-link :to="{ name:'index'}">
-                    <i v-if="$route.name=='index-article-id'|$route.name=='index-about'" class="fa fa-upload"></i>
-                    <i v-else-if="$route.name!='index-article-id'" class="fa fa-home"></i>
+                    <i class="fa fa-home"></i>
                 </nuxt-link>
             </menu>
         </transition>
+        <!-- 手机端导航菜单（上一篇文章） -->
+       <menu id="phone-to-lastArticle" @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id-1!=0?true:false">
+            <nuxt-link :to="{ name:'index-article-id',params: { id:Number($route.params.id)-1 }}">
+                旧
+            </nuxt-link>
+        </menu>
+        <!-- 手机端导航菜单（下一篇文章） -->
+        <menu id="phone-to-nextArticle" @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id<articlesLength | Number($route.params.id)+1==articlesLength?true:false">
+            <nuxt-link :to="{ name:'index-article-id',params: { id:Number($route.params.id)+1 }}">
+                新
+            </nuxt-link>
+        </menu>
         <!-- 手机端导航菜单 -->
         <nav id="phone-menu-box">
             <nuxt-link id="logo" to="/" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
@@ -199,9 +217,9 @@ export default {
             randomArticles: [
                 { id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''}
             ],
-            article: { 
-                id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''
-            },
+            articles: [
+                { id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''}
+            ],
             categories: [
                 { categorie: '' }
             ],
@@ -227,6 +245,8 @@ export default {
         let PeopleSumRes = await axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } })
         // 获取所有文章总数
         let articlesLength = await axios.get('https://api.glumi.cn/api/Article.php',{ params: { data: 'getAllArticleSum' } })
+        // 获取所有文章数据
+        let articlesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params: { data: 'getAllArticle' } })
         return { 
             header: MenuRes.data,
             links: linksRes.data,
@@ -236,7 +256,8 @@ export default {
             categories: categoriesRes.data,
             EveryDayNewPeopleSum: EveryDayNewPeopleSumRes.data,
             PeopleSum: PeopleSumRes.data,
-            articlesLength: articlesLength.data
+            articlesLength: articlesLength.data,
+            articles: articlesRes.data
         }
     },
     // 过滤器，用于裁剪字符数。通过改变 i 来修改字符最大值。
@@ -247,7 +268,7 @@ export default {
                 return value.slice(0,i)+'...'
             }
             return value
-        }
+        },
     },
     methods:{
         // 返回首页
@@ -344,7 +365,7 @@ export default {
 
 <style lang="scss" scoped>
     .page-enter-active {
-        animation: part-enter-20 1s;
+        animation: part-enter-1 1s;
     }
     .page-leave-active {
         animation: part-leave-1 0.71s;
@@ -492,13 +513,16 @@ export default {
         }
     }
     #header {
+        // position: absolute;
         transition: 1s;
         width: 100%;
+        // max-height: 100%;
         height: 417px;
         background: no-repeat center center;
+        background-image: url('~/static/header2.jpg');
         // background-image: url('https://huangxuan.me/img/home-bg.jpg');
         // background-image: url('~/static/header.jpeg');
-        background-image: url('~/static/header.jpg');
+        // background-image: url('~/static/header.jpg');
         background-size: cover;
         display: flex;
         justify-content:space-around;
@@ -526,8 +550,42 @@ export default {
             }
             h1 {
                 font-size: 80px;
-                // font-size: 3rem;
                 margin: 0;
+            }
+            h2 {
+                // width: 850px;
+                font-size: 44px;
+                padding: 10px;
+                margin: 0 auto;
+                box-sizing: border-box;
+                @media all and(min-width: 900px) {
+                    width: 850px;
+                    text-align: left;
+                    #articleTime {
+                        font-size: 18px;
+                        // display: none;
+                    }
+                    #articleSubTitle {
+                        font-size: 18px;
+                        // display: none;
+                    }
+                }
+                @media all and(max-width: 900px) {
+                    text-align: left;
+                    width: 100%;
+                    #articleTitle {
+                        font-size: 24px;
+                        margin-bottom: 10px;
+                    }
+                    #articleTime {
+                        font-size: 15px;
+                        color: #fff;
+                    }
+                    #articleSubTitle {
+                        font-size: 15px;
+                        margin-bottom: 10px;
+                    }
+                }
             }
             #text {
                 font-size: 1.2rem;
@@ -535,17 +593,14 @@ export default {
             }
             @media all and(max-width:605px) {
                 h1 {
-                    // font-size: 3rem;
                     font-size: 50px;
                 }
                 width: 100%;
             }
         }
         .preview-overlay {
-            // position: relative;
             position: relative ;
             bottom: -1px;
-            // top: 217px;
             width: 100%;
             height: 100%;
             overflow: hidden;
@@ -670,18 +725,15 @@ export default {
             }
             #articleNav {
                 width: 100%;
-                // width: 100px;
                 border: 0;
                 li {
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
                     font-size: inherit;
-                    // height: 100%;
                     box-sizing: border-box;
                     border: 1px solid rgb(211, 211, 211);
                     border-radius: 15px;
-                    // background-color: aliceblue;
                     padding: 10px;
                     text-align: center;
                     margin: 5px 0px;
@@ -735,11 +787,7 @@ export default {
                     box-sizing: border-box;
                     img {
                         width: 100%;
-                        // width: 110px;
-                        // height: 110px;
                         border-radius: 10px;
-                        // border: 5px solid rgb(176, 178, 180);
-                        // box-shadow: 0px 0px 10px 0px;
                     }
                     a {
                         display: inline-block;
@@ -803,6 +851,70 @@ export default {
             display: none;
         }
     }
+    #phone-to-nextArticle {
+        position: fixed;
+        right: 35px;
+        bottom: 25px;
+        font-size: 26px;
+        margin: 0;
+        padding: 0;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0px 0px 10px 0px #dededf;
+        background-color: #ffffff;
+        z-index: 3000;
+        a {
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            user-select: none;
+            i {
+                width: 100%;
+                height: 100%;  
+
+            }
+        }
+        @media all and(min-width:900px) {
+            display: none;
+        }
+    }
+    #phone-to-lastArticle {
+        position: fixed;
+        right: 35px;
+        bottom: 165px;
+        font-size: 26px;
+        margin: 0;
+        padding: 0;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0px 0px 10px 0px #dededf;
+        background-color: #ffffff;
+        z-index: 3000;
+        a {
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            user-select: none;
+            i {
+                width: 100%;
+                height: 100%;  
+
+            }
+        }
+        @media all and(min-width:900px) {
+            display: none;
+        }
+    }
     #phone-menu-box {
         transition: 0.5s;
         position: absolute;
@@ -810,7 +922,6 @@ export default {
         align-items: center;
         top: 0;
         width: 100%;
-        // background-color: #ffffff;
         a {
             padding: 15px;
             font-size: 1rem;
@@ -895,7 +1006,6 @@ export default {
             height: 20px;
             padding: 15px;
             line-height: 25px;
-            // font-size: 1.5rem;
             margin: 0px 10px;
             border: 1px solid #000000;
             border-radius: 100%;

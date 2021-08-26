@@ -2,11 +2,11 @@
 <template>
     <div id="article">
         <article>
-            <h1 id="Title">
+            <!-- <h1 id="Title">
                 {{ article.Title }}
-            </h1>
-            <p>{{ article.subtitle }}</p>
-            <p id="Author"><span>发布人 </span>{{article.Author}} 写于 {{article.Time}}</p>
+            </h1> -->
+            <!-- <p>{{ article.subtitle }}</p> -->
+            <!-- <p id="Author"><span>发布人 </span>{{article.Author}} 写于 {{article.Time}}</p> -->
             <p id="content" v-html="article.Content"></p>
         </article>
         <div id="articleFooter">
@@ -95,12 +95,12 @@ export default {
     },
     // 如果你看到这里有个奇怪的代码🤔，那么它负责导航抬头（header）收放的动画效果。
     beforeCreate(){
-        if(process.client){
-            if(this.$route.name=='index-article-id'){
-                window.scrollTo(0,0)
-                document.getElementById('header').style.height="0px"
-            }
-        }
+        // if(process.client){
+        //     if(this.$route.name=='index-article-id'){
+        //         window.scrollTo(0,0)
+        //         document.getElementById('header').style.height="0px"
+        //     }
+        // }
     }
 }
 </script>
