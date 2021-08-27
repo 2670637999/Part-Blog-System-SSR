@@ -55,7 +55,7 @@ export default {
             list-style: none;
             padding: 0;
             overflow: hidden;
-            color: rgb(0, 0, 0);
+            color: rgb(105, 105, 105);
             border-bottom: 1px solid #ebebeb;
             h3 {
                 display: flex;

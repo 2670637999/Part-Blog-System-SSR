@@ -62,8 +62,13 @@ export default {
             return input.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi,'').replace(/<[^>]+?>/g,'').replace(/\s+/g,' ').replace(/ /g,' ').replace(/>/g,' ');  
         },
         ToTop(){
-            window.scrollTo(0,0)
-            console.log('Top!')
+            let i = window.scrollY
+            var time = setInterval(()=>{
+                window.scrollTo(0,i-=7)
+                if(window.scrollY==0){
+                    clearInterval(time)
+                }
+            },0.1)
         }
     }
 }

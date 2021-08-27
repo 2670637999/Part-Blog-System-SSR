@@ -90,7 +90,13 @@ export default {
     },
     methods: {
         ToTop(){
-            window.scrollTo(0,0)
+            let i = window.scrollY
+            var time = setInterval(()=>{
+                window.scrollTo(0,i-=7)
+                if(window.scrollY==0){
+                    clearInterval(time)
+                }
+            },0.1)
         }
     },
     // 如果你看到这里有个奇怪的代码🤔，那么它负责导航抬头（header）收放的动画效果。

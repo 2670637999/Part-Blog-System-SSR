@@ -9,6 +9,9 @@
             </nuxt-link>
         </nav>
         <header id="header" >
+            <!-- <video loop="loop" autoplay="autoplay" >
+                <source src="~/static/header.mp4">
+            </video> -->
             <!-- 顶部标题文字显示 -->
             <div id="TitleBox">
                 <h1 id="headerTitle" v-if="$route.name=='index'">L.I.F.E</h1>
@@ -273,7 +276,13 @@ export default {
     methods:{
         // 返回首页
         onTop(){
-            window.scrollTo(0,0)
+            let i = window.scrollY
+            var time = setInterval(()=>{
+                window.scrollTo(0,i-=7)
+                if(window.scrollY==0){
+                    clearInterval(time)
+                }
+            },0.1)
         },
         // 跳转站外链接
         ToUrl(url){
@@ -281,7 +290,13 @@ export default {
         },
         // 点击随机文章时自动调用
         ToTop(){
-            window.scrollTo(0,0)
+            let i = window.scrollY
+            var time = setInterval(()=>{
+                window.scrollTo(0,i-=7)
+                if(window.scrollY==0){
+                    clearInterval(time)
+                }
+            },0.1)
         },
         async getRandomArticles(){
             // 获取随机文章列表数据
@@ -523,17 +538,21 @@ export default {
         align-items: center;
         text-align: center;
         flex-direction: column;
-        video {
-            @media all and(min-width:900px) {
-                width: 100%;
-            }
-            @media all and(max-width:900px) {
-                height: 100%;
-            }
-            source {
+        // video {
+        //     width: 100%;
+        //     // z-index: -6000;
+        //     height: 100%;
+        //     object-fit: cover;
+        //     @media all and(min-width:900px) {
+        //         height: 417px;
+        //     }
+        //     @media all and(max-width:900px) {
+        //         height: 317px;
+        //     }
+        //     source {
 
-            }
-        }
+        //     }
+        // }
         #TitleBox {
             width: 100%;
             position: absolute;
@@ -597,9 +616,9 @@ export default {
             bottom: -1px;
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            // overflow: hidden;
+            // z-index: 100;
             box-sizing: border-box;
-            z-index: 0;
             svg {
                 display: block;
                 width: 100%;
