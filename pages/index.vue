@@ -151,28 +151,28 @@
             <p>© https://blog.glumi.cn</p>
         </div>
         <!-- home 键（返回首页按钮） -->
-        <transition mode="out-in" enter-active-class="part-enter-10" leave-active-class="part-leave-3">
+        <!-- <transition mode="out-in" enter-active-class="part-enter-10" leave-active-class="part-leave-3">
             <menu id="phone-to-home" @click="onTop" v-if="$route.name!='index'">
                 <nuxt-link :to="{ name:'index'}">
                     <i class="fa fa-home"></i>
                 </nuxt-link>
             </menu>
-        </transition>
+        </transition> -->
         <!-- 手机端导航菜单（上一篇文章） -->
-       <menu id="phone-to-lastArticle" @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id-1!=0?true:false">
+       <!-- <menu id="phone-to-lastArticle" @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id-1!=0?true:false">
             <nuxt-link :to="{ name:'index-article-id',params: { id:Number($route.params.id)-1 }}">
                 旧
             </nuxt-link>
-        </menu>
+        </menu> -->
         <!-- 手机端导航菜单（下一篇文章） -->
-        <menu id="phone-to-nextArticle" @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id<articlesLength | Number($route.params.id)+1==articlesLength?true:false">
+        <!-- <menu id="phone-to-nextArticle" @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id<articlesLength | Number($route.params.id)+1==articlesLength?true:false">
             <nuxt-link :to="{ name:'index-article-id',params: { id:Number($route.params.id)+1 }}">
                 新
             </nuxt-link>
-        </menu>
+        </menu> -->
         <!-- 手机端导航菜单 -->
         <nav id="phone-menu-box">
-            <nuxt-link id="logo" to="/" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
+            <nuxt-link id="logo" :to="{ name:'index' }" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
             <div id="phone-menu-button" @click="onClickDisplayMenu">
                 <i class="fa fa-navicon"></i>
             </div>
@@ -274,8 +274,6 @@ export default {
         // 返回首页
         onTop(){
             window.scrollTo(0,0)
-            document.getElementById('phone-to-home').style.animation = "phone-to-home-button-animation 1s"
-            console.log('Top!')
         },
         // 跳转站外链接
         ToUrl(url){
