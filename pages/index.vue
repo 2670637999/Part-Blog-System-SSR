@@ -381,9 +381,6 @@ export default {
             margin: 0;
         }
     }
-    #appbox {
-
-    }
     #nav.sticky {
         background-color: rgba(#ffffff,0.91);
         box-shadow: 0px 0px 10px 0px #777777;
@@ -519,10 +516,9 @@ export default {
         // max-height: 100%;
         height: 417px;
         background: no-repeat center center;
-        background-image: url('~/static/header2.jpg');
         // background-image: url('https://huangxuan.me/img/home-bg.jpg');
         // background-image: url('~/static/header.jpeg');
-        // background-image: url('~/static/header.jpg');
+        background-image: url('~/static/header.jpg');
         background-size: cover;
         display: flex;
         justify-content:space-around;
@@ -646,6 +642,7 @@ export default {
         }
         @media all and(max-width: 605px) {
             height: 317px;
+            background-image: url('~/static/header2.jpg');
         }
     }
     #main {
