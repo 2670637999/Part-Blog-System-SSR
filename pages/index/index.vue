@@ -64,7 +64,7 @@ export default {
         ToTop(){
             let i = window.scrollY
             var time = setInterval(()=>{
-                window.scrollTo(0,i-=7)
+                window.scrollTo(0,i-=(i*0.01))
                 if(window.scrollY==0){
                     clearInterval(time)
                 }
