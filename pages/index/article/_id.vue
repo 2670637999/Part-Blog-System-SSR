@@ -94,6 +94,12 @@ export default {
             },0.1)
         }
     },
+    mounted(){
+        this.$nextTick(() => {
+        this.$nuxt.$loading.start()
+        setTimeout(() => this.$nuxt.$loading.finish(), 2000)
+        })
+    }
 }
 </script>
 
@@ -131,6 +137,9 @@ export default {
         }
         #content {
             color: #5c5c5c;
+            // font-family: sst;
+            // font-weight: 300;
+            // font-size: 16px;
         }
         div {
             margin-left: 100px;

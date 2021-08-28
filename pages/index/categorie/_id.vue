@@ -7,7 +7,7 @@
             </nuxt-link>
             <h3 v-show="articles[data].subtitle==''?false:true">{{ articles[data].subtitle }}</h3>
             <p>{{ ToText(articles[data].Content)|ellipsis}}</p>
-            <p>{{ articles[data].Author }} 写于 {{ articles[data].Time }} 「{{ articles[data].categorie }}」 <nuxt-link :to="{ name: 'index-article-id', params:{ id: articles[data].id  } }"><span @click="ToTop" >查看更多</span></nuxt-link></p>
+            <p>{{ articles[data].Author }} 写于 {{ articles[data].Time }} 「{{ articles[data].categorie }}」 <nuxt-link :to="{ name: 'index-article-id', params:{ id: articles[data].id  } }"><span @click="ToTop" >阅读全文</span></nuxt-link></p>
         </article>
     </div>
 </template>

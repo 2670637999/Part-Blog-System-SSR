@@ -8,7 +8,14 @@
             <h3 v-show="articles[data].subtitle==''?false:true">{{ articles[data].subtitle }}</h3>
             <p>{{ ToText(articles[data].Content)|ellipsis}}</p>
             <p>{{ articles[data].Author }} 写于 {{ articles[data].Time }}</p>
-            <p id="categories">分类：<nuxt-link :to="{name:'index-categorie-id',params:{ id:articles[data].categorie }}"><span @click="ToTop">{{ articles[data].categorie }}</span></nuxt-link></p>
+            <p id="categories">分类：
+                <nuxt-link :to="{name:'index-categorie-id',params:{ id:articles[data].categorie }}">
+                    <span @click="ToTop">{{ articles[data].categorie }}</span>
+                </nuxt-link>
+                <nuxt-link :to="{ name:'index-article-id',params:{ id: articles[data].id } }">
+                    <span @click="ToTop">阅读全文</span>
+                </nuxt-link>
+            </p>
         </article>
     </div>
 </template>
@@ -75,7 +82,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
     a {
         color: #575656;
         text-decoration: none;
@@ -111,25 +117,18 @@ export default {
         border-bottom: 1px solid #e6e6e6;
         margin-bottom: 20px;
         a {
-            transition: 1s;
+            transition: 0.2s;
             display: inline-block;
-            background: linear-gradient(#63a3f7,#418ef3) no-repeat;
-            background-size: 100% 2px;
-            background-position-y: 50px;
-            background-position-x: -25rem;
             &:hover {
                 color: cornflowerblue;
-                background-position-x: 0rem;
             }
         }
         h2 {
             transition: 0.21s;
-            // border-left: 4px solid rgb(209, 211, 214);
             // padding-left: 10px;
+            // border-left: 4px solid cornflowerblue;
             font-size: 21px;
-            &:hover {
-                // border-left: 4px solid cornflowerblue;
-            }
+            color: #696969;
         }
         h3 {
             font-weight: 200;
@@ -152,6 +151,10 @@ export default {
                 box-sizing: border-box;
                 margin-left: 3px;
                 border-radius: 999em;
+            }
+            a:nth-child(2){
+                font-style: initial;
+                float: right;
             }
         }
         @media all and(max-width:900px) {

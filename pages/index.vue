@@ -73,7 +73,7 @@
             <menu>
                 <!-- 名言语录 -->
                 <ul v-show="$route.name=='index'">
-                    <h3>名言语录</h3>
+                    <!-- <h3>名言语录</h3> -->
                     <li>What I cannot create，I do not understand - Richard Feynman</li>
                     <li>"凡我不能创造的，我都不能理解。"<br>—— 理查德·费曼<br></li>
                     <li>造轮子圣经：</li>
@@ -91,7 +91,7 @@
                 </transition>
                 <!-- 网易云音乐外部播放器 -->
                 <ul id="music">
-                    <h3>音乐</h3>
+                    <!-- <h3>音乐</h3> -->
                     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 :src="`//music.163.com/outchain/player?type=2&id=${ musicID }&auto=0&height=66`"></iframe>
                 </ul>
                 <!-- 文章分类 -->
@@ -332,6 +332,10 @@ export default {
         }
     },
     async mounted(){
+        this.$nextTick(() => {
+        this.$nuxt.$loading.start()
+        setTimeout(() => this.$nuxt.$loading.finish(), 2000)
+        })
         var charDom = document.getElementById('echarts_data')
         var myChart = echarts.init(charDom)
 
@@ -787,12 +791,13 @@ export default {
             }
             ul {
                 color: #a3a3a3;
-                border-radius: 10px;
+                // border-radius: 10px;
                 margin: 20px 0px;
                 padding: 0 10px 0 10px;
                 list-style: none;
                 border-bottom: 1px solid #e6e6e6;
                 box-sizing: border-box;
+                h3 {}
                 li {
                     // width: 100%;
                     display: inline-block;
