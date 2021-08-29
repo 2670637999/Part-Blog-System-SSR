@@ -9,9 +9,6 @@
             </nuxt-link>
         </nav>
         <header id="header" >
-            <!-- <video loop="loop" autoplay="autoplay" >
-                <source src="~/static/header.mp4">
-            </video> -->
             <!-- 顶部标题文字显示 -->
             <div id="TitleBox">
                 <h1 id="headerTitle" v-if="$route.name=='index'">L.I.F.E</h1>
@@ -156,26 +153,6 @@
             <p>粤ICP备18077886号</p>
             <p>© https://blog.glumi.cn</p>
         </div>
-        <!-- home 键（返回首页按钮） -->
-        <!-- <transition mode="out-in" enter-active-class="part-enter-10" leave-active-class="part-leave-3">
-            <menu id="phone-to-home" @click="onTop" v-if="$route.name!='index'">
-                <nuxt-link :to="{ name:'index'}">
-                    <i class="fa fa-home"></i>
-                </nuxt-link>
-            </menu>
-        </transition> -->
-        <!-- 手机端导航菜单（上一篇文章） -->
-       <!-- <menu id="phone-to-lastArticle" @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id-1!=0?true:false">
-            <nuxt-link :to="{ name:'index-article-id',params: { id:Number($route.params.id)-1 }}">
-                旧
-            </nuxt-link>
-        </menu> -->
-        <!-- 手机端导航菜单（下一篇文章） -->
-        <!-- <menu id="phone-to-nextArticle" @click="onTop" v-if="$route.name=='index-article-id'&$route.params.id<articlesLength | Number($route.params.id)+1==articlesLength?true:false">
-            <nuxt-link :to="{ name:'index-article-id',params: { id:Number($route.params.id)+1 }}">
-                新
-            </nuxt-link>
-        </menu> -->
         <!-- 手机端导航菜单 -->
         <nav id="phone-menu-box">
             <nuxt-link id="logo" :to="{ name:'index' }" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
@@ -419,7 +396,7 @@ export default {
         justify-content: flex-end;
         box-sizing: border-box;
         z-index: 1000;
-        
+        overflow: hidden;
         a {
             transition: 0.51s;
             padding: 20px 30px;
@@ -535,6 +512,7 @@ export default {
         width: 100%;
         // max-height: 100%;
         height: 417px;
+        overflow: hidden;
         background: no-repeat center center;
         // background-image: url('https://huangxuan.me/img/home-bg.jpg');
         // background-image: url('~/static/header.jpeg');
@@ -674,6 +652,7 @@ export default {
         flex-direction: row;
         justify-content: center;
         z-index: 10000 !important;
+        overflow: hidden;
         div {
             width: 750px;
             @media all and(max-width:900px) {
