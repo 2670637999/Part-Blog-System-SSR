@@ -68,7 +68,7 @@ export default {
         }
         #admin-content {
             width: 100%;
-            background-color: #ebebeb;
+            background-color: #fff;
         }
     }
 </style>

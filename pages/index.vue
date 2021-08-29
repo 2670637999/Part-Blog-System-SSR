@@ -76,7 +76,6 @@
                     <!-- <h3>名言语录</h3> -->
                     <li>What I cannot create，I do not understand - Richard Feynman</li>
                     <li>"凡我不能创造的，我都不能理解。"<br>—— 理查德·费曼<br></li>
-                    <li>造轮子圣经：</li>
                     <li><a style="color:cornflowerblue;" href="https://github.com/danistefanovic/build-your-own-x">build-your-own-x</a></li>
                 </ul>
                 <!-- 作者简介 -->
@@ -93,6 +92,10 @@
                 <ul id="music">
                     <!-- <h3>音乐</h3> -->
                     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 :src="`//music.163.com/outchain/player?type=2&id=${ musicID }&auto=0&height=66`"></iframe>
+                    <li v-show="$route.name=='index'">
+                        第一个进入太空的地球生物：流浪狗“莱卡”于1957年11月3日当地时间上午10时28分升空，但几小时后因太空衣隔热不佳成为“火烧狗”。目前它的尸体与当年的太空舱还滞留在地球轨道上。 <br>—— 想回家的莱卡
+                    </li>
+
                 </ul>
                 <!-- 文章分类 -->
                 <ul id="categories" v-show="$route.name=='index'|$route.name=='index-article-id'|$route.name=='index-categorie-id'">
