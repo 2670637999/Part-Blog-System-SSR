@@ -8,7 +8,8 @@
                 <i :class="header[data].iconClass"></i> {{ header[data].itemName }}
             </nuxt-link>
         </nav>
-        <header id="header" >
+        <header id="header">
+            <!-- <img src="/header.jpg"> -->
             <!-- 顶部标题文字显示 -->
             <div id="TitleBox">
                 <h1 id="headerTitle" v-if="$route.name=='index'">L.I.F.E</h1>
@@ -312,6 +313,12 @@ export default {
         }
     },
     async mounted(){
+        // var dom = document.getElementsByTagName('article')
+        
+        // document.body.onscroll(()=>{
+        //     console.log(dom[1].getBoundingClientRect().top)
+        // })
+
         this.$nextTick(() => {
         this.$nuxt.$loading.start()
         setTimeout(() => this.$nuxt.$loading.finish(), 2000)
@@ -384,6 +391,9 @@ export default {
         a {
             color: #000000;
         }
+    }
+    #appbox {
+        
     }
     #nav {
         // background-color: rgba(#ffffff,0.91);
@@ -644,7 +654,7 @@ export default {
         }
         @media all and(max-width: 605px) {
             height: 317px;
-            background-image: url('~/static/header2.jpg');
+            background-image: url('~/static/articles.jpg');
         }
     }
     #main {
