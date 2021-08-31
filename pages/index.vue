@@ -526,28 +526,13 @@ export default {
         background: no-repeat center center;
         // background-image: url('https://huangxuan.me/img/home-bg.jpg');
         // background-image: url('~/static/header.jpeg');
-        background-image: url('~/static/header.jpg');
+        // background-image: url('~/static/header.jpg');
         background-size: cover;
         display: flex;
         justify-content:space-around;
         align-items: center;
         text-align: center;
         flex-direction: column;
-        // video {
-        //     width: 100%;
-        //     // z-index: -6000;
-        //     height: 100%;
-        //     object-fit: cover;
-        //     @media all and(min-width:900px) {
-        //         height: 417px;
-        //     }
-        //     @media all and(max-width:900px) {
-        //         height: 317px;
-        //     }
-        //     source {
-
-        //     }
-        // }
         #TitleBox {
             width: 100%;
             position: absolute;
@@ -571,11 +556,9 @@ export default {
                     text-align: left;
                     #articleTime {
                         font-size: 18px;
-                        // display: none;
                     }
                     #articleSubTitle {
                         font-size: 18px;
-                        // display: none;
                     }
                 }
                 @media all and(max-width: 900px) {
@@ -611,8 +594,6 @@ export default {
             bottom: -1px;
             width: 100%;
             height: 100%;
-            // overflow: hidden;
-            // z-index: 100;
             box-sizing: border-box;
             svg {
                 display: block;
@@ -654,7 +635,6 @@ export default {
         }
         @media all and(max-width: 605px) {
             height: 317px;
-            background-image: url('~/static/articles.jpg');
         }
     }
     #main {
