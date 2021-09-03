@@ -5,35 +5,9 @@ export default ({ app })=>{
       var http = new XMLHttpRequest();
       http.open('GET',`https://api.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
       http.send()
-      // switch(to.name){
-      //   case (to.name=='index'?'index':'' | to.name=='index-categorie-id'?'index-categorie-id':''):
-      //     if(window.innerWidth > 900){
-      //       document.getElementById('header').style.height="417px"
-      //         document.getElementById('nav').style.visibility = "inherit"
-      //         document.getElementById('nav').style.opacity = "1"
-      //         document.getElementById('phone-menu-box').style.visibility = "hidden"
-      //         document.getElementById('phone-menu-box').style.opacity = "0"
-      //     }
-      //     else if(window.innerWidth > 600){
-      //       document.getElementById('header').style.height="417px"
-      //         document.getElementById('phone-menu-box').style.visibility = "inherit"
-      //         document.getElementById('phone-menu-box').style.opacity = "1"
-      //         document.querySelector('menu').style.opacity = "1"
-      //     }else if(window.innerWidth < 605){
-      //         document.getElementById('header').style.height="317px"
-      //         document.getElementById('phone-menu-box').style.visibility = "inherit"
-      //         document.getElementById('phone-menu-box').style.opacity = "1"
-      //     }
-      //   break;
-      //   case 'index-article-id':
-      //       document.getElementById('phone-menu-box').style.visibility = 'hidden'
-      //       document.getElementById('phone-menu-box').style.opacity = '0'
-      //       document.getElementById('nav').style.visibility = 'hidden'
-      //       document.getElementById('nav').style.opacity = '0'  
-      //   break;
-      // }
     }
     if(process.client){
+      console.log(to.params.id)
       switch(to.name){
         case 'index':
           if(window.innerWidth>900){
@@ -74,11 +48,15 @@ export default ({ app })=>{
           document.getElementById('header').style.backgroundImage = "url('/comment.jpg')";  
         break;
         case 'index-article-id':
-          if(window.innerWidth>900){
-            document.getElementById('header').style.backgroundImage = "url('/header.jpg')";
-          }else if(window.innerWidth<900) {
-            document.getElementById('header').style.backgroundImage = "url('/articles.jpg')";
-          }
+          let http2 = new XMLHttpRequest();
+          http2.open('GET',`https://api.glumi.cn/api/Article.php?data=getArticleindexOfData&getidArticle=${to.params.id}`,false)
+          http2.send()
+          document.getElementById('header').style.backgroundImage = `url('${JSON.parse(http2.response).imgURL}')`;
+          // if(window.innerWidth>900){
+          //   document.getElementById('header').style.backgroundImage = "url('/header.jpg')";
+          // }else if(window.innerWidth<900) {
+          //   document.getElementById('header').style.backgroundImage = "url('/articles.jpg')";
+          // }
         break;
       }
     }

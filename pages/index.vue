@@ -543,6 +543,9 @@ export default {
             position: absolute;
             color: #ffffff;
             justify-content: center;
+            #headerTitle {
+                text-shadow: 0px 1px 10px #858585;
+            }
             div {
                 justify-content: center;
             }
@@ -553,7 +556,7 @@ export default {
             h2 {
                 // width: 850px;
                 font-size: 44px;
-                padding: 10px;
+                padding: 15px;
                 margin: 0 auto;
                 box-sizing: border-box;
                 @media all and(min-width: 900px) {

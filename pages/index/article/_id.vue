@@ -164,6 +164,7 @@ export default {
         @media all and(max-width: 900px) {
             width: 100%;
             margin: 0;
+            padding: 0px 15px;
         }
     }
     #articleFooter {

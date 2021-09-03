@@ -88,7 +88,7 @@ export default {
         }
         #articles {
             margin-bottom: 55px;
-            padding: 10px;
+            padding: 15px;
             div {
                 h3 {
                     color: #0085a1;
