@@ -125,8 +125,8 @@
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
                 <ul v-show="($route.name=='index'|$route.name=='index-about'|$route.name=='index-comment'|$route.name=='index-project'|$route.name=='index-articles'|$route.name=='index-admin')">
                     <h3>更多内容</h3>
-                    <li @click="ToTop"><nuxt-link :to="{name:'index-document'}"><i class="fa fa-code"></i> 文档中心（开发中）</nuxt-link></li>
-                    <li @click="ToTop"><nuxt-link :to="{name:'index-douban'}"><i class="fa fa-code"></i> 豆瓣观影（开发中）</nuxt-link></li>
+                    <li @click="ToTop"><nuxt-link :to="{name:'index-document'}"><i class="fa fa-code"></i> 文档中心 (开发中)</nuxt-link></li>
+                    <li @click="ToTop"><nuxt-link :to="{name:'index-douban'}"><i class="fa fa-code"></i> 豆瓣观影 (开发中)</nuxt-link></li>
                 </ul>
                 </transition>
                 <!-- 友情链接 -->
@@ -138,6 +138,11 @@
                     </li>
                 </ul>
                 </transition>
+                <!-- 小程序 -->
+                <ul>
+                    <img src="~/static/xcx.jpg" alt="图片失效了">
+                    <center><h4>通过小程序阅读博客</h4></center>
+                </ul>
                 <!-- 统计 -->
                 <transition mode="in-out" enter-active-class="part-enter-13" leave-active-class="part-leave-1">
                 <ul v-show="$route.name=='index'">
@@ -654,6 +659,7 @@ export default {
             list-style: none;
             margin: 20px 0px 0px 30px;
             padding: 0;
+            
             #about {
                 display: flex;
                 flex-direction: column;
