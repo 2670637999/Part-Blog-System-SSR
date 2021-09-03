@@ -139,7 +139,7 @@
                 </ul>
                 </transition>
                 <!-- 小程序 -->
-                <ul>
+                <ul v-show="$route.name=='index'">
                     <img src="~/static/xcx.jpg" alt="图片失效了">
                     <center><h4>通过小程序阅读博客</h4></center>
                 </ul>
