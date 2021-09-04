@@ -9,7 +9,7 @@
                     <li v-show="searchInputForm">
                         {{ searchArticles.Title }}
                         <nuxt-link :to="{ name:'index-article-id', params: { id: searchArticles.id }}">
-                            <span @click.stop="onClickChangeSearchBox();onTop();">阅读</span>
+                            <span @click="onClickChangeSearchBox();onTop();">阅读</span>
                         </nuxt-link>
                     </li>
                 </ul>
