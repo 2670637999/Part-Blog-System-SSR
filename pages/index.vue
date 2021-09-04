@@ -1,12 +1,27 @@
 <!-- 整站页面的布局 -->
 <template>
     <div id="appbox">
+        <!-- PC端搜索框 -->
+        <div id="pc_search" @click="onClickChangeSearchBox();onClickDisplayMenu();">
+            <div>
+                <input type="text" placeholder="输入关键字(大小写敏感)" v-model="searchInputForm" @input="onChangeSearchInputform">
+                <ul>
+                    <li v-show="searchInputForm">
+                        {{ searchArticles.Title }}
+                        <nuxt-link :to="{ name:'index-article-id', params: { id: searchArticles.id }}">
+                            <span @click="onClickChangeSearchBox();onTop();">阅读</span>
+                        </nuxt-link>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <!-- PC 端导航菜单 -->
         <nav id="nav">
             <nuxt-link id="logo" to="/" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
             <nuxt-link :key="data" v-for="(item,data) in header" :to="{ name:header[data].url }">
                 <i :class="header[data].iconClass"></i> {{ header[data].itemName }}
             </nuxt-link>
+            <a @click="onClickChangeSearchBox">搜索</a>
         </nav>
         <header id="header">
             <!-- <img src="/header.jpg"> -->
@@ -159,6 +174,8 @@
             <p>粤ICP备18077886号</p>
             <p>© https://blog.glumi.cn</p>
         </div>
+        <!-- 手机端搜索框 -->
+        <!-- <div id="phone_search">phone_search</div> -->
         <!-- 手机端导航菜单 -->
         <nav id="phone-menu-box">
             <nuxt-link id="logo" :to="{ name:'index' }" ><span @click="onTop">陈陈菌博客</span></nuxt-link>
@@ -167,7 +184,12 @@
             </div>
             <div id="phone-menu">
                 <ul>
-                    <li :key="data" v-for="(item,data) in header" @click="onClickDisplayMenu"><nuxt-link :to="{ name:header[data].url}"><i :class="header[data].iconClass"></i> {{header[data].itemName}}</nuxt-link></li>
+                    <li :key="data" v-for="(item,data) in header" @click="onClickDisplayMenu">
+                        <nuxt-link :to="{ name:header[data].url}"><i :class="header[data].iconClass"></i> {{header[data].itemName}}</nuxt-link>
+                    </li>
+                    <li>
+                        <a @click="onClickChangeSearchBox">搜索</a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -178,6 +200,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import * as echarts from 'echarts'
+import documentVue from './index/document.vue'
 export default {
     // 整站的 head 属性
     head: {
@@ -191,6 +214,7 @@ export default {
     },
     data(){
         return {
+            searchInputForm: '',
             EveryDayNewPeopleSum: '',
             PeopleSum: '',
             articlesLength: Number,
@@ -207,6 +231,9 @@ export default {
                 { id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''}
             ],
             articles: [
+                { id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''}
+            ],
+            searchArticles: [
                 { id: Number,Title: '', subtitle:'', Content: '', Author: '',categorie: '',Time: '',url: ''}
             ],
             categories: [
@@ -284,10 +311,53 @@ export default {
                 }
             },0.1)
         },
+        async onChangeSearchInputform(){
+            axios.get('https://api.glumi.cn/api/Article.php',{
+                params:{
+                    data: 'getAllArticle'
+                }
+            }).then((res)=>{
+                // searchArticles
+                for(let i =0;i<res.data.length;i++){
+                    if(res.data[i].Title.indexOf(`${ this.searchInputForm }`) != -1){
+                        this.searchArticles = null
+                        this.searchArticles = res.data[i]
+                        console.log(this.searchArticles.Title)
+                    }
+                }
+            })
+            console.log('输入发生变化')
+        },
         async getRandomArticles(){
             // 获取随机文章列表数据
             let RandomArticlesRes = await axios.get('https://api.glumi.cn/api/Article.php',{ params: { data:'getRandomArticle' }})
             this.randomArticles = RandomArticlesRes.data
+        },
+        async onClickChangeSearchBox(){
+            console.log('点击了搜索')
+            this.$store.commit('ChangePC_Search_ShowState')
+            this.$store.commit('ChangeDisplayMenuState')
+            if(this.$store.state.PC_Search_ShowState){
+                document.getElementById('pc_search').childNodes[0].style.width = "600px"
+                document.getElementById('pc_search').style.paddingLeft = "0px"
+                document.getElementById('pc_search').style.zIndex = "1"
+                document.getElementById('pc_search').style.opacity = "1"
+                document.getElementById('pc_search').style.backgroundColor = "rgba($color: #000, $alpha: 0.5);"
+                setTimeout(()=>{
+                    document.getElementById('pc_search').childNodes[0].style.height = "500px"
+                },500)
+            }else if(!this.$store.state.PC_Search_ShowState) {
+                document.getElementById('pc_search').childNodes[0].style.height = "50px"
+                setTimeout(()=>{
+                    document.getElementById('pc_search').childNodes[0].style.width = "0px"
+                    document.getElementById('pc_search').style.paddingLeft = "1000px"
+                },500)
+                setTimeout(()=>{
+                    document.getElementById('pc_search').style.opacity = "0"
+                    document.getElementById('pc_search').style.backgroundColor = "rgba($color: #000, $alpha: 0);"
+                    document.getElementById('pc_search').style.zIndex = "-10"
+                },1000)
+            }
         },
         // 移动端导航菜单的交互动画效果。
         async onClickDisplayMenu(){
@@ -295,12 +365,12 @@ export default {
             if(this.$store.state.DisplayMenuState){
                 document.getElementById('phone-menu').style.top = "55px"
                 document.getElementById('phone-menu').style.width = "160px"
-                document.getElementById('phone-menu').style.maxHeight = "380px"
+                document.getElementById('phone-menu').style.maxHeight = "580px"
                 document.getElementById('phone-menu').style.boxShadow = "0px 0px 10px 0px #bdbdbd"
                 document.getElementById('phone-menu').style.opacity = "1"
-                for (let i =0;i<document.getElementById('phone-menu').childNodes[0].childNodes.length;i++){ 
-                    document.querySelector('#phone-menu ul').childNodes[i].style.opacity="1" 
-                }
+                // for (let i =0;i<document.getElementById('phone-menu').childNodes[0].childNodes.length;i++){ 
+                //     document.querySelector('#phone-menu ul').childNodes[i].style.opacity="1" 
+                // }
                 document.getElementById('phone-menu-button').style.backgroundColor = "#ebebeb"
                 document.getElementById('phone-menu-button').style.color = "#000000"
             }else {
@@ -309,9 +379,9 @@ export default {
                 document.getElementById('phone-menu').style.top = "0px"
                 document.getElementById('phone-menu').style.maxHeight = "0px"
                 document.getElementById('phone-menu').style.opacity = "0"
-                for (let i =0;i<document.getElementById('phone-menu').childNodes[0].childNodes.length;i++){ 
-                    document.querySelector('#phone-menu ul').childNodes[i].style.opacity="0" 
-                }
+                // for (let i =0;i<document.getElementById('phone-menu').childNodes[0].childNodes.length;i++){ 
+                //     document.querySelector('#phone-menu ul').childNodes[i].style.opacity="0" 
+                // }
                 document.getElementById('phone-menu-button').style.backgroundColor = "inherit"
                 document.getElementById('phone-menu-button').style.color = "#ffffff"
             }
@@ -338,36 +408,36 @@ export default {
         }})
         window.localStorage.setItem('people','visit')
         // 模拟实时更新访客数据
-        setInterval(()=>{
-            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getEveryDayNewPeopleSum' } }).then((res)=>this.EveryDayNewPeopleSum=res.data)
-            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } }).then((res)=>this.PeopleSum=res.data)
-            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllDateTime' } }).then((res)=>{
-                myChart.setOption({
-                    title: {
-                        left: 'center',
-                        text: `今日访问：${this.EveryDayNewPeopleSum}，总访问数：${this.PeopleSum}`
-                    },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    xAxis: {
-                        type: 'category',
-                        data: res.data
-                    },
-                    yAxis: {
-                        type: 'value'
-                    }
-                })
-            })
-            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllPeopleNumber' } }).then((res)=>{
-                myChart.setOption({
-                    series: [{
-                        type: 'line',
-                        data: res.data,
-                    }]
-                })
-            })
-        },1000)
+        // setInterval(()=>{
+        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getEveryDayNewPeopleSum' } }).then((res)=>this.EveryDayNewPeopleSum=res.data)
+        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } }).then((res)=>this.PeopleSum=res.data)
+        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllDateTime' } }).then((res)=>{
+        //         myChart.setOption({
+        //             title: {
+        //                 left: 'center',
+        //                 text: `今日访问：${this.EveryDayNewPeopleSum}，总访问数：${this.PeopleSum}`
+        //             },
+        //             tooltip: {
+        //                 trigger: 'axis'
+        //             },
+        //             xAxis: {
+        //                 type: 'category',
+        //                 data: res.data
+        //             },
+        //             yAxis: {
+        //                 type: 'value'
+        //             }
+        //         })
+        //     })
+        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllPeopleNumber' } }).then((res)=>{
+        //         myChart.setOption({
+        //             series: [{
+        //                 type: 'line',
+        //                 data: res.data,
+        //             }]
+        //         })
+        //     })
+        // },1000)
     }
 }
 </script>
@@ -413,11 +483,12 @@ export default {
         z-index: 1000;
         overflow: hidden;
         a {
+            // display: inline-block;
             transition: 0.51s;
-            padding: 20px 30px;
             box-sizing: border-box;
             color: #ffffff;
             text-decoration: none;
+            padding: 20px 30px;
             &:hover {
                 cursor: pointer;
                 // color: cornflowerblue !important;
@@ -818,6 +889,64 @@ export default {
         }
         100%{
             transform: scale(1);
+        }
+    }
+    #phone_search {
+        display: none;
+        display: block;
+        position: absolute;
+        top: 0;
+        margin: auto;
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        @media all and(min-width: 900px) {
+            display: none;
+        }
+    }
+    #pc_search {
+        transition: 0.5s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: -10;
+        background-color: rgba($color: #fff, $alpha: 0.5);
+        div {
+            transition: 0.5s;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 0px;
+            height: 50px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px 0px #b3b1b1;
+            input {
+                border-radius: 15px;
+                padding: 15px;
+                width: 100%;
+                box-sizing: border-box;
+                font-size: 1rem;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                li {
+                    padding: 15px;
+                    box-sizing: border-box;
+                    width: 100%;
+                    a {
+                        float: right;
+                    }
+                }
+            }
+        }
+        @media all and(max-width: 900px) {
+            // display: none;
         }
     }
     #phone-to-home {
