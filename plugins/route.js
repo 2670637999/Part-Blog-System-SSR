@@ -51,12 +51,16 @@ export default ({ app })=>{
           let http2 = new XMLHttpRequest();
           http2.open('GET',`https://api.glumi.cn/api/Article.php?data=getArticleindexOfData&getidArticle=${to.params.id}`,false)
           http2.send()
-          document.getElementById('header').style.backgroundImage = `url('${JSON.parse(http2.response).imgURL}')`;
-          // if(window.innerWidth>900){
-          //   document.getElementById('header').style.backgroundImage = "url('/header.jpg')";
-          // }else if(window.innerWidth<900) {
-          //   document.getElementById('header').style.backgroundImage = "url('/articles.jpg')";
-          // }
+          if(JSON.parse(http2.response).imgURL==null | JSON.parse(http2.response).imgURL==''){
+            if(window.innerWidth>900){
+              document.getElementById('header').style.backgroundImage = "url('/header.jpg')";
+            }else if(window.innerWidth<900) {
+              document.getElementById('header').style.backgroundImage = "url('/articles.jpg')";
+            }
+          }
+          else {
+            document.getElementById('header').style.backgroundImage = `url('${JSON.parse(http2.response).imgURL}')`;
+          }
         break;
       }
     }
