@@ -2,14 +2,14 @@
 <template>
     <div id="appbox">
         <!-- PC端搜索框 -->
-        <div id="pc_search" @click="onClickChangeSearchBox();onClickDisplayMenu();">
+        <div id="pc_search"  @click.self="onClickChangeSearchBox();onClickDisplayMenu();">
             <div>
                 <input type="text" placeholder="输入关键字(大小写敏感)" v-model="searchInputForm" @input="onChangeSearchInputform">
                 <ul>
                     <li v-show="searchInputForm">
                         {{ searchArticles.Title }}
                         <nuxt-link :to="{ name:'index-article-id', params: { id: searchArticles.id }}">
-                            <span @click="onClickChangeSearchBox();onTop();">阅读</span>
+                            <span @click.stop="onClickChangeSearchBox();onTop();">阅读</span>
                         </nuxt-link>
                     </li>
                 </ul>
@@ -21,7 +21,7 @@
             <nuxt-link :key="data" v-for="(item,data) in header" :to="{ name:header[data].url }">
                 <i :class="header[data].iconClass"></i> {{ header[data].itemName }}
             </nuxt-link>
-            <a @click="onClickChangeSearchBox">搜索</a>
+            <a @click="onClickChangeSearchBox">搜索（beta）</a>
         </nav>
         <header id="header">
             <!-- <img src="/header.jpg"> -->
@@ -188,7 +188,7 @@
                         <nuxt-link :to="{ name:header[data].url}"><i :class="header[data].iconClass"></i> {{header[data].itemName}}</nuxt-link>
                     </li>
                     <li>
-                        <a @click="onClickChangeSearchBox">搜索</a>
+                        <a @click="onClickChangeSearchBox">搜索（beta）</a>
                     </li>
                 </ul>
             </div>
@@ -338,7 +338,11 @@ export default {
             this.$store.commit('ChangePC_Search_ShowState')
             this.$store.commit('ChangeDisplayMenuState')
             if(this.$store.state.PC_Search_ShowState){
-                document.getElementById('pc_search').childNodes[0].style.width = "600px"
+                if(window.innerWidth<900){
+                    document.getElementById('pc_search').childNodes[0].style.width = "90%"
+                }else if(window.innerWidth>900){
+                    document.getElementById('pc_search').childNodes[0].style.width = "600px"
+                }
                 document.getElementById('pc_search').style.paddingLeft = "0px"
                 document.getElementById('pc_search').style.zIndex = "1"
                 document.getElementById('pc_search').style.opacity = "1"
@@ -408,36 +412,36 @@ export default {
         }})
         window.localStorage.setItem('people','visit')
         // 模拟实时更新访客数据
-        setInterval(()=>{
-            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getEveryDayNewPeopleSum' } }).then((res)=>this.EveryDayNewPeopleSum=res.data)
-            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } }).then((res)=>this.PeopleSum=res.data)
-            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllDateTime' } }).then((res)=>{
-                myChart.setOption({
-                    title: {
-                        left: 'center',
-                        text: `今日访问：${this.EveryDayNewPeopleSum}，总访问数：${this.PeopleSum}`
-                    },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    xAxis: {
-                        type: 'category',
-                        data: res.data
-                    },
-                    yAxis: {
-                        type: 'value'
-                    }
-                })
-            })
-            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllPeopleNumber' } }).then((res)=>{
-                myChart.setOption({
-                    series: [{
-                        type: 'line',
-                        data: res.data,
-                    }]
-                })
-            })
-        },1000)
+        // setInterval(()=>{
+        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getEveryDayNewPeopleSum' } }).then((res)=>this.EveryDayNewPeopleSum=res.data)
+        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } }).then((res)=>this.PeopleSum=res.data)
+        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllDateTime' } }).then((res)=>{
+        //         myChart.setOption({
+        //             title: {
+        //                 left: 'center',
+        //                 text: `今日访问：${this.EveryDayNewPeopleSum}，总访问数：${this.PeopleSum}`
+        //             },
+        //             tooltip: {
+        //                 trigger: 'axis'
+        //             },
+        //             xAxis: {
+        //                 type: 'category',
+        //                 data: res.data
+        //             },
+        //             yAxis: {
+        //                 type: 'value'
+        //             }
+        //         })
+        //     })
+        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllPeopleNumber' } }).then((res)=>{
+        //         myChart.setOption({
+        //             series: [{
+        //                 type: 'line',
+        //                 data: res.data,
+        //             }]
+        //         })
+        //     })
+        // },1000)
     }
 }
 </script>
