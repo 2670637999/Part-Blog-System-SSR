@@ -408,36 +408,36 @@ export default {
         }})
         window.localStorage.setItem('people','visit')
         // 模拟实时更新访客数据
-        // setInterval(()=>{
-        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getEveryDayNewPeopleSum' } }).then((res)=>this.EveryDayNewPeopleSum=res.data)
-        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } }).then((res)=>this.PeopleSum=res.data)
-        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllDateTime' } }).then((res)=>{
-        //         myChart.setOption({
-        //             title: {
-        //                 left: 'center',
-        //                 text: `今日访问：${this.EveryDayNewPeopleSum}，总访问数：${this.PeopleSum}`
-        //             },
-        //             tooltip: {
-        //                 trigger: 'axis'
-        //             },
-        //             xAxis: {
-        //                 type: 'category',
-        //                 data: res.data
-        //             },
-        //             yAxis: {
-        //                 type: 'value'
-        //             }
-        //         })
-        //     })
-        //     axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllPeopleNumber' } }).then((res)=>{
-        //         myChart.setOption({
-        //             series: [{
-        //                 type: 'line',
-        //                 data: res.data,
-        //             }]
-        //         })
-        //     })
-        // },1000)
+        setInterval(()=>{
+            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getEveryDayNewPeopleSum' } }).then((res)=>this.EveryDayNewPeopleSum=res.data)
+            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getPeopleSumNumber' } }).then((res)=>this.PeopleSum=res.data)
+            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllDateTime' } }).then((res)=>{
+                myChart.setOption({
+                    title: {
+                        left: 'center',
+                        text: `今日访问：${this.EveryDayNewPeopleSum}，总访问数：${this.PeopleSum}`
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: res.data
+                    },
+                    yAxis: {
+                        type: 'value'
+                    }
+                })
+            })
+            axios.get('https://api.glumi.cn/api/echarts.php',{ params: { data: 'getAllPeopleNumber' } }).then((res)=>{
+                myChart.setOption({
+                    series: [{
+                        type: 'line',
+                        data: res.data,
+                    }]
+                })
+            })
+        },1000)
     }
 }
 </script>
