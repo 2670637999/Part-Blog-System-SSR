@@ -5,9 +5,6 @@ export default ({ app })=>{
       var http = new XMLHttpRequest();
       http.open('GET',`https://api.glumi.cn/api/Login.php?data=ValidateToken&token=${tokenstr}`,false)
       http.send()
-    }
-    if(process.client){
-      console.log(to.params.id)
       switch(to.name){
         case 'index':
           if(window.innerWidth>900){
@@ -64,6 +61,8 @@ export default ({ app })=>{
         break;
       }
     }
+  
+    
 
       if(to.name=='index-admin' 
       | to.name=='index-admin-editor' 
