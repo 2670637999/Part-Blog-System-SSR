@@ -1,7 +1,5 @@
 <img src="https://blog.glumi.cn/_nuxt/img/part-blog.20caff3.png">
 
-## 前端演示： https://blog.glumi.cn
-
 ## 功能
 
 - 前后端分离架构
